@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9c9ce16d6df54a639197f6629687229b" Name="Diagram1" ZoomLevel="97" ShowGrid="false">
+        <EntityTypeShape EntityType="EIMS.Datalayer.Course" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.CourseFill" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.Faculty" Width="1.5" PointX="6" PointY="0.875" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.GroupCourse" Width="1.5" PointX="10.5" PointY="1.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.Lesson" Width="1.5" PointX="8.25" PointY="7.375" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.LessonDate" Width="1.5" PointX="10.5" PointY="7.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.LessonPresence" Width="1.5" PointX="12.75" PointY="7.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.Role" Width="1.5" PointX="3.75" PointY="5.125" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.StudentGroup" Width="1.5" PointX="11.25" PointY="4.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.Task" Width="1.5" PointX="12.75" PointY="10.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.UniversityGroup" Width="1.5" PointX="8.25" PointY="3.25" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.UserInfo" Width="1.5" PointX="6" PointY="6.5" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_CourseFill_Course" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_GroupCourse_Course" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Group_Faculty" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_GroupCourse_Group" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_Group" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_User" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_LessonDate_Lesson" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_LessonPresence_LessonDate" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Task_LessonDate" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_LessonPresence_User" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_User_Role" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_StudentGroup_Group" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_StudentGroup_User" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Group_User" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Group_User1" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Group_User11" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.DayOfWeek" Width="1.5" PointX="6.375" PointY="12.375" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.LessonOrder" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_DayOfWeek" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_LessonOrder" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.Room" Width="1.5" PointX="0.75" PointY="11.875" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.Subject" Width="1.5" PointX="1.125" PointY="8" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Course_Subject" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_Room" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_Subject" />
+        <AssociationConnector Association="EIMS.Datalayer.TeacherSubject" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
