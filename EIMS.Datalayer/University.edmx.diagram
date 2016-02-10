@@ -43,6 +43,12 @@
         <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_Room" />
         <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_Subject" />
         <AssociationConnector Association="EIMS.Datalayer.TeacherSubject" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.LessonDateDay" Width="1.5" PointX="3.375" PointY="12.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.StudentsGroup" Width="1.5" PointX="8.375" PointY="12.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.StudentView" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.SubjectCourse" Width="1.5" PointX="13.375" PointY="4.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.TeacherAndSubject" Width="1.5" PointX="10.375" PointY="13.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.TeacherView" Width="1.5" PointX="12.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

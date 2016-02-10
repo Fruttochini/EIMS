@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'I:\Универ\GoogleDrive_oldan\ITSTEP\IT_STEP_DIPLOMA\EIMS\EIMS\EIMS.Datalayer\University.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Coding_projects\TeamWork\EIMS\EIMS.Datalayer\University.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
