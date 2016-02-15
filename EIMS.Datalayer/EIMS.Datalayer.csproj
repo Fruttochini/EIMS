@@ -72,6 +72,9 @@
     <Compile Include="LessonDate.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
+    <Compile Include="LessonDateDay.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
     <Compile Include="LessonOrder.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
@@ -88,10 +91,25 @@
     <Compile Include="StudentGroup.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
+    <Compile Include="StudentsGroup.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StudentView.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subject.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
+    <Compile Include="SubjectCourse.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
     <Compile Include="Task.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherAndSubject.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherView.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
     <Compile Include="University.Context.cs">
