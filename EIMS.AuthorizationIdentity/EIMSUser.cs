@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Security.Claims;
 
 namespace EIMS.AuthorizationIdentity
 {
@@ -18,6 +19,13 @@ namespace EIMS.AuthorizationIdentity
         public string address { get; set; }
         public bool sex { get; set; }
 
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(EIMSUserManager userManager)
+        {
+            var userIdentity = await userManager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Add custom user claims here
+            return userIdentity;
+        }
 
     }
 }

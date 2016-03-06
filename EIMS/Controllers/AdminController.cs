@@ -9,12 +9,13 @@ namespace EIMS.Controllers
 {
     public class AdminController : Controller
     {
-        private IRepository context = new Repository.Repository();
+        //private IRepository context = new Repository.Repository();
+
         // GET: Admin
-        public ActionResult Index()
-        {
-            IEnumerable<Teacher> list = context.GetTeachers();
-            return View(list);
-        }
+        //public ActionResult Index()
+        //{
+        //    IEnumerable<Teacher> list = context.GetTeachers();
+        //    return View(list);
+        //}
     }
 }
