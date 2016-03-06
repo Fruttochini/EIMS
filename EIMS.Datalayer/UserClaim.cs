@@ -12,10 +12,13 @@ namespace EIMS.Datalayer
     using System;
     using System.Collections.Generic;
     
-    public partial class LessonDateDay
+    public partial class UserClaim
     {
-        public System.DateTime date { get; set; }
-        public string Name { get; set; }
-        public string subjectName { get; set; }
+        public long Id { get; set; }
+        public long UserId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
+    
+        public virtual EIMSUser EIMSUser { get; set; }
     }
 }

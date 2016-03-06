@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using EIMS.Common;
 using EIMS.Datalayer;
+using EIMS.AuthorizationIdentity;
 
 using System.Linq;
 
@@ -10,17 +11,21 @@ namespace EIMS.Repository
 
     public class Repository : IRepository
     {
-        private readonly EIMSEntitiesContext context;
+        private EIMSEntitiesContext context;
 
         public Repository()
         {
             this.context = new EIMSEntitiesContext();
         }
 
+
+
         public void Dispose()
         {
-            this.Dispose();
+            context.Dispose();
         }
+
+
 
         public IEnumerable<Common.Course> GetCourses()
         {
@@ -44,6 +49,8 @@ namespace EIMS.Repository
 
             return FacultyList;
         }
+
+
 
         public IEnumerable<Common.Room> GetRooms()
         {

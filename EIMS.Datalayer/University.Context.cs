@@ -29,107 +29,62 @@ namespace EIMS.Datalayer
     
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<CourseFill> CourseFill { get; set; }
+        public virtual DbSet<DayOfWeek> DayOfWeek { get; set; }
+        public virtual DbSet<EIMSUser> EIMSUser { get; set; }
         public virtual DbSet<Faculty> Faculty { get; set; }
         public virtual DbSet<GroupCourse> GroupCourse { get; set; }
         public virtual DbSet<Lesson> Lesson { get; set; }
         public virtual DbSet<LessonDate> LessonDate { get; set; }
+        public virtual DbSet<LessonOrder> LessonOrder { get; set; }
         public virtual DbSet<LessonPresence> LessonPresence { get; set; }
         public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<Room> Room { get; set; }
         public virtual DbSet<StudentGroup> StudentGroup { get; set; }
+        public virtual DbSet<Subject> Subject { get; set; }
         public virtual DbSet<Task> Task { get; set; }
         public virtual DbSet<UniversityGroup> UniversityGroup { get; set; }
-        public virtual DbSet<UserInfo> UserInfo { get; set; }
-        public virtual DbSet<DayOfWeek> DayOfWeek { get; set; }
-        public virtual DbSet<LessonOrder> LessonOrder { get; set; }
-        public virtual DbSet<Room> Room { get; set; }
-        public virtual DbSet<Subject> Subject { get; set; }
-        public virtual DbSet<LessonDateDay> LessonDateDay { get; set; }
-        public virtual DbSet<StudentsGroup> StudentsGroup { get; set; }
-        public virtual DbSet<StudentView> StudentView { get; set; }
-        public virtual DbSet<SubjectCourse> SubjectCourse { get; set; }
-        public virtual DbSet<TeacherAndSubject> TeacherAndSubject { get; set; }
-        public virtual DbSet<TeacherView> TeacherView { get; set; }
+        public virtual DbSet<UserClaim> UserClaim { get; set; }
+        public virtual DbSet<UserLogin> UserLogin { get; set; }
     
-        public virtual ObjectResult<UserInfo> GetUsersByRole(Nullable<byte> role)
+        public virtual int GetUsersByRole(Nullable<byte> role)
         {
             var roleParameter = role.HasValue ?
                 new ObjectParameter("Role", role) :
                 new ObjectParameter("Role", typeof(byte));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserInfo>("GetUsersByRole", roleParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetUsersByRole", roleParameter);
         }
     
-        public virtual ObjectResult<UserInfo> GetUsersByRole(Nullable<byte> role, MergeOption mergeOption)
-        {
-            var roleParameter = role.HasValue ?
-                new ObjectParameter("Role", role) :
-                new ObjectParameter("Role", typeof(byte));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserInfo>("GetUsersByRole", mergeOption, roleParameter);
-        }
-    
-        public virtual ObjectResult<Course> GetCourseByID(Nullable<int> iD)
+        public virtual int GetCourseByID(Nullable<int> iD)
         {
             var iDParameter = iD.HasValue ?
                 new ObjectParameter("ID", iD) :
                 new ObjectParameter("ID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Course>("GetCourseByID", iDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetCourseByID", iDParameter);
         }
     
-        public virtual ObjectResult<Course> GetCourseByID(Nullable<int> iD, MergeOption mergeOption)
+        public virtual int GetGroupByID(Nullable<int> iD)
         {
             var iDParameter = iD.HasValue ?
                 new ObjectParameter("ID", iD) :
                 new ObjectParameter("ID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Course>("GetCourseByID", mergeOption, iDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetGroupByID", iDParameter);
         }
     
-        public virtual ObjectResult<UniversityGroup> GetGroupByID(Nullable<int> iD)
+        public virtual int GetSubjectByID(Nullable<int> iD)
         {
             var iDParameter = iD.HasValue ?
                 new ObjectParameter("ID", iD) :
                 new ObjectParameter("ID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UniversityGroup>("GetGroupByID", iDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetSubjectByID", iDParameter);
         }
     
-        public virtual ObjectResult<UniversityGroup> GetGroupByID(Nullable<int> iD, MergeOption mergeOption)
+        public virtual int GetSubjects()
         {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UniversityGroup>("GetGroupByID", mergeOption, iDParameter);
-        }
-    
-        public virtual ObjectResult<Subject> GetSubjectByID(Nullable<int> iD)
-        {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Subject>("GetSubjectByID", iDParameter);
-        }
-    
-        public virtual ObjectResult<Subject> GetSubjectByID(Nullable<int> iD, MergeOption mergeOption)
-        {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Subject>("GetSubjectByID", mergeOption, iDParameter);
-        }
-    
-        public virtual ObjectResult<Subject> GetSubjects()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Subject>("GetSubjects");
-        }
-    
-        public virtual ObjectResult<Subject> GetSubjects(MergeOption mergeOption)
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Subject>("GetSubjects", mergeOption);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetSubjects");
         }
     
         public virtual int DeleteCourse(Nullable<int> iD)
@@ -296,202 +251,103 @@ namespace EIMS.Datalayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUser", iDParameter);
         }
     
-        public virtual ObjectResult<DayOfWeek> GetDayOfWeekByID(Nullable<int> dayOfWeek)
+        public virtual int GetDayOfWeekByID(Nullable<int> dayOfWeek)
         {
             var dayOfWeekParameter = dayOfWeek.HasValue ?
                 new ObjectParameter("dayOfWeek", dayOfWeek) :
                 new ObjectParameter("dayOfWeek", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DayOfWeek>("GetDayOfWeekByID", dayOfWeekParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetDayOfWeekByID", dayOfWeekParameter);
         }
     
-        public virtual ObjectResult<DayOfWeek> GetDayOfWeekByID(Nullable<int> dayOfWeek, MergeOption mergeOption)
-        {
-            var dayOfWeekParameter = dayOfWeek.HasValue ?
-                new ObjectParameter("dayOfWeek", dayOfWeek) :
-                new ObjectParameter("dayOfWeek", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DayOfWeek>("GetDayOfWeekByID", mergeOption, dayOfWeekParameter);
-        }
-    
-        public virtual ObjectResult<Faculty> GetFacultyByID(Nullable<int> facultyID)
+        public virtual int GetFacultyByID(Nullable<int> facultyID)
         {
             var facultyIDParameter = facultyID.HasValue ?
                 new ObjectParameter("facultyID", facultyID) :
                 new ObjectParameter("facultyID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Faculty>("GetFacultyByID", facultyIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetFacultyByID", facultyIDParameter);
         }
     
-        public virtual ObjectResult<Faculty> GetFacultyByID(Nullable<int> facultyID, MergeOption mergeOption)
-        {
-            var facultyIDParameter = facultyID.HasValue ?
-                new ObjectParameter("facultyID", facultyID) :
-                new ObjectParameter("facultyID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Faculty>("GetFacultyByID", mergeOption, facultyIDParameter);
-        }
-    
-        public virtual ObjectResult<Lesson> GetLessonByID(Nullable<int> lessonID)
+        public virtual int GetLessonByID(Nullable<int> lessonID)
         {
             var lessonIDParameter = lessonID.HasValue ?
                 new ObjectParameter("lessonID", lessonID) :
                 new ObjectParameter("lessonID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lesson>("GetLessonByID", lessonIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetLessonByID", lessonIDParameter);
         }
     
-        public virtual ObjectResult<Lesson> GetLessonByID(Nullable<int> lessonID, MergeOption mergeOption)
-        {
-            var lessonIDParameter = lessonID.HasValue ?
-                new ObjectParameter("lessonID", lessonID) :
-                new ObjectParameter("lessonID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lesson>("GetLessonByID", mergeOption, lessonIDParameter);
-        }
-    
-        public virtual ObjectResult<LessonOrder> GetLessonOrderByID(Nullable<int> orderID)
+        public virtual int GetLessonOrderByID(Nullable<int> orderID)
         {
             var orderIDParameter = orderID.HasValue ?
                 new ObjectParameter("orderID", orderID) :
                 new ObjectParameter("orderID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LessonOrder>("GetLessonOrderByID", orderIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetLessonOrderByID", orderIDParameter);
         }
     
-        public virtual ObjectResult<LessonOrder> GetLessonOrderByID(Nullable<int> orderID, MergeOption mergeOption)
-        {
-            var orderIDParameter = orderID.HasValue ?
-                new ObjectParameter("orderID", orderID) :
-                new ObjectParameter("orderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LessonOrder>("GetLessonOrderByID", mergeOption, orderIDParameter);
-        }
-    
-        public virtual ObjectResult<LessonPresence> GetLessonPreesenceByID(Nullable<int> lessonPresenceID)
+        public virtual int GetLessonPreesenceByID(Nullable<int> lessonPresenceID)
         {
             var lessonPresenceIDParameter = lessonPresenceID.HasValue ?
                 new ObjectParameter("lessonPresenceID", lessonPresenceID) :
                 new ObjectParameter("lessonPresenceID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LessonPresence>("GetLessonPreesenceByID", lessonPresenceIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetLessonPreesenceByID", lessonPresenceIDParameter);
         }
     
-        public virtual ObjectResult<LessonPresence> GetLessonPreesenceByID(Nullable<int> lessonPresenceID, MergeOption mergeOption)
-        {
-            var lessonPresenceIDParameter = lessonPresenceID.HasValue ?
-                new ObjectParameter("lessonPresenceID", lessonPresenceID) :
-                new ObjectParameter("lessonPresenceID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LessonPresence>("GetLessonPreesenceByID", mergeOption, lessonPresenceIDParameter);
-        }
-    
-        public virtual ObjectResult<Role> GetRoleByID(Nullable<int> role)
+        public virtual int GetRoleByID(Nullable<int> role)
         {
             var roleParameter = role.HasValue ?
                 new ObjectParameter("role", role) :
                 new ObjectParameter("role", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Role>("GetRoleByID", roleParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetRoleByID", roleParameter);
         }
     
-        public virtual ObjectResult<Role> GetRoleByID(Nullable<int> role, MergeOption mergeOption)
-        {
-            var roleParameter = role.HasValue ?
-                new ObjectParameter("role", role) :
-                new ObjectParameter("role", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Role>("GetRoleByID", mergeOption, roleParameter);
-        }
-    
-        public virtual ObjectResult<Room> GetRoomByID(Nullable<int> roomID)
+        public virtual int GetRoomByID(Nullable<int> roomID)
         {
             var roomIDParameter = roomID.HasValue ?
                 new ObjectParameter("roomID", roomID) :
                 new ObjectParameter("roomID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Room>("GetRoomByID", roomIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetRoomByID", roomIDParameter);
         }
     
-        public virtual ObjectResult<Room> GetRoomByID(Nullable<int> roomID, MergeOption mergeOption)
-        {
-            var roomIDParameter = roomID.HasValue ?
-                new ObjectParameter("roomID", roomID) :
-                new ObjectParameter("roomID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Room>("GetRoomByID", mergeOption, roomIDParameter);
-        }
-    
-        public virtual ObjectResult<UserInfo> GetStudentByID(Nullable<int> studentID)
+        public virtual int GetStudentByID(Nullable<int> studentID)
         {
             var studentIDParameter = studentID.HasValue ?
                 new ObjectParameter("studentID", studentID) :
                 new ObjectParameter("studentID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserInfo>("GetStudentByID", studentIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetStudentByID", studentIDParameter);
         }
     
-        public virtual ObjectResult<UserInfo> GetStudentByID(Nullable<int> studentID, MergeOption mergeOption)
-        {
-            var studentIDParameter = studentID.HasValue ?
-                new ObjectParameter("studentID", studentID) :
-                new ObjectParameter("studentID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserInfo>("GetStudentByID", mergeOption, studentIDParameter);
-        }
-    
-        public virtual ObjectResult<UserInfo> GetSuperuserByID(Nullable<int> superuserID)
+        public virtual int GetSuperuserByID(Nullable<int> superuserID)
         {
             var superuserIDParameter = superuserID.HasValue ?
                 new ObjectParameter("superuserID", superuserID) :
                 new ObjectParameter("superuserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserInfo>("GetSuperuserByID", superuserIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetSuperuserByID", superuserIDParameter);
         }
     
-        public virtual ObjectResult<UserInfo> GetSuperuserByID(Nullable<int> superuserID, MergeOption mergeOption)
-        {
-            var superuserIDParameter = superuserID.HasValue ?
-                new ObjectParameter("superuserID", superuserID) :
-                new ObjectParameter("superuserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserInfo>("GetSuperuserByID", mergeOption, superuserIDParameter);
-        }
-    
-        public virtual ObjectResult<Task> GetTaskByID(Nullable<int> taskID)
+        public virtual int GetTaskByID(Nullable<int> taskID)
         {
             var taskIDParameter = taskID.HasValue ?
                 new ObjectParameter("taskID", taskID) :
                 new ObjectParameter("taskID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Task>("GetTaskByID", taskIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetTaskByID", taskIDParameter);
         }
     
-        public virtual ObjectResult<Task> GetTaskByID(Nullable<int> taskID, MergeOption mergeOption)
-        {
-            var taskIDParameter = taskID.HasValue ?
-                new ObjectParameter("taskID", taskID) :
-                new ObjectParameter("taskID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Task>("GetTaskByID", mergeOption, taskIDParameter);
-        }
-    
-        public virtual ObjectResult<UserInfo> GetTeacherByID(Nullable<int> teacherID)
+        public virtual int GetTeacherByID(Nullable<int> teacherID)
         {
             var teacherIDParameter = teacherID.HasValue ?
                 new ObjectParameter("teacherID", teacherID) :
                 new ObjectParameter("teacherID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserInfo>("GetTeacherByID", teacherIDParameter);
-        }
-    
-        public virtual ObjectResult<UserInfo> GetTeacherByID(Nullable<int> teacherID, MergeOption mergeOption)
-        {
-            var teacherIDParameter = teacherID.HasValue ?
-                new ObjectParameter("teacherID", teacherID) :
-                new ObjectParameter("teacherID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserInfo>("GetTeacherByID", mergeOption, teacherIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetTeacherByID", teacherIDParameter);
         }
     
         public virtual int InsertCourse(string coursename)

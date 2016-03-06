@@ -12,48 +12,57 @@ namespace EIMS.Datalayer
     using System;
     using System.Collections.Generic;
     
-    public partial class UserInfo
+    public partial class EIMSUser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserInfo()
+        public EIMSUser()
         {
             this.Lesson = new HashSet<Lesson>();
             this.LessonPresence = new HashSet<LessonPresence>();
-            this.StudentGroup = new HashSet<StudentGroup>();
             this.UniversityGroup = new HashSet<UniversityGroup>();
             this.UniversityGroup1 = new HashSet<UniversityGroup>();
-            this.UniversityGroup11 = new HashSet<UniversityGroup>();
+            this.UserLogin = new HashSet<UserLogin>();
             this.Subject = new HashSet<Subject>();
+            this.Role = new HashSet<Role>();
         }
     
-        public long ID { get; set; }
-        public string Username { get; set; }
+        public long Id { get; set; }
+        public string Login { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public Nullable<byte> RoleID { get; set; }
-        public System.DateTime CreationDate { get; set; }
+        public Nullable<System.DateTime> CreationDate { get; set; }
+        public Nullable<System.DateTime> ApprovalDate { get; set; }
+        public Nullable<System.DateTime> LastLoginDate { get; set; }
+        public bool IsLocked { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string SecurityStamp { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
+        public bool LockoutEnabled { get; set; }
+        public int AccessFailedCount { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string MiddleName { get; set; }
-        public string photoLink { get; set; }
         public string address { get; set; }
-        public bool sex { get; set; }
-        public Nullable<System.DateTime> LastEdit { get; set; }
+        public string photolink { get; set; }
+        public Nullable<bool> sex { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> Lesson { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LessonPresence> LessonPresence { get; set; }
-        public virtual Role Role { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentGroup> StudentGroup { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UniversityGroup> UniversityGroup { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UniversityGroup> UniversityGroup1 { get; set; }
+        public virtual UserClaim UserClaim { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UniversityGroup> UniversityGroup11 { get; set; }
+        public virtual ICollection<UserLogin> UserLogin { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subject> Subject { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Role> Role { get; set; }
     }
 }

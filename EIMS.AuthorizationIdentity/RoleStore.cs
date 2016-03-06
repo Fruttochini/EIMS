@@ -7,36 +7,44 @@ using System.Threading.Tasks;
 
 namespace EIMS.AuthorizationIdentity
 {
-    class RoleStore : IRoleStore<IdentityRole, byte>
-    {
-        public Task CreateAsync(IdentityRole role)
-        {
-            throw new NotImplementedException();
-        }
+    //class RoleStore : IRoleStore<IdentityRole, byte>
+    //{
+    //    private IIdentityUnit iunit;
 
-        public Task DeleteAsync(IdentityRole role)
-        {
-            throw new NotImplementedException();
-        }
+    //    public RoleStore(IIdentityUnit repo)
+    //    {
+    //        iunit = repo;
+    //    }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+    //    public Task CreateAsync(IdentityRole role)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public Task<IdentityRole> FindByIdAsync(byte roleId)
-        {
-            throw new NotImplementedException();
-        }
+    //    public Task DeleteAsync(IdentityRole role)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public Task<IdentityRole> FindByNameAsync(string roleName)
-        {
-            throw new NotImplementedException();
-        }
+    //    public void Dispose()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public Task UpdateAsync(IdentityRole role)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //    public Task<IdentityRole> FindByIdAsync(byte roleId)
+    //    {
+
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public Task<IdentityRole> FindByNameAsync(string roleName)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public Task UpdateAsync(IdentityRole role)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

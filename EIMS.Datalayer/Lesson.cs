@@ -28,13 +28,13 @@ namespace EIMS.Datalayer
         public int LessonOrder { get; set; }
         public byte DayOfWeek { get; set; }
     
-        public virtual UniversityGroup UniversityGroup { get; set; }
-        public virtual UserInfo UserInfo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LessonDate> LessonDate { get; set; }
         public virtual DayOfWeek DayOfWeek1 { get; set; }
+        public virtual EIMSUser EIMSUser { get; set; }
+        public virtual UniversityGroup UniversityGroup { get; set; }
         public virtual LessonOrder LessonOrder1 { get; set; }
         public virtual Room Room { get; set; }
         public virtual Subject Subject { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LessonDate> LessonDate { get; set; }
     }
 }

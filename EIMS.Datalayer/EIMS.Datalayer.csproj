@@ -60,6 +60,9 @@
     <Compile Include="DayOfWeek.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
+    <Compile Include="EIMSUser.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
     <Compile Include="Faculty.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
@@ -70,9 +73,6 @@
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
     <Compile Include="LessonDate.cs">
-      <DependentUpon>University.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LessonDateDay.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
     <Compile Include="LessonOrder.cs">
@@ -91,25 +91,10 @@
     <Compile Include="StudentGroup.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
-    <Compile Include="StudentsGroup.cs">
-      <DependentUpon>University.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentView.cs">
-      <DependentUpon>University.tt</DependentUpon>
-    </Compile>
     <Compile Include="Subject.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
-    <Compile Include="SubjectCourse.cs">
-      <DependentUpon>University.tt</DependentUpon>
-    </Compile>
     <Compile Include="Task.cs">
-      <DependentUpon>University.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TeacherAndSubject.cs">
-      <DependentUpon>University.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TeacherView.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
     <Compile Include="University.Context.cs">
@@ -130,7 +115,10 @@
     <Compile Include="UniversityGroup.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserInfo.cs">
+    <Compile Include="UserClaim.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserLogin.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -148,6 +136,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="allDB.sql" />
     <Content Include="University.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>University.edmx</DependentUpon>

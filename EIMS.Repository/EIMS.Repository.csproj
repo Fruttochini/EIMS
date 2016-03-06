@@ -54,6 +54,10 @@
     <Compile Include="Repository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EIMS.AuthorizationIdentity\EIMS.AuthorizationIdentity.csproj">
+      <Project>{7223a509-f754-485b-b519-e88a6269c575}</Project>
+      <Name>EIMS.AuthorizationIdentity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EIMS.Common\EIMS.Common.csproj">
       <Project>{13cddf49-ae05-48c1-b043-6618fd06f922}</Project>
       <Name>EIMS.Common</Name>

@@ -19,7 +19,7 @@ namespace EIMS.Datalayer
         {
             this.CourseFill = new HashSet<CourseFill>();
             this.Lesson = new HashSet<Lesson>();
-            this.UserInfo = new HashSet<UserInfo>();
+            this.EIMSUser = new HashSet<EIMSUser>();
         }
     
         public int subjectID { get; set; }
@@ -31,6 +31,6 @@ namespace EIMS.Datalayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> Lesson { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserInfo> UserInfo { get; set; }
+        public virtual ICollection<EIMSUser> EIMSUser { get; set; }
     }
 }

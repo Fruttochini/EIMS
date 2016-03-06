@@ -12,10 +12,12 @@ namespace EIMS.Datalayer
     using System;
     using System.Collections.Generic;
     
-    public partial class StudentsGroup
+    public partial class UserLogin
     {
-        public string Surname { get; set; }
-        public string Name { get; set; }
-        public string groupName { get; set; }
+        public long UserId { get; set; }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
+    
+        public virtual EIMSUser EIMSUser { get; set; }
     }
 }

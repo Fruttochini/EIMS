@@ -17,13 +17,13 @@ namespace EIMS.Datalayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Role()
         {
-            this.UserInfo = new HashSet<UserInfo>();
+            this.EIMSUser = new HashSet<EIMSUser>();
         }
     
-        public byte ID { get; set; }
-        public string Role1 { get; set; }
+        public long Id { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserInfo> UserInfo { get; set; }
+        public virtual ICollection<EIMSUser> EIMSUser { get; set; }
     }
 }

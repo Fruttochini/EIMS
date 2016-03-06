@@ -19,7 +19,7 @@ namespace EIMS.Datalayer
         public bool presence { get; set; }
         public Nullable<byte> mark { get; set; }
     
+        public virtual EIMSUser EIMSUser { get; set; }
         public virtual LessonDate LessonDate { get; set; }
-        public virtual UserInfo UserInfo { get; set; }
     }
 }

@@ -29,6 +29,8 @@ namespace EIMS.Datalayer
         public Nullable<long> elderID { get; set; }
         public int facultyID { get; set; }
     
+        public virtual EIMSUser EIMSUser { get; set; }
+        public virtual EIMSUser EIMSUser1 { get; set; }
         public virtual Faculty Faculty { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GroupCourse> GroupCourse { get; set; }
@@ -36,7 +38,5 @@ namespace EIMS.Datalayer
         public virtual ICollection<Lesson> Lesson { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentGroup> StudentGroup { get; set; }
-        public virtual UserInfo UserInfo { get; set; }
-        public virtual UserInfo UserInfo11 { get; set; }
     }
 }

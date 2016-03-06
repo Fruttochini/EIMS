@@ -17,5 +17,6 @@ namespace EIMS.Common
         IEnumerable<Faculty> GetFaculties();
 
         Teacher GetTeacherByID(long ID);
+
     }
 }

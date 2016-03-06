@@ -1,4 +1,5 @@
-﻿using EIMS.Common;
+﻿using EIMS.AuthorizationIdentity;
+using EIMS.Common;
 using EIMS.Datalayer;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace EIMS.Repository
             };
             return teacher;
         }
+
 
     }
 }
