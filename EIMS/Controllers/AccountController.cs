@@ -18,15 +18,17 @@ namespace EIMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private EIMSUserManager _userManager;
+        private EIMSRoleManager _roleManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(EIMSUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(EIMSUserManager userManager, ApplicationSignInManager signInManager, EIMSRoleManager roleManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
         }
 
         public ApplicationSignInManager SignInManager
@@ -51,6 +53,15 @@ namespace EIMS.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        public EIMSRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<EIMSRoleManager>();
+            }
+            private set { this._roleManager = value; }
         }
 
         //
@@ -138,6 +149,7 @@ namespace EIMS.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
@@ -148,6 +160,7 @@ namespace EIMS.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -178,7 +191,7 @@ namespace EIMS.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(long userId, string code)
         {
-            if (userId == null || code == null)
+            if (userId < 0 || code == null)
             {
                 return View("Error");
             }
@@ -289,7 +302,7 @@ namespace EIMS.Controllers
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
+            if (userId < 0)
             {
                 return View("Error");
             }

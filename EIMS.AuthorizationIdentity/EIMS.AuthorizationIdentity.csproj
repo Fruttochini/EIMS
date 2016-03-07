@@ -89,6 +89,7 @@
     <Compile Include="EIMSClaim.cs" />
     <Compile Include="EIMSLogin.cs" />
     <Compile Include="EIMSRole.cs" />
+    <Compile Include="EIMSRoleManager.cs" />
     <Compile Include="EIMSUser.cs" />
     <Compile Include="EIMSUserManager.cs" />
     <Compile Include="EIMSUserRole.cs" />
@@ -96,7 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
