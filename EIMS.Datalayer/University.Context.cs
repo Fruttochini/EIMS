@@ -37,14 +37,12 @@ namespace EIMS.Datalayer
         public virtual DbSet<LessonDate> LessonDate { get; set; }
         public virtual DbSet<LessonOrder> LessonOrder { get; set; }
         public virtual DbSet<LessonPresence> LessonPresence { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Room> Room { get; set; }
         public virtual DbSet<StudentGroup> StudentGroup { get; set; }
         public virtual DbSet<Subject> Subject { get; set; }
         public virtual DbSet<Task> Task { get; set; }
         public virtual DbSet<UniversityGroup> UniversityGroup { get; set; }
-        public virtual DbSet<UserClaim> UserClaim { get; set; }
-        public virtual DbSet<UserLogin> UserLogin { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
     
         public virtual int GetUsersByRole(Nullable<byte> role)
         {

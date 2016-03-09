@@ -11,10 +11,15 @@ namespace EIMS.Common
     {
         IEnumerable<Teacher> GetTeachers();
         IEnumerable<Student> GetStudents();
+
         IEnumerable<Subject> GetSubjects();
         IEnumerable<Room> GetRooms();
+
         IEnumerable<Course> GetCourses();
         IEnumerable<Faculty> GetFaculties();
+        IEnumerable<UniversityGroup> GetGroups();
+        IEnumerable<Lesson> GetLessons();
+        IEnumerable<Lesson> GetLessonsByDate(DateTime date);
 
         Teacher GetTeacherByID(long ID);
 

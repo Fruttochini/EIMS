@@ -115,12 +115,6 @@
     <Compile Include="UniversityGroup.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserClaim.cs">
-      <DependentUpon>University.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserLogin.cs">
-      <DependentUpon>University.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="University.edmx">
@@ -137,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="allDB.sql" />
+    <Content Include="INSERT_RoleValues.sql" />
     <Content Include="University.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>University.edmx</DependentUpon>
