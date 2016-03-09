@@ -254,9 +254,17 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_SelectPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Admin\Course\" />
+    <Folder Include="Views\Admin\Faculty\" />
+    <Folder Include="Views\Admin\Group\" />
+    <Folder Include="Views\Admin\Room\" />
+    <Folder Include="Views\Admin\Schedule\" />
+    <Folder Include="Views\Admin\Subject\" />
+    <Folder Include="Views\Admin\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
