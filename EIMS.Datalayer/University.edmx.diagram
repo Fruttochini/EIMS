@@ -43,6 +43,7 @@
         <EntityTypeShape EntityType="EIMS.Datalayer.GroupCourse" Width="1.5" PointX="5.25" PointY="3.625" />
         <AssociationConnector Association="EIMS.Datalayer.FK_GroupCourse_Course" />
         <AssociationConnector Association="EIMS.Datalayer.FK_GroupCourse_Group" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_StudentGroup_EIMSUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

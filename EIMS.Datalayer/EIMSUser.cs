@@ -24,6 +24,7 @@ namespace EIMS.Datalayer
             this.Subject = new HashSet<Subject>();
             this.Role = new HashSet<Role>();
             this.UserClaim = new HashSet<UserClaim>();
+            this.StudentGroup = new HashSet<StudentGroup>();
         }
     
         public long Id { get; set; }
@@ -53,5 +54,7 @@ namespace EIMS.Datalayer
         public virtual ICollection<Role> Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserClaim> UserClaim { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentGroup> StudentGroup { get; set; }
     }
 }

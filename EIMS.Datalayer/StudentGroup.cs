@@ -20,5 +20,6 @@ namespace EIMS.Datalayer
         public Nullable<System.DateTime> graduationDate { get; set; }
     
         public virtual UniversityGroup UniversityGroup { get; set; }
+        public virtual EIMSUser EIMSUser { get; set; }
     }
 }
