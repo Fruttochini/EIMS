@@ -5,6 +5,7 @@ using EIMS.Datalayer;
 using EIMS.AuthorizationIdentity;
 
 using System.Linq;
+using System.Text;
 
 namespace EIMS.Repository
 {
@@ -177,9 +178,12 @@ namespace EIMS.Repository
             {
                 var tmpLesson = new Common.Lesson() { LessonID = item.lessonID, SubjectID = item.subjectID, GroupID = item.groupID, TeacherID = item.teacherID, RoomID = item.roomID, LessonOrder = item.LessonOrder, DayOfWeek = item.DayOfWeek, SubjectName = item.Subject.subjectName, GroupName = item.UniversityGroup.groupName, RoomNo = item.Room.roomNo };
                 var user = GetUserByID(tmpLesson.TeacherID);
-
+				var sb = new StringBuilder();
+				sb.AppendFormat("{0} {1} {2}", user.Surname, user.Name, user.MiddleName);
+				tmpLesson.TeacherFullName = sb.ToString();
+				result.Add(tmpLesson);
             }
-            throw new NotImplementedException();
+            return result;
         }
 
         public IEnumerable<Common.Lesson> GetLessonsByDate(DateTime date)
