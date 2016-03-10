@@ -25,7 +25,16 @@ namespace EIMS.Repository
 
         public IEnumerable<Common.Faculty> GetFaculties()
         {
-            throw new NotImplementedException();
+			var dbLst = context.Faculty.ToList();
+			var result = new List<Common.Faculty>();
+			foreach (var item in dbLst)
+			{
+				var tmpFclt = new Common.Faculty() { FacultyID = item.facultyID, Name = item.Name };
+				var grpList = item.UniversityGroup.ToList();
+				tmpFclt.UniversityGroup = grpList as IEnumerable<Common.UniversityGroup>;
+				result.Add(tmpFclt);
+			}
+			return result;
         }
 
         public IEnumerable<Common.Room> GetRooms()
