@@ -31,7 +31,7 @@ namespace EIMS.Repository
             {
                 var tmpFclt = new Common.Faculty() { FacultyID = item.facultyID, Name = item.Name };
                 var idList = item.UniversityGroup.Select(grp => grp.groupID);
-				tmpFclt.GroupID = idList;
+                tmpFclt.GroupID = idList;
                 result.Add(tmpFclt);
             }
             return result;
@@ -69,7 +69,22 @@ namespace EIMS.Repository
 
         public IEnumerable<Common.UniversityGroup> GetGroups()
         {
-            throw new NotImplementedException();
+            var result = new List<Common.UniversityGroup>();
+            var dbList = context.UniversityGroup.ToList();
+            foreach (var item in dbList)
+            {
+                var tmpGroup = new Common.UniversityGroup()
+                {
+                    GroupID = item.groupID,
+                    CreationDate = item.creationDate,
+                    FacultyID = item.facultyID,
+                    GroupName = item.groupName,
+                    elderID = item.elderID,
+                    SupervisorID = item.supervisorID
+                };
+                result.Add(tmpGroup);
+            }
+            return result;
         }
 
         public IEnumerable<Common.Lesson> GetLessons()

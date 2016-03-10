@@ -12,7 +12,5 @@ namespace EIMS.Common
         public Nullable<long> elderID { get; set; }
         public int FacultyID { get; set; }
 
-        //public IEnumerable<Student> Students { get; set; }
-        //public IEnumerable<Lesson> Lessons { get; set; }
     }
 }
