@@ -46,6 +46,9 @@
     <Compile Include="Faculty.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Lesson.cs" />
+    <Compile Include="LessonDate.cs" />
+    <Compile Include="LessonOrder.cs" />
+    <Compile Include="LessonPresence.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
