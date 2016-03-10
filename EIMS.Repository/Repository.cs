@@ -198,7 +198,8 @@ namespace EIMS.Repository
 
         public User GetUserByID(long ID)
         {
-            throw new NotImplementedException();
+            var dbusr = context.EIMSUser.Where(usr => usr.Id == ID).Single();
+            return dbusr.ToUser();
         }
     }
 }
