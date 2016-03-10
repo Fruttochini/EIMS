@@ -31,12 +31,7 @@ namespace EIMS.Repository
             {
                 var tmpFclt = new Common.Faculty() { FacultyID = item.facultyID, Name = item.Name };
                 var idList = item.UniversityGroup.Select(grp => grp.groupID);
-				var lst = new List<int>();
-				foreach (var id in idList)
-				{
-					lst.Add(id);
-				}
-				tmpFclt.GroupID = lst;
+				tmpFclt.GroupID = idList;
                 result.Add(tmpFclt);
             }
             return result;
