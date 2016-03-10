@@ -9,8 +9,7 @@ namespace EIMS.Common
 {
     public interface IRepository : IDisposable
     {
-        IEnumerable<Teacher> GetTeachers();
-        IEnumerable<Student> GetStudents();
+        IEnumerable<User> GetUsers();
 
         IEnumerable<Subject> GetSubjects();
         IEnumerable<Room> GetRooms();
@@ -21,7 +20,7 @@ namespace EIMS.Common
         IEnumerable<Lesson> GetLessons();
         IEnumerable<Lesson> GetLessonsByDate(DateTime date);
 
-        Teacher GetTeacherByID(long ID);
+        User GetUserByID(long ID);
 
     }
 }
