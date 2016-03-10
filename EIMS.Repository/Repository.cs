@@ -32,14 +32,36 @@ namespace EIMS.Repository
                     dct.Add(anonim.subjectID, anonim.subjectHoursPerWeek);
                 }
                 tmpCrs.SubjectByHours = dct;
-                //var tmpLst = item.CourseFill.Select(sbj => new MyDataSet { subjectID = sbj.subjectID, subjectByHours = sbj.subjectHoursPerWeek});
-                //foreach (var id in tmpLst)
-                {
-                    //	var subjByHours = crsFill.Where(s => s.subjectID == id); 
-                }
+				result.Add(tmpCrs);
             }
             return result;
         }
+
+		public IEnumerable<Common.DayOfWeek> GetDayOfWeek()
+		{
+			var dbLst = context.DayOfWeek.ToList();
+			var result = new List<Common.DayOfWeek>();
+			foreach (var item in dbLst)
+			{
+				var tmpDOW = new Common.DayOfWeek() { DayID = item.ID, DayName = item.Name };
+				var idLst = item.Lesson.Select(less => less.lessonID);
+				tmpDOW.LessonID = idLst;
+				result.Add(tmpDOW);
+			}
+			return result;
+		}
+
+		public IEnumerable<Common.Task> GetTask()
+		{
+			var dbLst = context.Task.ToList();
+			var result = new List<Common.Task>();
+			foreach (var item in dbLst)
+			{
+				var tmpTsk = new Common.Task() { taskID = item.taskID, lessonDateID = item.lessonDateID, homeTask = item.homeTask, expiryDate = item.expiryDate };
+				result.Add(tmpTsk);
+			}
+			return result;
+		}
 
         public IEnumerable<Common.Faculty> GetFaculties()
         {
