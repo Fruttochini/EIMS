@@ -176,7 +176,8 @@ namespace EIMS.Repository
 			foreach (var item in dbLst)
 			{
 				var tmpLesson = new Common.Lesson() { LessonID = item.lessonID, SubjectID = item.subjectID, GroupID = item.groupID, TeacherID = item.teacherID, RoomID = item.roomID, LessonOrder=item.LessonOrder, DayOfWeek = item.DayOfWeek, SubjectName = item.Subject.subjectName, GroupName = item.UniversityGroup.groupName, RoomNo = item.Room.roomNo };
-				var fullName = item.EIMSUser.UserClaim.Where(n => n.EIMSUser.Role.Equals("Teacher")).Select(fullName => new { fullName. });
+				var user = GetUserByID(tmpLesson.TeacherID);
+
 			}
             throw new NotImplementedException();
         }
