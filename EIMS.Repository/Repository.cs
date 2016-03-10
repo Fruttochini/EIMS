@@ -20,19 +20,25 @@ namespace EIMS.Repository
 
         public IEnumerable<Common.Course> GetCourses()
         {
-			var dbLst = context.Course.ToList();
-			var result = new List<Common.Course>();
-			foreach (var item in dbLst)
-			{
-				var tmpCrs = new Common.Course() { CourseID = item.courseID, CourseName = item.courseName };
-				var dct = new Dictionary<int, int>();
-				//var tmpLst = item.CourseFill.Select(sbj => new MyDataSet { subjectID = sbj.subjectID, subjectByHours = sbj.subjectHoursPerWeek});
-				//foreach (var id in tmpLst)
-				{
-				//	var subjByHours = crsFill.Where(s => s.subjectID == id); 
-				}
-			}
-			return result;
+            var dbLst = context.Course.ToList();
+            var result = new List<Common.Course>();
+            foreach (var item in dbLst)
+            {
+                var tmpCrs = new Common.Course() { CourseID = item.courseID, CourseName = item.courseName };
+                var dct = new Dictionary<int, int>();
+                var tmpLst = item.CourseFill.Select(course => new { course.subjectID, course.subjectHoursPerWeek });
+                foreach (var anonim in tmpLst)
+                {
+                    dct.Add(anonim.subjectID, anonim.subjectHoursPerWeek);
+                }
+                tmpCrs.SubjectByHours = dct;
+                //var tmpLst = item.CourseFill.Select(sbj => new MyDataSet { subjectID = sbj.subjectID, subjectByHours = sbj.subjectHoursPerWeek});
+                //foreach (var id in tmpLst)
+                {
+                    //	var subjByHours = crsFill.Where(s => s.subjectID == id); 
+                }
+            }
+            return result;
         }
 
         public IEnumerable<Common.Faculty> GetFaculties()
