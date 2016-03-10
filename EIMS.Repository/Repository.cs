@@ -189,7 +189,7 @@ namespace EIMS.Repository
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            context.Dispose();
         }
 
         public IEnumerable<User> GetUsers()
