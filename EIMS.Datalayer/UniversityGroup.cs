@@ -17,9 +17,9 @@ namespace EIMS.Datalayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UniversityGroup()
         {
-            this.GroupCourse = new HashSet<GroupCourse>();
             this.Lesson = new HashSet<Lesson>();
             this.StudentGroup = new HashSet<StudentGroup>();
+            this.GroupCourse = new HashSet<GroupCourse>();
         }
     
         public int groupID { get; set; }
@@ -33,10 +33,10 @@ namespace EIMS.Datalayer
         public virtual EIMSUser EIMSUser1 { get; set; }
         public virtual Faculty Faculty { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GroupCourse> GroupCourse { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> Lesson { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentGroup> StudentGroup { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GroupCourse> GroupCourse { get; set; }
     }
 }

@@ -32,7 +32,6 @@ namespace EIMS.Datalayer
         public virtual DbSet<DayOfWeek> DayOfWeek { get; set; }
         public virtual DbSet<EIMSUser> EIMSUser { get; set; }
         public virtual DbSet<Faculty> Faculty { get; set; }
-        public virtual DbSet<GroupCourse> GroupCourse { get; set; }
         public virtual DbSet<Lesson> Lesson { get; set; }
         public virtual DbSet<LessonDate> LessonDate { get; set; }
         public virtual DbSet<LessonOrder> LessonOrder { get; set; }
@@ -44,6 +43,7 @@ namespace EIMS.Datalayer
         public virtual DbSet<UniversityGroup> UniversityGroup { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<UserClaim> UserClaim { get; set; }
+        public virtual DbSet<GroupCourse> GroupCourse { get; set; }
     
         public virtual int GetUsersByRole(Nullable<byte> role)
         {

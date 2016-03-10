@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="EIMS.Datalayer.DayOfWeek" Width="1.5" PointX="3" PointY="21.875" />
         <EntityTypeShape EntityType="EIMS.Datalayer.EIMSUser" Width="1.5" PointX="0.75" PointY="6.125" />
         <EntityTypeShape EntityType="EIMS.Datalayer.Faculty" Width="1.5" PointX="0.75" PointY="3.5" />
-        <EntityTypeShape EntityType="EIMS.Datalayer.GroupCourse" Width="1.5" PointX="5.25" PointY="4.125" />
         <EntityTypeShape EntityType="EIMS.Datalayer.Lesson" Width="1.5" PointX="5.25" PointY="10.125" />
         <EntityTypeShape EntityType="EIMS.Datalayer.LessonDate" Width="1.5" PointX="7.5" PointY="10.875" />
         <EntityTypeShape EntityType="EIMS.Datalayer.LessonOrder" Width="1.5" PointX="3" PointY="11.5" />
@@ -21,7 +20,6 @@
         <EntityTypeShape EntityType="EIMS.Datalayer.Task" Width="1.5" PointX="9.75" PointY="13.875" />
         <EntityTypeShape EntityType="EIMS.Datalayer.UniversityGroup" Width="1.5" PointX="3" PointY="6.625" />
         <AssociationConnector Association="EIMS.Datalayer.FK_CourseFill_Course" />
-        <AssociationConnector Association="EIMS.Datalayer.FK_GroupCourse_Course" />
         <AssociationConnector Association="EIMS.Datalayer.FK_Course_Subject" />
         <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_DayOfWeek" />
         <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_EIMSUser" />
@@ -29,7 +27,6 @@
         <AssociationConnector Association="EIMS.Datalayer.FK_UniversityGroup_EIMSUser" />
         <AssociationConnector Association="EIMS.Datalayer.FK_UniversityGroup_EIMSUser1" />
         <AssociationConnector Association="EIMS.Datalayer.FK_Group_Faculty" />
-        <AssociationConnector Association="EIMS.Datalayer.FK_GroupCourse_Group" />
         <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_Group" />
         <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_LessonOrder" />
         <AssociationConnector Association="EIMS.Datalayer.FK_Lesson_Room" />
@@ -43,6 +40,9 @@
         <AssociationConnector Association="EIMS.Datalayer.UserRole" />
         <EntityTypeShape EntityType="EIMS.Datalayer.UserClaim" Width="1.5" PointX="3" PointY="24.5" />
         <AssociationConnector Association="EIMS.Datalayer.FK_UserClaim_EIMSUser" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.GroupCourse" Width="1.5" PointX="5.25" PointY="3.625" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_GroupCourse_Course" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_GroupCourse_Group" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

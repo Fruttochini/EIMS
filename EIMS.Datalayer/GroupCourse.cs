@@ -16,7 +16,7 @@ namespace EIMS.Datalayer
     {
         public int courseID { get; set; }
         public int groupID { get; set; }
-        public System.DateTime startDate { get; set; }
+        public Nullable<System.DateTime> startDate { get; set; }
         public Nullable<System.DateTime> endDate { get; set; }
     
         public virtual Course Course { get; set; }

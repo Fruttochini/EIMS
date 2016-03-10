@@ -56,11 +56,10 @@
           <Key>
             <PropertyRef Name="courseID" />
             <PropertyRef Name="groupID" />
-            <PropertyRef Name="startDate" />
           </Key>
           <Property Name="courseID" Type="int" Nullable="false" />
           <Property Name="groupID" Type="int" Nullable="false" />
-          <Property Name="startDate" Type="datetime" Nullable="false" />
+          <Property Name="startDate" Type="datetime" />
           <Property Name="endDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Lesson">
@@ -975,7 +974,6 @@
           <EntitySet Name="DayOfWeek" EntityType="EIMS.Datalayer.DayOfWeek" />
           <EntitySet Name="EIMSUser" EntityType="EIMS.Datalayer.EIMSUser" />
           <EntitySet Name="Faculty" EntityType="EIMS.Datalayer.Faculty" />
-          <EntitySet Name="GroupCourse" EntityType="EIMS.Datalayer.GroupCourse" />
           <EntitySet Name="Lesson" EntityType="EIMS.Datalayer.Lesson" />
           <EntitySet Name="LessonDate" EntityType="EIMS.Datalayer.LessonDate" />
           <EntitySet Name="LessonOrder" EntityType="EIMS.Datalayer.LessonOrder" />
@@ -988,10 +986,6 @@
           <AssociationSet Name="FK_CourseFill_Course" Association="EIMS.Datalayer.FK_CourseFill_Course">
             <End Role="Course" EntitySet="Course" />
             <End Role="CourseFill" EntitySet="CourseFill" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GroupCourse_Course" Association="EIMS.Datalayer.FK_GroupCourse_Course">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="GroupCourse" EntitySet="GroupCourse" />
           </AssociationSet>
           <AssociationSet Name="FK_Course_Subject" Association="EIMS.Datalayer.FK_Course_Subject">
             <End Role="Subject" EntitySet="Subject" />
@@ -1020,10 +1014,6 @@
           <AssociationSet Name="FK_Group_Faculty" Association="EIMS.Datalayer.FK_Group_Faculty">
             <End Role="Faculty" EntitySet="Faculty" />
             <End Role="UniversityGroup" EntitySet="UniversityGroup" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GroupCourse_Group" Association="EIMS.Datalayer.FK_GroupCourse_Group">
-            <End Role="UniversityGroup" EntitySet="UniversityGroup" />
-            <End Role="GroupCourse" EntitySet="GroupCourse" />
           </AssociationSet>
           <AssociationSet Name="FK_Lesson_Group" Association="EIMS.Datalayer.FK_Lesson_Group">
             <End Role="UniversityGroup" EntitySet="UniversityGroup" />
@@ -1070,6 +1060,15 @@
           <AssociationSet Name="FK_UserClaim_EIMSUser" Association="EIMS.Datalayer.FK_UserClaim_EIMSUser">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
             <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
+          <EntitySet Name="GroupCourse" EntityType="EIMS.Datalayer.GroupCourse" />
+          <AssociationSet Name="FK_GroupCourse_Course" Association="EIMS.Datalayer.FK_GroupCourse_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="GroupCourse" EntitySet="GroupCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupCourse_Group" Association="EIMS.Datalayer.FK_GroupCourse_Group">
+            <End Role="UniversityGroup" EntitySet="UniversityGroup" />
+            <End Role="GroupCourse" EntitySet="GroupCourse" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Course">
@@ -1131,19 +1130,6 @@
           <Property Name="facultyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UniversityGroup" Relationship="EIMS.Datalayer.FK_Group_Faculty" FromRole="Faculty" ToRole="UniversityGroup" />
-        </EntityType>
-        <EntityType Name="GroupCourse">
-          <Key>
-            <PropertyRef Name="courseID" />
-            <PropertyRef Name="groupID" />
-            <PropertyRef Name="startDate" />
-          </Key>
-          <Property Name="courseID" Type="Int32" Nullable="false" />
-          <Property Name="groupID" Type="Int32" Nullable="false" />
-          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="endDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Course" Relationship="EIMS.Datalayer.FK_GroupCourse_Course" FromRole="GroupCourse" ToRole="Course" />
-          <NavigationProperty Name="UniversityGroup" Relationship="EIMS.Datalayer.FK_GroupCourse_Group" FromRole="GroupCourse" ToRole="UniversityGroup" />
         </EntityType>
         <EntityType Name="Lesson">
           <Key>
@@ -1253,9 +1239,9 @@
           <NavigationProperty Name="EIMSUser" Relationship="EIMS.Datalayer.FK_UniversityGroup_EIMSUser" FromRole="UniversityGroup" ToRole="EIMSUser" />
           <NavigationProperty Name="EIMSUser1" Relationship="EIMS.Datalayer.FK_UniversityGroup_EIMSUser1" FromRole="UniversityGroup" ToRole="EIMSUser" />
           <NavigationProperty Name="Faculty" Relationship="EIMS.Datalayer.FK_Group_Faculty" FromRole="UniversityGroup" ToRole="Faculty" />
-          <NavigationProperty Name="GroupCourse" Relationship="EIMS.Datalayer.FK_GroupCourse_Group" FromRole="UniversityGroup" ToRole="GroupCourse" />
           <NavigationProperty Name="Lesson" Relationship="EIMS.Datalayer.FK_Lesson_Group" FromRole="UniversityGroup" ToRole="Lesson" />
           <NavigationProperty Name="StudentGroup" Relationship="EIMS.Datalayer.FK_StudentGroup_Group" FromRole="UniversityGroup" ToRole="StudentGroup" />
+          <NavigationProperty Name="GroupCourse" Relationship="EIMS.Datalayer.FK_GroupCourse_Group" FromRole="UniversityGroup" ToRole="GroupCourse" />
         </EntityType>
         <Association Name="FK_CourseFill_Course">
           <End Type="EIMS.Datalayer.Course" Role="Course" Multiplicity="1">
@@ -1267,20 +1253,6 @@
               <PropertyRef Name="courseID" />
             </Principal>
             <Dependent Role="CourseFill">
-              <PropertyRef Name="courseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GroupCourse_Course">
-          <End Type="EIMS.Datalayer.Course" Role="Course" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="EIMS.Datalayer.GroupCourse" Role="GroupCourse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="courseID" />
-            </Principal>
-            <Dependent Role="GroupCourse">
               <PropertyRef Name="courseID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1370,20 +1342,6 @@
             </Principal>
             <Dependent Role="UniversityGroup">
               <PropertyRef Name="facultyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GroupCourse_Group">
-          <End Type="EIMS.Datalayer.UniversityGroup" Role="UniversityGroup" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="EIMS.Datalayer.GroupCourse" Role="GroupCourse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UniversityGroup">
-              <PropertyRef Name="groupID" />
-            </Principal>
-            <Dependent Role="GroupCourse">
-              <PropertyRef Name="groupID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1535,6 +1493,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="GroupCourse">
+          <Key>
+            <PropertyRef Name="courseID" />
+            <PropertyRef Name="groupID" />
+          </Key>
+          <Property Name="courseID" Type="Int32" Nullable="false" />
+          <Property Name="groupID" Type="Int32" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Precision="3" />
+          <Property Name="endDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Course" Relationship="EIMS.Datalayer.FK_GroupCourse_Course" FromRole="GroupCourse" ToRole="Course" />
+          <NavigationProperty Name="UniversityGroup" Relationship="EIMS.Datalayer.FK_GroupCourse_Group" FromRole="GroupCourse" ToRole="UniversityGroup" />
+        </EntityType>
+        <Association Name="FK_GroupCourse_Course">
+          <End Type="EIMS.Datalayer.Course" Role="Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EIMS.Datalayer.GroupCourse" Role="GroupCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="courseID" />
+            </Principal>
+            <Dependent Role="GroupCourse">
+              <PropertyRef Name="courseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupCourse_Group">
+          <End Type="EIMS.Datalayer.UniversityGroup" Role="UniversityGroup" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EIMS.Datalayer.GroupCourse" Role="GroupCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UniversityGroup">
+              <PropertyRef Name="groupID" />
+            </Principal>
+            <Dependent Role="GroupCourse">
+              <PropertyRef Name="groupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1652,16 +1650,6 @@
               <MappingFragment StoreEntitySet="Faculty">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="facultyID" ColumnName="facultyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GroupCourse">
-            <EntityTypeMapping TypeName="EIMS.Datalayer.GroupCourse">
-              <MappingFragment StoreEntitySet="GroupCourse">
-                <ScalarProperty Name="endDate" ColumnName="endDate" />
-                <ScalarProperty Name="startDate" ColumnName="startDate" />
-                <ScalarProperty Name="groupID" ColumnName="groupID" />
-                <ScalarProperty Name="courseID" ColumnName="courseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1789,6 +1777,16 @@
                 <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupCourse">
+            <EntityTypeMapping TypeName="EIMS.Datalayer.GroupCourse">
+              <MappingFragment StoreEntitySet="GroupCourse">
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="courseID" ColumnName="courseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
