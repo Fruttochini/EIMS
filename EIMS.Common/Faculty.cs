@@ -11,6 +11,6 @@ namespace EIMS.Common
         public int FacultyID { get; set; }
         public string Name { get; set; }
 
-		public IEnumerable<UniversityGroup> UniversityGroup { get; set; }
+		public IEnumerable<int> GroupID { get; set; }
     }
 }
