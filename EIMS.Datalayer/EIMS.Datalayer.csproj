@@ -115,6 +115,9 @@
     <Compile Include="UniversityGroup.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserClaim.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="University.edmx">

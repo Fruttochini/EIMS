@@ -165,6 +165,15 @@
           <Property Name="elderID" Type="bigint" />
           <Property Name="facultyID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="UserId" />
@@ -437,6 +446,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserClaim_EIMSUser">
+          <End Role="EIMSUser" Type="Self.EIMSUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EIMSUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRole_EIMSUser">
           <End Role="EIMSUser" Type="Self.EIMSUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -665,6 +688,7 @@
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherSubject" EntityType="Self.TeacherSubject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UniversityGroup" EntityType="Self.UniversityGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Course_Subject" Association="Self.FK_Course_Subject">
             <End Role="Subject" EntitySet="Subject" />
@@ -745,6 +769,10 @@
           <AssociationSet Name="FK_UniversityGroup_EIMSUser1" Association="Self.FK_UniversityGroup_EIMSUser1">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
             <End Role="UniversityGroup" EntitySet="UniversityGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaim_EIMSUser" Association="Self.FK_UserClaim_EIMSUser">
+            <End Role="EIMSUser" EntitySet="EIMSUser" />
+            <End Role="UserClaim" EntitySet="UserClaim" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRole_EIMSUser" Association="Self.FK_UserRole_EIMSUser">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
@@ -1038,6 +1066,11 @@
             <End Role="EIMSUser" EntitySet="EIMSUser" />
             <End Role="Role" EntitySet="Role" />
           </AssociationSet>
+          <EntitySet Name="UserClaim" EntityType="EIMS.Datalayer.UserClaim" />
+          <AssociationSet Name="FK_UserClaim_EIMSUser" Association="EIMS.Datalayer.FK_UserClaim_EIMSUser">
+            <End Role="EIMSUser" EntitySet="EIMSUser" />
+            <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Course">
           <Key>
@@ -1089,6 +1122,7 @@
           <NavigationProperty Name="UniversityGroup1" Relationship="EIMS.Datalayer.FK_UniversityGroup_EIMSUser1" FromRole="EIMSUser" ToRole="UniversityGroup" />
           <NavigationProperty Name="Subject" Relationship="EIMS.Datalayer.TeacherSubject" FromRole="EIMSUser" ToRole="Subject" />
           <NavigationProperty Name="Role" Relationship="EIMS.Datalayer.UserRole" FromRole="EIMSUser" ToRole="Role" />
+          <NavigationProperty Name="UserClaim" Relationship="EIMS.Datalayer.FK_UserClaim_EIMSUser" FromRole="EIMSUser" ToRole="UserClaim" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -1477,6 +1511,30 @@
           <End Type="EIMS.Datalayer.EIMSUser" Role="EIMSUser" Multiplicity="*" />
           <End Type="EIMS.Datalayer.Role" Role="Role" Multiplicity="*" />
         </Association>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EIMSUser" Relationship="EIMS.Datalayer.FK_UserClaim_EIMSUser" FromRole="UserClaim" ToRole="EIMSUser" />
+        </EntityType>
+        <Association Name="FK_UserClaim_EIMSUser">
+          <End Type="EIMS.Datalayer.EIMSUser" Role="EIMSUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EIMS.Datalayer.UserClaim" Role="UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EIMSUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1724,6 +1782,16 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="UserClaim">
+            <EntityTypeMapping TypeName="EIMS.Datalayer.UserClaim">
+              <MappingFragment StoreEntitySet="UserClaim">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

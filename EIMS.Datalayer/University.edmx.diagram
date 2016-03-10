@@ -41,6 +41,8 @@
         <AssociationConnector Association="EIMS.Datalayer.TeacherSubject" />
         <EntityTypeShape EntityType="EIMS.Datalayer.Role" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="EIMS.Datalayer.UserRole" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.UserClaim" Width="1.5" PointX="3" PointY="24.5" />
+        <AssociationConnector Association="EIMS.Datalayer.FK_UserClaim_EIMSUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

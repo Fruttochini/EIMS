@@ -43,6 +43,7 @@ namespace EIMS.Datalayer
         public virtual DbSet<Task> Task { get; set; }
         public virtual DbSet<UniversityGroup> UniversityGroup { get; set; }
         public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<UserClaim> UserClaim { get; set; }
     
         public virtual int GetUsersByRole(Nullable<byte> role)
         {
