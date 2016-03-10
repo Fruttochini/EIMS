@@ -63,6 +63,48 @@ namespace EIMS.Repository
 			return result;
 		}
 
+		public IEnumerable<Common.LessonOrder> GetLessonOrder()
+		{
+			var dbLst = context.LessonOrder.ToList();
+			var result = new List<Common.LessonOrder>();
+			foreach (var item in dbLst)
+			{
+				var tmpLessOrder = new Common.LessonOrder() { lessonOrderID = item.ID, timeStart = item.TimeStart, timeEnd = item.TimeEnd };
+				var idLst = item.Lesson.Select(lessOrder => lessOrder.lessonID);
+				tmpLessOrder.GetLessonID = idLst;
+				result.Add(tmpLessOrder);
+			}
+			return result;
+		}
+
+		public IEnumerable<Common.LessonPresence> GetLessonPresence()
+		{
+			var dbLst = context.LessonPresence.ToList();
+			var result = new List<Common.LessonPresence>();
+			foreach (var item in dbLst)
+			{
+				var tmpLessPresence = new Common.LessonPresence() { lessonDateID = item.lessonDateID, studentID = item.studentID, presence = item.presence, mark = item.mark };
+				result.Add(tmpLessPresence);
+			}
+			return result;
+		}
+
+		public IEnumerable<Common.LessonDate> GetLessonDate()
+		{
+			var dbLst = context.LessonDate.ToList();
+			var result = new List<Common.LessonDate>();
+			foreach (var item in dbLst)
+			{
+				var tmpLessDate = new Common.LessonDate() { lessonDateID = item.lessonDateID, lessonID = item.lessonID, date = item.date };
+				var tid = item.Task.Select(t => t.taskID);
+				var sid = item.LessonPresence.Select(s => s.studentID);
+				tmpLessDate.TaskID = tid;
+				tmpLessDate.StudentID = sid;
+				result.Add(tmpLessDate);
+			}
+			return result;
+		}
+
         public IEnumerable<Common.Faculty> GetFaculties()
         {
             var dbLst = context.Faculty.ToList();
@@ -129,6 +171,13 @@ namespace EIMS.Repository
 
         public IEnumerable<Common.Lesson> GetLessons()
         {
+			var dbLst = context.Lesson.ToList();
+			var result = new List<Common.Lesson>();
+			foreach (var item in dbLst)
+			{
+				var tmpLesson = new Common.Lesson() { LessonID = item.lessonID, SubjectID = item.subjectID, GroupID = item.groupID, TeacherID = item.teacherID, RoomID = item.roomID, SubjectName = item.Subject.subjectName, GroupName = item.UniversityGroup.groupName, RoomNo = item.Room.roomNo };
+				var fullName = item.EIMSUser.UserClaim.Where(n=>n.EIMSUser.Role.Equals("Teacher")).Select()
+			}
             throw new NotImplementedException();
         }
 
