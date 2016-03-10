@@ -29,7 +29,7 @@ namespace EIMS.Common
         public string LastLoginDate { get; set; }
 
         public string PhoneNumber { get; set; }
-        public IEnumerable<Role> Roles { get; set; }
+        public IEnumerable<string> Roles { get; set; }
 
 
     }
