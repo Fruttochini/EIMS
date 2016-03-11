@@ -170,7 +170,7 @@ namespace EIMS.Repository
             return result;
         }
 
-        public IEnumerable<Common.Lesson> GetLessonsByDate(DateTime date)
+        public IEnumerable<Common.LessonDate> GetLessonsByDate(DateTime date)
         {
 
 			var result = new List<Common.LessonDate>();
