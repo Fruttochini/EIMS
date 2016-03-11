@@ -90,22 +90,6 @@ namespace EIMS.Repository
             return result;
         }
 
-        public IEnumerable<Common.LessonDate> GetLessonDate()
-        {
-            var dbLst = context.LessonDate.ToList();
-            var result = new List<Common.LessonDate>();
-            foreach (var item in dbLst)
-            {
-                var tmpLessDate = new Common.LessonDate() { lessonDateID = item.lessonDateID, lessonID = item.lessonID, date = item.date };
-                var tid = item.Task.Select(t => t.taskID);
-                var sid = item.LessonPresence.Select(s => s.studentID);
-                tmpLessDate.TaskID = tid;
-                tmpLessDate.StudentID = sid;
-                result.Add(tmpLessDate);
-            }
-            return result;
-        }
-
         public IEnumerable<Common.Faculty> GetFaculties()
         {
             var dbLst = context.Faculty.ToList();
@@ -188,8 +172,16 @@ namespace EIMS.Repository
 
         public IEnumerable<Common.Lesson> GetLessonsByDate(DateTime date)
         {
-            throw new NotImplementedException();
-        }
+
+			var result = new List<Common.LessonDate>();
+			var dbLst = context.LessonDate.Where(lesson=>lesson.date==date).Select(lDate=>lDate).ToList();
+			foreach (var item in dbLst)
+			{
+				var tmpLessDate = item.ToLessonDate();
+				result.Add(tmpLessDate);
+			}
+			return result;
+		}
 
         public void Dispose()
         {
