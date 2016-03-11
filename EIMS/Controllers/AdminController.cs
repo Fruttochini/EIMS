@@ -129,6 +129,22 @@ namespace EIMS.Controllers
         {
             return View(context.GetUserByID(id));
         }
+
+        public ActionResult GetFaculties()
+        {
+            var facultyList = new List<FacultyViewModel>();
+            var dblst = context.GetFaculties();
+            foreach (var fac in dblst)
+            {
+                FacultyViewModel tmp = new FacultyViewModel()
+                {
+                    FacultyID = fac.FacultyID,
+                    Name = fac.Name
+                };
+                facultyList.Add(tmp);
+            }
+            return View(facultyList);
+        }
         // GET: Admin
         //public ActionResult Index()
         //{
