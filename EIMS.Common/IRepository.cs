@@ -15,10 +15,10 @@ namespace EIMS.Common
         IEnumerable<Room> GetRooms();
 
         IEnumerable<Course> GetCourses();
-		IEnumerable<DayOfWeek> GetDayOfWeek();
-		IEnumerable<Task> GetTask();
-		IEnumerable<LessonOrder> GetLessonOeder();
-		IEnumerable<LessonPresence> GetLessonPresence();
+        IEnumerable<DayOfWeek> GetDayOfWeek();
+        IEnumerable<Task> GetTask();
+        IEnumerable<LessonOrder> GetLessonOrder();
+        IEnumerable<LessonPresence> GetLessonPresence();
         IEnumerable<Faculty> GetFaculties();
         IEnumerable<UniversityGroup> GetGroups();
         IEnumerable<Lesson> GetLessons();
