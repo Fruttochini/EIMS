@@ -162,10 +162,10 @@ namespace EIMS.Repository
             {
                 var tmpLesson = new Common.Lesson() { LessonID = item.lessonID, SubjectID = item.subjectID, GroupID = item.groupID, TeacherID = item.teacherID, RoomID = item.roomID, LessonOrder = item.LessonOrder, DayOfWeek = item.DayOfWeek, SubjectName = item.Subject.subjectName, GroupName = item.UniversityGroup.groupName, RoomNo = item.Room.roomNo };
                 var user = GetUserByID(tmpLesson.TeacherID);
-				var sb = new StringBuilder();
-				sb.AppendFormat("{0} {1} {2}", user.Surname, user.Name, user.MiddleName);
-				tmpLesson.TeacherFullName = sb.ToString();
-				result.Add(tmpLesson);
+                var sb = new StringBuilder();
+                sb.AppendFormat("{0} {1} {2}", user.Surname, user.Name, user.MiddleName);
+                tmpLesson.TeacherFullName = sb.ToString();
+                result.Add(tmpLesson);
             }
             return result;
         }
@@ -173,15 +173,15 @@ namespace EIMS.Repository
         public IEnumerable<Common.LessonDate> GetLessonsByDate(DateTime date)
         {
 
-			var result = new List<Common.LessonDate>();
-			var dbLst = context.LessonDate.Where(lesson=>lesson.date==date).Select(lDate=>lDate).ToList();
-			foreach (var item in dbLst)
-			{
-				var tmpLessDate = item.ToLessonDate();
-				result.Add(tmpLessDate);
-			}
-			return result;
-		}
+            var result = new List<Common.LessonDate>();
+            var dbLst = context.LessonDate.Where(lesson => lesson.date == date).Select(lDate => lDate).ToList();
+            foreach (var item in dbLst)
+            {
+                var tmpLessDate = item.ToLessonDate();
+                result.Add(tmpLessDate);
+            }
+            return result;
+        }
 
         public void Dispose()
         {
