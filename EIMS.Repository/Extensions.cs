@@ -47,7 +47,18 @@ namespace EIMS.Repository
             return tmpUsr;
         }
 
-
+		public static Common.LessonDate ToLessonDate(this Datalayer.LessonDate lsd)
+		{
+			var tmpDate = new Common.LessonDate()
+			{
+				lessonDateID = lsd.lessonDateID,
+				lessonID = lsd.lessonID,
+				date = lsd.date,
+				TaskID = lsd.Task.Select(task=>task.taskID),
+				StudentID = lsd.LessonPresence.Select(stud=>stud.studentID)
+			};
+			return tmpDate;
+		}
 
     }
 }
