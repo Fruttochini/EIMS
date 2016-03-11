@@ -193,6 +193,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FacultyViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -260,13 +261,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\Course\" />
-    <Folder Include="Views\Admin\Faculty\" />
-    <Folder Include="Views\Admin\Group\" />
-    <Folder Include="Views\Admin\Room\" />
-    <Folder Include="Views\Admin\Schedule\" />
-    <Folder Include="Views\Admin\Subject\" />
-    <Folder Include="Views\Admin\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
