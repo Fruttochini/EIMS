@@ -108,6 +108,7 @@ namespace EIMS.Controllers
 
         public ActionResult GetAllUsers()
         {
+            
             return View(context.GetUsers());
         }
 
