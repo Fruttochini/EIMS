@@ -17,7 +17,7 @@ namespace EIMS.Common
         IEnumerable<Course> GetCourses();
 		IEnumerable<DayOfWeek> GetDayOfWeek();
 		IEnumerable<Task> GetTask();
-		IEnumerable<LessonOrder> GetLessonOeder();
+		IEnumerable<LessonOrder> GetLessonOrder();
 		IEnumerable<LessonPresence> GetLessonPresence();
         IEnumerable<Faculty> GetFaculties();
         IEnumerable<UniversityGroup> GetGroups();
