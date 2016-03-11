@@ -97,7 +97,7 @@ namespace EIMS.Controllers
                         await UserManager.AddClaimAsync(user.Id, new Claim("PostalCode", model.PostalCode));
                     await UserManager.AddClaimAsync(user.Id, new Claim("CreationDate", DateTime.Now.Date.ToString()));
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("GetAllUsers", "Admin");
                 }
 
             }
