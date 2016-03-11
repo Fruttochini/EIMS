@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Select Page";
 }
-@if (User.IsInRole("A"))
+@if (User.IsInRole("Admin"))
 {
     <aside class="col-md-2">
         <div class="navbar navbar-pills nav-stacked navbar-left">
@@ -19,7 +19,7 @@
         </div>
     </aside>
 }
-else if (User.IsInRole("2"))
+else if (User.IsInRole("Superuser"))
 {
     <aside class="col-md-2">
         <div class="navbar navbar-pills nav-stacked navbar-left">
