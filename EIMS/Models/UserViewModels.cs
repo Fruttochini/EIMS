@@ -37,4 +37,13 @@ namespace EIMS.Models
         public string PhoneNumber { get; set; }
 
     }
+
+    public class UserInfoViewModel
+    {
+        public long ID { get; set; }
+        public string Email { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Role { get; set; }
+    }
 }

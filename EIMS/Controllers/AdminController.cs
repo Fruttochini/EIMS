@@ -97,7 +97,7 @@ namespace EIMS.Controllers
                         await UserManager.AddClaimAsync(user.Id, new Claim("PostalCode", model.PostalCode));
                     await UserManager.AddClaimAsync(user.Id, new Claim("CreationDate", DateTime.Now.Date.ToString()));
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("GetAllUsers", "Admin");
                 }
 
             }
@@ -108,8 +108,21 @@ namespace EIMS.Controllers
 
         public ActionResult GetAllUsers()
         {
-            
-            return View(context.GetUsers());
+            var lst = context.GetUsers();
+            List<UserInfoViewModel> UserList = new List<UserInfoViewModel>();
+            foreach (var dbUser in lst)
+            {
+                var user = new UserInfoViewModel()
+                {
+                    Email = dbUser.Email,
+                    ID = dbUser.ID,
+                    Name = dbUser.Name,
+                    Surname = dbUser.Surname,
+                    Role = dbUser.Roles.FirstOrDefault()
+                };
+                UserList.Add(user);
+            }
+            return View(UserList);
         }
 
         public ActionResult UserDetails(long id)
