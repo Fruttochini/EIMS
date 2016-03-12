@@ -207,6 +207,12 @@ namespace EIMS.Repository
             var dbusr = context.EIMSUser.Where(usr => usr.Id == ID).Single();
             return dbusr.ToUser();
         }
+
+		public Common.Faculty GetFacultyByID(int id)
+		{
+			var dbusr = context.Faculty.Where(fclt => fclt.facultyID == id).Single();
+			return dbusr.ToFaculty();
+		}
     }
 }
 
