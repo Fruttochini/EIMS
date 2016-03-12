@@ -73,5 +73,15 @@ namespace EIMS.Repository
             return tmpDate;
         }
 
+		public static Common.Faculty ToFaculty(this Datalayer.Faculty fclt)
+		{
+			var tmpFaculty = new Common.Faculty()
+			{
+				FacultyID = fclt.facultyID,
+				Name = fclt.Name
+			};
+			return tmpFaculty;
+		}
+
     }
 }
