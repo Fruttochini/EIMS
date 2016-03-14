@@ -216,11 +216,11 @@ namespace EIMS.Repository
 
 		public bool? CreateFaculty(FacultyCommon faculty)
 		{
-			var dbItm = new Datalayer.Faculty()
+			var dbItem = new Datalayer.Faculty()
 			{
 				Name = faculty.Name
 			};
-			context.Faculty.Add(dbItm);
+			context.Faculty.Add(dbItem);
 			if (context.SaveChanges() > 0)
 				return true;
 			return false;
@@ -240,6 +240,37 @@ namespace EIMS.Repository
 		{
 			var tmpFaculty = context.Faculty.Where(f => f.facultyID == id).Single();
 			context.Faculty.Remove(tmpFaculty);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? CreateCourse (Common.Course course)
+		{
+			var dbItem = new Datalayer.Course()
+			{
+				courseName = course.CourseName
+			};
+			context.Course.Add(dbItem);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? UpdateCourse (Common.Course course)
+		{
+			var tmpCourse = context.Course.Where(c => c.courseID == course.CourseID).Single();
+			tmpCourse.courseName = course.CourseName;
+			context.Course.Add(tmpCourse);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? DeleteCourse (int id)
+		{
+			var tmpCourse = context.Course.Where(c => c.courseID == id).Single();
+			context.Course.Remove(tmpCourse);
 			if (context.SaveChanges() > 0)
 				return true;
 			return false;
