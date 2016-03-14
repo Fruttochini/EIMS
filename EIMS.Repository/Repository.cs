@@ -90,13 +90,13 @@ namespace EIMS.Repository
             return result;
         }
 
-        public IEnumerable<Common.Faculty> GetFaculties()
+        public IEnumerable<FacultyCommon> GetFaculties()
         {
             var dbLst = context.Faculty.ToList();
-            var result = new List<Common.Faculty>();
+            var result = new List<FacultyCommon>();
             foreach (var item in dbLst)
             {
-                var tmpFclt = new Common.Faculty() { FacultyID = item.facultyID, Name = item.Name };
+                var tmpFclt = new FacultyCommon() { FacultyID = item.facultyID, Name = item.Name };
                 var idList = item.UniversityGroup.Select(grp => grp.groupID);
                 tmpFclt.GroupID = idList;
                 result.Add(tmpFclt);
@@ -208,10 +208,32 @@ namespace EIMS.Repository
             return dbusr.ToUser();
         }
 
-		public Common.Faculty GetFacultyByID(int id)
+		public FacultyCommon GetFacultyByID(int id)
 		{
 			var dbusr = context.Faculty.Where(fclt => fclt.facultyID == id).Single();
 			return dbusr.ToFaculty();
+		}
+
+		public bool? CreateFaculty(FacultyCommon faculty)
+		{
+			var dbItm = new Datalayer.Faculty()
+			{
+				Name = faculty.Name
+			};
+			context.Faculty.Add(dbItm);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? UpdateFaculty(FacultyCommon faculty)
+		{
+			var tmpFaculty = context.Faculty.Where(f => f.facultyID == faculty.FacultyID).Single();
+			tmpFaculty.Name = faculty.Name;
+			context.Faculty.Add(tmpFaculty);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
 		}
     }
 }
