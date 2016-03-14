@@ -235,6 +235,15 @@ namespace EIMS.Repository
 				return true;
 			return false;
 		}
+
+		public bool? DeleteFaculty(int id)
+		{
+			var tmpFaculty = context.Faculty.Where(f => f.facultyID == id).Single();
+			context.Faculty.Remove(tmpFaculty);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
     }
 }
 
