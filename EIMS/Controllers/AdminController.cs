@@ -127,8 +127,199 @@ namespace EIMS.Controllers
 
         public ActionResult UserDetails(long id)
         {
-            return View(context.GetUserByID(id));
+            var cUser = context.GetUserByID(id);
+            var uservm = new RegisterUserViewModel()
+            {
+                ID = cUser.ID,
+                Username = cUser.Username,
+                Email = cUser.Email,
+                Name = cUser.Name,
+                Surname = cUser.Surname,
+                MiddleName = cUser.MiddleName,
+                Gender = cUser.Gender,
+                DateOfBirth = cUser.DateOfBirth,
+                PhoneNumber = cUser.PhoneNumber,
+                Country = cUser.Country,
+                photoLink = cUser.photoLink,
+                PostalCode = cUser.PostalCode,
+                StateOrProvince = cUser.StateOrProvince,
+                StreetAddress = cUser.StreetAddress
+
+            };
+            return View(uservm);
         }
+
+        public ActionResult EditUser(long id)
+        {
+            var cUser = context.GetUserByID(id);
+            var uservm = new RegisterUserViewModel()
+            {
+                ID = cUser.ID,
+                Username = cUser.Username,
+                Email = cUser.Email,
+                Name = cUser.Name,
+                Surname = cUser.Surname,
+                MiddleName = cUser.MiddleName,
+                Gender = cUser.Gender,
+                DateOfBirth = cUser.DateOfBirth,
+                PhoneNumber = cUser.PhoneNumber,
+                Country = cUser.Country,
+                photoLink = cUser.photoLink,
+                PostalCode = cUser.PostalCode,
+                StateOrProvince = cUser.StateOrProvince,
+                StreetAddress = cUser.StreetAddress
+
+            };
+            return View(uservm);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditUser(RegisterUserViewModel model)
+        {
+            bool IsChanged = false;
+            var user = await UserManager.FindByIdAsync(model.ID);
+            if (!user.UserName.Equals(model.Username))
+            {
+                user.UserName = model.Username;
+                IsChanged = true;
+            }
+            if (!user.PhoneNumber.Equals(model.PhoneNumber))
+            {
+                user.PhoneNumber = model.PhoneNumber;
+                IsChanged = true;
+            }
+            if (!user.Email.Equals(model.Email))
+            {
+                user.Email = model.Email;
+                IsChanged = true;
+            }
+
+            if (IsChanged)
+            {
+                var result = await UserManager.UpdateAsync(user);
+
+            }
+
+            var ClaimList = user.Claims.ToList();
+            EIMSClaim claim = ClaimList.Where(cl => cl.ClaimType == "Name").Single();
+            if (!claim.ClaimValue.Equals(model.Name))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("Name", model.Name));
+            }
+
+            claim = ClaimList.Where(cl => cl.ClaimType == "Surname").Single();
+            if (!claim.ClaimValue.Equals(model.Surname))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("Surname", model.Surname));
+            }
+
+            claim = ClaimList.Where(cl => cl.ClaimType == "Gender").Single();
+            if (!claim.ClaimValue.Equals(model.Gender))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("Gender", model.Gender));
+            }
+
+            claim = ClaimList.Where(cl => cl.ClaimType == "DateOfBirth").Single();
+            if (!claim.ClaimValue.Equals(model.DateOfBirth))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("DateOfBirth", model.DateOfBirth));
+            }
+
+            claim = ClaimList.Where(cl => cl.ClaimType == "MiddleName").Single();
+            if (!claim.ClaimValue.Equals(model.MiddleName))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("MiddleName", model.MiddleName));
+            }
+
+            claim = ClaimList.Where(cl => cl.ClaimType == "photoLink").Single();
+            if (!claim.ClaimValue.Equals(model.photoLink))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("photoLink", model.photoLink));
+            }
+
+            claim = ClaimList.Where(cl => cl.ClaimType == "Country").Single();
+            if (!claim.ClaimValue.Equals(model.Country))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("Country", model.Country));
+            }
+
+            claim = ClaimList.Where(cl => cl.ClaimType == "StateOrProvince").Single();
+            if (!claim.ClaimValue.Equals(model.StateOrProvince))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("StateOrProvince", model.StateOrProvince));
+            }
+
+            claim = ClaimList.Where(cl => cl.ClaimType == "StreetAddress").Single();
+            if (!claim.ClaimValue.Equals(model.StreetAddress))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("StreetAddress", model.StreetAddress));
+            }
+            claim = ClaimList.Where(cl => cl.ClaimType == "PostalCode").Single();
+            if (!claim.ClaimValue.Equals(model.PostalCode))
+            {
+                await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
+                await UserManager.AddClaimAsync(user.Id, new Claim("PostalCode", model.PostalCode));
+            }
+
+            return RedirectToAction("GetAllUsers");
+
+        }
+
+
+        public ActionResult ChangeUserPassword(long id)
+        {
+            var cUser = context.GetUserByID(id);
+            var userVM = new ChangeUserPasswordViewModel()
+            {
+                ID = cUser.ID,
+                Username = cUser.Username,
+                Email = cUser.Email
+            };
+            return View(userVM);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeUserPassword(ChangeUserPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+
+                return View(model);
+            }
+            var result = await UserManager.RemovePasswordAsync(model.ID);
+            if (result.Succeeded)
+            {
+                result = await UserManager.AddPasswordAsync(model.ID, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("EditUser", new { id = model.ID });
+                }
+                else
+                {
+                    ModelState.AddModelError("", result.Errors.FirstOrDefault());
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", result.Errors.FirstOrDefault());
+            }
+            return View(model);
+
+        }
+
 
         public ActionResult GetFaculties()
         {

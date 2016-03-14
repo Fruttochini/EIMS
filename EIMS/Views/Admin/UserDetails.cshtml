@@ -1,4 +1,4 @@
-﻿@model EIMS.Common.User
+﻿@model EIMS.Models.RegisterUserViewModel
 
 @{
     ViewBag.Title = "UserDetails";
@@ -7,7 +7,7 @@
 <h2>UserDetails</h2>
 
 <div>
-    <h4>User</h4>
+    <h4>RegisterUserViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,22 +17,13 @@
         <dd>
             @Html.DisplayFor(model => model.Username)
         </dd>
-
+                
         <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Email)
-        </dd>
-
-      
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
         </dd>
 
         <dt>
@@ -57,6 +48,22 @@
 
         <dd>
             @Html.DisplayFor(model => model.MiddleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
         </dd>
 
         <dt>
@@ -100,30 +107,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastLoginDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastLoginDate)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.PhoneNumber)
         </dt>
 
@@ -134,6 +117,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "EditUser", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "GetAllUsers")
 </p>

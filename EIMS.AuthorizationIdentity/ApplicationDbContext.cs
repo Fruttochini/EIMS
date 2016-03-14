@@ -39,5 +39,6 @@ namespace EIMS.AuthorizationIdentity
             modelBuilder.Entity<EIMSUser>().Property(r => r.PasswordHash).HasColumnName("Password");
         }
 
+
     }
 }
