@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EIMS.Common
 {
-    public class Faculty
+    public class FacultyCommon
     {
         public int FacultyID { get; set; }
         public string Name { get; set; }

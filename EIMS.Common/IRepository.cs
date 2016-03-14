@@ -19,12 +19,17 @@ namespace EIMS.Common
 		IEnumerable<Task> GetTask();
         IEnumerable<LessonOrder> GetLessonOrder();
 		IEnumerable<LessonPresence> GetLessonPresence();
-        IEnumerable<Faculty> GetFaculties();
+        IEnumerable<FacultyCommon> GetFaculties();
         IEnumerable<UniversityGroup> GetGroups();
         IEnumerable<Lesson> GetLessons();
         IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
 
         User GetUserByID(long ID);
 
-    }
+		FacultyCommon GetFacultyByID(int id);
+		bool? CreateFaculty(FacultyCommon faculty);
+		bool? UpdateFaculty(FacultyCommon faculty);
+		bool? DeleteFaculty(int id);
+
+	}
 }
