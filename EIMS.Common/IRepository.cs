@@ -29,7 +29,7 @@ namespace EIMS.Common
 		FacultyCommon GetFacultyByID(int id);
 		bool? CreateFaculty(FacultyCommon faculty);
 		bool? UpdateFaculty(FacultyCommon faculty);
-
+		bool? DeleteFaculty(int id);
 
 	}
 }
