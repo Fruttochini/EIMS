@@ -41,6 +41,12 @@ namespace EIMS.Controllers
 			return View(faculty);
 		}
 
+		public ActionResult DeleteFaculty(int id)
+		{
+			DeleteFaculty(id);
+			return View();
+		}
+
 		public ActionResult GetFacultyByID(int id)
 		{
 			return View(context.GetFacultyByID(id));
