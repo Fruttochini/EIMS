@@ -216,7 +216,7 @@ namespace EIMS.Repository
 
 		public bool? CreateFaculty(FacultyCommon faculty)
 		{
-			var dbItem = new Datalayer.Faculty()
+			var dbItem = new Faculty()
 			{
 				Name = faculty.Name
 			};
@@ -230,7 +230,6 @@ namespace EIMS.Repository
 		{
 			var tmpFaculty = context.Faculty.Where(f => f.facultyID == faculty.FacultyID).Single();
 			tmpFaculty.Name = faculty.Name;
-			context.Faculty.Add(tmpFaculty);
 			if (context.SaveChanges() > 0)
 				return true;
 			return false;
