@@ -9,10 +9,10 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/Faculty/Faculties/' + page,
+                url: '/Faculty/GetFaculties/' + page,
                 success: function (data, textstatus) {
                     if (data != '') {
-                        $(".table").append(data);
+                        $("#ScrollList").append(data);
                     }
                     else {
                         page = -1;
