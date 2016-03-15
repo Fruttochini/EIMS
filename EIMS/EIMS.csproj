@@ -191,6 +191,7 @@
     <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -267,6 +268,8 @@
     <Content Include="Views\Faculty\GetFaculties.cshtml" />
     <Content Include="Views\Faculty\Faculties.cshtml" />
     <Content Include="Views\Faculty\FacultyList.cshtml" />
+    <Content Include="Views\Subject\GetSubjectList.cshtml" />
+    <Content Include="Views\Subject\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
