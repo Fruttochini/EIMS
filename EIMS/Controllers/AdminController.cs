@@ -53,7 +53,13 @@ namespace EIMS.Controllers
 
         public ActionResult CreateUser()
         {
-            return View();
+            RegisterUserViewModel usr = new RegisterUserViewModel();
+            var roles = new List<string>();
+            roles.Add("");
+            var iroles = RoleManager.Roles.Select(rol => rol.Name);
+            roles.AddRange(iroles);
+            usr.Roles = roles;
+            return View(usr);
         }
 
         [HttpPost]
@@ -96,6 +102,10 @@ namespace EIMS.Controllers
                     if (!string.IsNullOrEmpty(model.PostalCode))
                         await UserManager.AddClaimAsync(user.Id, new Claim("PostalCode", model.PostalCode));
                     await UserManager.AddClaimAsync(user.Id, new Claim("CreationDate", DateTime.Now.Date.ToString()));
+                    if (!string.IsNullOrEmpty(model.RoleToAssign))
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, model.RoleToAssign);
+                    }
 
                     return RedirectToAction("GetAllUsers", "Admin");
                 }
@@ -149,7 +159,7 @@ namespace EIMS.Controllers
             return View(uservm);
         }
 
-        public ActionResult EditUser(long id)
+        public async Task<ActionResult> EditUser(long id)
         {
             var cUser = context.GetUserByID(id);
             var uservm = new RegisterUserViewModel()
@@ -170,6 +180,16 @@ namespace EIMS.Controllers
                 StreetAddress = cUser.StreetAddress
 
             };
+
+            //Create Role List
+            var result = await UserManager.GetRolesAsync(id);
+            uservm.RoleToAssign = result.FirstOrDefault();
+            var roles = new List<string>();
+            roles.Add("");
+            var iroles = RoleManager.Roles.Select(rol => rol.Name);
+            roles.AddRange(iroles);
+            uservm.Roles = roles; /**/
+
             return View(uservm);
         }
 
@@ -194,6 +214,26 @@ namespace EIMS.Controllers
             {
                 user.Email = model.Email;
                 IsChanged = true;
+            }
+
+
+            if (!string.IsNullOrEmpty(model.RoleToAssign))
+            {
+                bool isInRole = await UserManager.IsInRoleAsync(model.ID, model.RoleToAssign);
+                if (!isInRole)
+                {
+                    var role = (await UserManager.GetRolesAsync(model.ID)).FirstOrDefault();
+                    if (role != null)
+                        await UserManager.RemoveFromRoleAsync(model.ID, role);
+                    await UserManager.AddToRoleAsync(model.ID, model.RoleToAssign);
+                }
+
+            }
+            else
+            {
+                var role = (await UserManager.GetRolesAsync(model.ID)).FirstOrDefault();
+                if (role != null)
+                    await UserManager.RemoveFromRoleAsync(model.ID, role);
             }
 
             if (IsChanged)
@@ -271,6 +311,8 @@ namespace EIMS.Controllers
                 await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
                 await UserManager.AddClaimAsync(user.Id, new Claim("PostalCode", model.PostalCode));
             }
+
+
 
             return RedirectToAction("GetAllUsers");
 

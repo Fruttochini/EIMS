@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using EIMS.AuthorizationIdentity;
 
 namespace EIMS.Models
 {
@@ -58,6 +59,14 @@ namespace EIMS.Models
         [Required]
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
+
+        public IEnumerable<string> Roles
+        {
+            get; set;
+        }
+
+        public string RoleToAssign { get; set; }
+
 
     }
 
