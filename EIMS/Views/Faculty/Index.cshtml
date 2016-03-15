@@ -1,0 +1,25 @@
+﻿@model IEnumerable<EIMS.Models.FacultyViewModel>
+@{
+    ViewBag.Title = "Faculties";
+}
+
+<h2>Faculties</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateFaculty")
+</p>
+<div class="container well">
+    <div class="col-md-4" style="display: inline">
+        <span>@Html.DisplayNameFor(model => model.FacultyID)</span>
+    </div>
+    <div class="col-md-4" style="display: inline">
+        <span>@Html.DisplayNameFor(model => model.Name)</span>
+    </div>
+</div>
+<div id="ScrollList">
+    @Html.Partial("GetFaculties")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/FacultyInfinityScrolling.js")
+}
