@@ -12,19 +12,24 @@ namespace EIMS.Controllers
     public class FacultyController : Controller
     {
         private IRepository context = new Repository.Repository();
-		const int pageSize = 10;
+		const int pageSize = 9;
+
+		public ActionResult Index()
+		{
+			return View(GetItemsPerPage());
+		}
 
         public ActionResult GetFaculties(int? id)
         {
 			int page = id ?? 0;
 			if (Request.IsAjaxRequest())
 			{
-				return PartialView("GetDaculties", GetItemsPerPage(page));
+				return PartialView("GetFaculties", GetItemsPerPage(page));
 			}
-			return View(GetItemsPerPage());
+			return PartialView(GetItemsPerPage());
         }
 
-		private object GetItemsPerPage(int page=1)
+		private object GetItemsPerPage(int page=0)
 		{
 			var itemToSkip = page * pageSize;
 			var facultyList = new List<FacultyViewModel>();
@@ -41,22 +46,35 @@ namespace EIMS.Controllers
 			return facultyList.OrderBy(f=>f.FacultyID).Skip(itemToSkip).Take(pageSize).ToList();
 		}
 
+		public ActionResult CreateFaculty()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[AllowAnonymous]
+		[ValidateAntiForgeryToken]
+
 		public ActionResult CreateFaculty(FacultyViewModel faculty)
         {
-			var tmpFaculty = new FacultyCommon()
+			if (ModelState.IsValid)
 			{
-				Name = faculty.Name
-			};
-			if (context.CreateFaculty(tmpFaculty) == true)
-			{
-				ViewBag.Result = "Success Added!";
-				return RedirectToAction("GetFaculties", "Faculty");
+				var tmpFaculty = new FacultyCommon()
+				{
+					Name = faculty.Name
+				};
+				if (context.CreateFaculty(tmpFaculty) == true)
+				{
+					ViewBag.Result = "Success Added!";
+					return RedirectToAction("Index", "Faculty");
+				}
+				else
+				{
+					ViewBag.Result = "Failed Adding to DataBase!";
+					return View();
+				}
 			}
-			else
-			{
-				ViewBag.Result = "Failed Adding to DataBase!";
-				return View();
-			}
+			return View(faculty);
         }
 
         public ActionResult EditFaculty(int id)
@@ -88,13 +106,13 @@ namespace EIMS.Controllers
 				tmpFaculty.FacultyID = model.FacultyID;
 				context.UpdateFaculty(tmpFaculty);
 			}
-			return RedirectToAction("GetFaculties");
+			return RedirectToAction("Index");
 		}
 
         public ActionResult DeleteFaculty(int id)
         {
             context.DeleteFaculty(id);
-            return View();
+            return RedirectToAction("Index");
         }
 
         public ActionResult GetFacultyByID(int id)
