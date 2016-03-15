@@ -1,16 +1,15 @@
 ﻿@model IEnumerable<EIMS.Models.FacultyViewModel>
-<h4>Faculties</h4>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FacultyID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
-    @Html.Partial("FacultyList")
-</table>
-@Scripts.Render("FacultyInfinityScrolling.js")
+@foreach (var item in Model)
+{
+    <div class="container">
+        <div class="well">
+            <span class="col-md-4">@Html.DisplayFor(modelItem => item.FacultyID)</span>
+            <span class="col-md-4">@Html.DisplayFor(modelItem => item.Name)</span>
+            <span>
+                @Html.ActionLink("Edit", "EditFaculty", new { id = item.FacultyID }) |
+                @Html.ActionLink("Delete", "DeleteFaculty", new { id = item.FacultyID })
+            </span>
+        </div>
+    </div>
+}
