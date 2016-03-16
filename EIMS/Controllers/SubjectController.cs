@@ -1,4 +1,5 @@
 ﻿using EIMS.Common;
+using EIMS.Models;
 using EIMS.Repository;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,11 @@ namespace EIMS.Controllers
         public ActionResult GetSubjectList()
         {
             var subjList = context.GetSubjects();
+            var vmlist = new List<SubjectInfoViewModel>();
+            foreach (var item in subjList)
+            {
+
+            }
             return View(subjList);
         }
 
