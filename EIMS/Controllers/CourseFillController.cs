@@ -41,7 +41,7 @@ namespace EIMS.Controllers
 					subjectID=item.subjectID,
 					courseName=item.courseName,
 					subjectName=item.subjectName,
-					SubjectHoursPerWeek=item.SubjectHoursPerWeek
+					SubjectHoursPerWeek=item.SubjectHoursPerWeek,
 				};
 				courseFillList.Add(cfvm);
 			}
@@ -50,7 +50,14 @@ namespace EIMS.Controllers
 
 		public ActionResult CreateCourseFill()
 		{
-			return View();
+			var dbSubject = context.GetSubjects().Select(x => new SelectListItem() { Text = x.SubjectName, Value = x.SubjectID.ToString() }).ToList();
+			var dbCourse = context.GetCourses().Select(x => new SelectListItem() { Text = x.CourseName, Value = x.CourseID.ToString() }).ToList();
+			CourseFillViewModel cfvm = new CourseFillViewModel()
+			{
+				SubjectList = dbSubject,
+				CourseList = dbCourse,
+			};
+			return View(cfvm);
 		}
 
 		[HttpPost]
@@ -81,11 +88,15 @@ namespace EIMS.Controllers
 		public ActionResult EditCourseFill(int courseID, int subjectID)
 		{
 			var courseFill = context.GetCoursFillByCourseSubject(courseID, subjectID);
+			var dbSubject = context.GetSubjects().Select(x => new SelectListItem() { Text = x.SubjectName, Value = x.SubjectID.ToString() }).ToList();
+			var dbCourse = context.GetCourses().Select(x => new SelectListItem() { Text = x.CourseName, Value = x.CourseID.ToString() }).ToList();
 			var tmpCourseFill = new CourseFillViewModel()
 			{
 				courseID = courseFill.courseID,
 				subjectID = courseFill.subjectID,
-				SubjectHoursPerWeek = courseFill.SubjectHoursPerWeek
+				SubjectHoursPerWeek = courseFill.SubjectHoursPerWeek,
+				SubjectList = dbSubject,
+				CourseList = dbCourse
 			};
 			return View(tmpCourseFill);
 		}

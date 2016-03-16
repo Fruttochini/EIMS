@@ -1,0 +1,16 @@
+﻿@model IEnumerable<EIMS.Models.CourseFillViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="container">
+        <div class="well">
+            <span class="col-md-2">@Html.DisplayFor(modelItem => item.courseName)</span>
+            <span class="col-md-2">@Html.DisplayFor(modelItem => item.subjectName)</span>
+            <span class="col-md-2">@Html.DisplayFor(modelItem => item.SubjectHoursPerWeek)</span>
+            <span>
+                @Html.ActionLink("Edit", "EditCourse", new { courseID = item.courseID, subjectID = item.subjectID }) |
+                @Html.ActionLink("Delete", "DeleteCourse", new { courseID = item.courseID, subjectID = item.subjectID })
+            </span>
+        </div>
+    </div>
+}

@@ -216,6 +216,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\CourseFillInfinityScroll.js" />
     <Content Include="Scripts\CourseInfinityScrolling.js" />
     <Content Include="Scripts\FacultyInfinityScrolling.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -280,6 +281,8 @@
     <Content Include="Views\Course\DetailCourse.cshtml" />
     <Content Include="Views\CourseFill\Index.cshtml" />
     <Content Include="Views\Subject\Create.cshtml" />
+    <Content Include="Views\CourseFill\GetCourseFill.cshtml" />
+    <Content Include="Views\CourseFill\CreateCourseFill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
