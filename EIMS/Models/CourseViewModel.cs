@@ -10,6 +10,6 @@ namespace EIMS.Models
 		public int CourseID { get; set; }
 		public string CourseName { get; set; }
 
-		public Dictionary<int,int> SubjectByHours { get; set; } 
+		public Dictionary<string,int> SubjectByHours { get; set; } 
 	}
 }
