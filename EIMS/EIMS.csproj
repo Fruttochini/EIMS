@@ -267,6 +267,9 @@
     <Content Include="Views\Faculty\GetFaculties.cshtml" />
     <Content Include="Views\Faculty\Faculties.cshtml" />
     <Content Include="Views\Faculty\FacultyList.cshtml" />
+    <Content Include="Views\Faculty\CreateFaculty.cshtml" />
+    <Content Include="Views\Faculty\EditFaculty.cshtml" />
+    <Content Include="Views\Faculty\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
