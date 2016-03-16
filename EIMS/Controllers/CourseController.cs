@@ -15,7 +15,7 @@ namespace EIMS.Controllers
 
 		public ActionResult Index()
 		{
-			return View();
+			return View(GetItemsPerPage());
 		}
 
 		public ActionResult GetCourse(int? id)
@@ -53,13 +53,79 @@ namespace EIMS.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-
 		public ActionResult CreateCourse(CourseViewModel course)
 		{
-			return View();
+			if(ModelState.IsValid)
+			{
+				var tmpCourse = new Common.Course()
+				{
+					CourseName = course.CourseName
+				};
+				if (context.CreateCourse(tmpCourse) == true)
+				{
+					return RedirectToAction("Index", "Course");
+				}
+				else
+				{
+					return View();
+				}
+			}
+			return View(course);
 		}
 
+		public ActionResult EditCourse(int id)
+		{
+			var course = context.GetCourseByID(id);
+			var tmpCourse = new CourseViewModel()
+			{
+				CourseID = course.CourseID,
+				CourseName = course.CourseName
+			};
+			return View(tmpCourse);
+		}
 
+		[HttpPost]
+		[AllowAnonymous]
+		[ValidateAntiForgeryToken]
+		public ActionResult EditCourse(CourseViewModel model)
+		{
+			bool IsChanged = false;
+			var course = context.GetCourseByID(model.CourseID);
+			var tmpCourse = new Common.Course();
+			if (!course.CourseName.Equals(model.CourseName))
+			{
+				tmpCourse.CourseName = model.CourseName;
+				IsChanged = true;
+			}
+			if (IsChanged)
+			{
+				tmpCourse.CourseID = model.CourseID;
+				context.UpdateCourse(tmpCourse);
+			}
+			return RedirectToAction("Index");
+		}
 
+		public ActionResult DeleteCourse(int id)
+		{
+			context.DeleteCourse(id);
+			return RedirectToAction("Index");
+		}
+
+		public ActionResult GetCourseByID(int id)
+		{
+			return View(context.GetCourseByID(id));
+		}
+
+		public ActionResult DetailCourse(int id)
+		{
+			var courseFill = context.GetCourseByID(id);
+			var tmpCourseFill = new CourseViewModel()
+			{
+				CourseID = courseFill.CourseID,
+				CourseName = courseFill.CourseName,
+				SubjectByHours = courseFill.SubjectByHours
+			};
+			return View(tmpCourseFill);
+		}
     }
 }
