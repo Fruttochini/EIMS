@@ -54,7 +54,6 @@ namespace EIMS.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-
 		public ActionResult CreateFaculty(FacultyViewModel faculty)
         {
 			if (ModelState.IsValid)
