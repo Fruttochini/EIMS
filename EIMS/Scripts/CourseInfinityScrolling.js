@@ -9,7 +9,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/Faculty/GetFaculties/' + page,
+                url: '/Course/GetCourse/' + page,
                 success: function (data, textstatus) {
                     if (data != '') {
                         $("#ScrollList").append(data);

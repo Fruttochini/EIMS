@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="9c9ce16d6df54a639197f6629687229b" Name="Diagram1" ZoomLevel="97" ShowGrid="false">
         <EntityTypeShape EntityType="EIMS.Datalayer.Course" Width="1.5" PointX="3" PointY="3.375" />
-        <EntityTypeShape EntityType="EIMS.Datalayer.CourseFill" Width="1.5" PointX="5.25" PointY="15.75" />
+        <EntityTypeShape EntityType="EIMS.Datalayer.CourseFill" Width="1.5" PointX="5.875" PointY="15.5" />
         <EntityTypeShape EntityType="EIMS.Datalayer.DayOfWeek" Width="1.5" PointX="3" PointY="21.875" />
         <EntityTypeShape EntityType="EIMS.Datalayer.EIMSUser" Width="1.5" PointX="0.75" PointY="6.125" />
         <EntityTypeShape EntityType="EIMS.Datalayer.Faculty" Width="1.5" PointX="0.75" PointY="3.5" />

@@ -83,5 +83,16 @@ namespace EIMS.Repository
 			return tmpFaculty;
 		}
 
-    }
+		public static Common.CourseFill ToCourseFill(this Datalayer.CourseFill cFill)
+		{
+			var tmpCourseFill = new Common.CourseFill()
+			{
+				courseID = cFill.courseID,
+				subjectID = cFill.subjectID,
+				SubjectHoursPerWeek = cFill.subjectHoursPerWeek
+			};
+			return tmpCourseFill;
+		}
+
+	}
 }

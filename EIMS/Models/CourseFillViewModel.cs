@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace EIMS.Common
+namespace EIMS.Models
 {
-	public class CourseFill
+	public class CourseFillViewModel
 	{
 		public int courseID { get; set; }
 		public int subjectID { get; set; }
 
 		public string courseName { get; set; }
-		public string subjectName { get; set; }
+		public string subjectName { get; set; } 
 		public int SubjectHoursPerWeek { get; set; }
 	}
 }
