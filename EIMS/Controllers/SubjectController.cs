@@ -24,9 +24,10 @@ namespace EIMS.Controllers
             var vmlist = new List<SubjectInfoViewModel>();
             foreach (var item in subjList)
             {
-
+                var vmitem = new SubjectInfoViewModel() { ID = item.SubjectID, Name = item.SubjectName };
+                vmlist.Add(vmitem);
             }
-            return View(subjList);
+            return View(vmlist);
         }
 
         public ActionResult Create()
