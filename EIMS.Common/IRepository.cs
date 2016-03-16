@@ -23,13 +23,22 @@ namespace EIMS.Common
         IEnumerable<UniversityGroup> GetGroups();
         IEnumerable<Lesson> GetLessons();
         IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
+		IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id);
+		IEnumerable<Common.CourseFill> GetAllCourseFill();
 
-        User GetUserByID(long ID);
-
+		User GetUserByID(long ID);
 		FacultyCommon GetFacultyByID(int id);
+		Course GetCourseByID(int id);
+		Common.CourseFill GetCoursFillByCourseSubject(int courseID, int subjectID);
+
 		bool? CreateFaculty(FacultyCommon faculty);
 		bool? UpdateFaculty(FacultyCommon faculty);
 		bool? DeleteFaculty(int id);
-
+		bool? CreateCourse(Course course);
+		bool? UpdateCourse(Course course);
+		bool? DeleteCourse(int id);
+		bool? CreateCourseFill(Common.CourseFill courseFill);
+		bool? UpdateCourseFill(Common.CourseFill courseFill);
+		bool? DeleteCourseFill(int courseID, int subjectID);
 	}
 }
