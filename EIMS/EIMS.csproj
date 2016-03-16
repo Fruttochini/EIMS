@@ -278,8 +278,6 @@
     <Content Include="Views\Course\EditCourse.cshtml" />
     <Content Include="Views\Course\DetailCourse.cshtml" />
     <Content Include="Views\CourseFill\Index.cshtml" />
- 
-    <Content Include="Views\Subject\GetSubjectList.cshtml" />
     <Content Include="Views\Subject\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
