@@ -351,7 +351,7 @@ namespace EIMS.Repository
         }
         public Common.CourseFill GetCoursFillByCourseSubject(int courseID, int subjectID)
         {
-            var dbCourseFill = context.CourseFill.Where(cf => cf.courseID == courseID && cf.subjectID == subjectID).Single();
+            var dbCourseFill = context.CourseFill.Where(cf => cf.courseID == courseID).Where(cl => cl.subjectID == subjectID).Single();
             return dbCourseFill.ToCourseFill();
         }
 
@@ -451,44 +451,44 @@ namespace EIMS.Repository
             return false;
         }
 
-		public bool? CreateLessonOrder(Common.LessonOrder lOrder)
-		{
-			var dbItem = new Datalayer.LessonOrder()
-			{
-				ID = lOrder.lessonOrderID,
-				TimeStart = lOrder.timeStart,
-				TimeEnd = lOrder.timeEnd
-			};
-			context.LessonOrder.Add(dbItem);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? CreateLessonOrder(Common.LessonOrder lOrder)
+        {
+            var dbItem = new Datalayer.LessonOrder()
+            {
+                ID = lOrder.lessonOrderID,
+                TimeStart = lOrder.timeStart,
+                TimeEnd = lOrder.timeEnd
+            };
+            context.LessonOrder.Add(dbItem);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? UpdateLessonOrder (Common.LessonOrder lOrder)
-		{
-			var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == lOrder.lessonOrderID).Single();
-			tmpLessonOrder.TimeStart = lOrder.timeStart;
-			tmpLessonOrder.TimeEnd = lOrder.timeEnd;
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? UpdateLessonOrder(Common.LessonOrder lOrder)
+        {
+            var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == lOrder.lessonOrderID).Single();
+            tmpLessonOrder.TimeStart = lOrder.timeStart;
+            tmpLessonOrder.TimeEnd = lOrder.timeEnd;
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? DeleteLessonOrder (int id)
-		{
-			var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == id).Single();
-			context.LessonOrder.Remove(tmpLessonOrder);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? DeleteLessonOrder(int id)
+        {
+            var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == id).Single();
+            context.LessonOrder.Remove(tmpLessonOrder);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public Common.LessonOrder GetLessonOrderByID (int id)
-		{
-			var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == id).Single();
-			return tmpLessonOrder.ToLessonOrder();
-		}
+        public Common.LessonOrder GetLessonOrderByID(int id)
+        {
+            var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == id).Single();
+            return tmpLessonOrder.ToLessonOrder();
+        }
     }
 }
 

@@ -94,6 +94,19 @@ namespace EIMS.Controllers
             return View(model);
         }
 
+        public ActionResult Details(int id)
+        {
+            var subject = context.GetSubjects().Where(su => su.SubjectID == id).FirstOrDefault();
+            CreateSubjectViewModel model = new CreateSubjectViewModel()
+            {
+                ID = subject.SubjectID,
+                Name = subject.SubjectName,
+                Requirements = context.GetRequirements(),
+                SelectedRequirements = subject.Requirements
+            };
+            return View(model);
+        }
+
 
         public ActionResult Delete(int id)
         {
