@@ -43,5 +43,7 @@ namespace EIMS.Common
         bool? DeleteCourseFill(int courseID, int subjectID);
 
         bool? CreateSubject(Common.Subject subject);
+        bool? UpdateSubject(Common.Subject subject);
+        bool? DeleteSubject(int id);
     }
 }

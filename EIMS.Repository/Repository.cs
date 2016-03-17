@@ -132,7 +132,15 @@ namespace EIMS.Repository
             var result = new List<Common.Subject>();
             foreach (var item in dbLst)
             {
-                var tmpSubj = new Common.Subject() { SubjectID = item.subjectID, SubjectName = item.subjectName };
+                var tmpSubj = new Common.Subject()
+                {
+                    SubjectID = item.subjectID,
+                    SubjectName = item.subjectName,
+                    Requirements = item.SRRequirement
+                    .Select(req => req.ID)
+                    .ToList()
+
+                };
                 result.Add(tmpSubj);
             }
             return result;
@@ -370,19 +378,79 @@ namespace EIMS.Repository
                 subjectName = subject.SubjectName
             };
 
-            var reqList = new List<Datalayer.SRRequirement>();
-            foreach (var item in subject.Requirements)
+
+            if (subject.Requirements != null)
             {
-                var srReq = context.SRRequirement.Where(req => req.ID == item).FirstOrDefault();
-                if (srReq != null)
-                    reqList.Add(srReq);
+                var reqList = new List<Datalayer.SRRequirement>();
+                foreach (var item in subject.Requirements)
+                {
+                    var srReq = context.SRRequirement.Where(req => req.ID == item).FirstOrDefault();
+                    if (srReq != null)
+                        reqList.Add(srReq);
+                }
+                dbSubject.SRRequirement = reqList;
             }
-            dbSubject.SRRequirement = reqList;
             context.Subject.Add(dbSubject);
+
             if (context.SaveChanges() > 0)
                 return true;
             return false;
 
+        }
+
+        public bool? UpdateSubject(Common.Subject subject)
+        {
+            var dbSubj = context.Subject.Where(subj => subj.subjectID == subject.SubjectID).FirstOrDefault();
+            if (dbSubj != null)
+            {
+                dbSubj.subjectName = subject.SubjectName;
+                if (subject.Requirements != null)
+                {
+                    var removeList = new List<SRRequirement>();
+                    foreach (var item in dbSubj.SRRequirement)
+                    {
+                        if (subject.Requirements.Contains(item.ID))
+                            continue;
+                        else
+                            removeList.Add(item);
+                    }
+                    foreach (var item in removeList)
+                    {
+                        dbSubj.SRRequirement.Remove(item);
+                    }
+                    var reqList = dbSubj.SRRequirement.Select(r => r.ID);
+                    var fullreqList = context.SRRequirement.ToList();
+                    foreach (var item in subject.Requirements)
+                    {
+                        if (!reqList.Contains(item))
+                        {
+                            var tmp = fullreqList.Where(r => r.ID == item).FirstOrDefault();
+                            if (tmp != null)
+                                dbSubj.SRRequirement.Add(tmp);
+                        }
+                    }
+
+                }
+                else
+                {
+                    dbSubj.SRRequirement.Clear();
+                }
+            }
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
+
+        public bool? DeleteSubject(int id)
+        {
+            var subj = context.Subject.Where(s => s.subjectID == id).FirstOrDefault();
+            if (subj != null)
+            {
+                context.Subject.Remove(subj);
+                if (context.SaveChanges() > 0)
+                    return true;
+            }
+            return false;
         }
     }
 }

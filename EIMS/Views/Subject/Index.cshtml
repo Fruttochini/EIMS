@@ -1,0 +1,31 @@
+﻿@model IEnumerable<EIMS.Models.SubjectInfoViewModel>
+
+@{
+    ViewBag.Title = "Subjects";
+}
+
+<h2>Subjects</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="scrollTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @Html.Partial("GetSubjectList_Partial")
+    </tbody>
+</table>
+
+    @section Scripts {
+        @Scripts.Render("~/Scripts/SubjectInfinityScroll.js")
+    }

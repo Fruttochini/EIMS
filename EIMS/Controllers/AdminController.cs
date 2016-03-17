@@ -63,7 +63,6 @@ namespace EIMS.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
 
         public async Task<ActionResult> CreateUser(RegisterUserViewModel model)

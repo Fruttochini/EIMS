@@ -2,7 +2,6 @@
 
     var page = 0;
     var _inCallback = false;
-
     function loadItems() {
         if (page > -1 && !_inCallback) {
             _inCallback = true;
@@ -10,10 +9,11 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/Course/GetCourseFill/' + page,
+                url: '/Subject/GetSubjectList/' + page,
                 success: function (data, textstatus) {
                     if (data != '') {
-                        $("#ScrollList").append(data);
+                        $("#scrollTable").append(data);
+                        
                     }
                     else {
                         page = -1;
@@ -21,6 +21,9 @@
                     _inCallback = false;
                 }
             });
+            $("#scrollTable").removeClass("table");
+            $("#scrollTable").addClass("table");
+            
         }
     }
 

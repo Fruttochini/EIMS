@@ -12,101 +12,101 @@ namespace EIMS.Controllers
     public class FacultyController : Controller
     {
         private IRepository context = new Repository.Repository();
-		const int pageSize = 9;
+        const int pageSize = 10;
 
-		public ActionResult Index()
-		{
-			return View(GetItemsPerPage());
-		}
+        public ActionResult Index()
+        {
+            return View(GetItemsPerPage());
+        }
 
         public ActionResult GetFaculties(int? id)
         {
-			int page = id ?? 0;
-			if (Request.IsAjaxRequest())
-			{
-				return PartialView("GetFaculties", GetItemsPerPage(page));
-			}
-			return PartialView(GetItemsPerPage());
+            int page = id ?? 0;
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("GetFaculties", GetItemsPerPage(page));
+            }
+            return PartialView(GetItemsPerPage());
         }
 
-		private object GetItemsPerPage(int page=0)
-		{
-			var itemToSkip = page * pageSize;
-			var facultyList = new List<FacultyViewModel>();
-			var dblst = context.GetFaculties();
-			foreach (var fac in dblst)
-			{
-				FacultyViewModel tmp = new FacultyViewModel()
-				{
-					FacultyID = fac.FacultyID,
-					Name = fac.Name
-				};
-				facultyList.Add(tmp);
-			}
-			return facultyList.OrderBy(f=>f.FacultyID).Skip(itemToSkip).Take(pageSize).ToList();
-		}
-
-		public ActionResult CreateFaculty()
-		{
-			return View();
-		}
-
-		[HttpPost]
-		[AllowAnonymous]
-		[ValidateAntiForgeryToken]
-		public ActionResult CreateFaculty(FacultyViewModel faculty)
+        private object GetItemsPerPage(int page = 0)
         {
-			if (ModelState.IsValid)
-			{
-				var tmpFaculty = new FacultyCommon()
-				{
-					Name = faculty.Name
-				};
-				if (context.CreateFaculty(tmpFaculty) == true)
-				{
-					ViewBag.Result = "Success Added!";
-					return RedirectToAction("Index", "Faculty");
-				}
-				else
-				{
-					ViewBag.Result = "Failed Adding to DataBase!";
-					return View();
-				}
-			}
-			return View(faculty);
+            var itemToSkip = page * pageSize;
+            var facultyList = new List<FacultyViewModel>();
+            var dblst = context.GetFaculties();
+            foreach (var fac in dblst)
+            {
+                FacultyViewModel tmp = new FacultyViewModel()
+                {
+                    FacultyID = fac.FacultyID,
+                    Name = fac.Name
+                };
+                facultyList.Add(tmp);
+            }
+            return facultyList.OrderBy(f => f.FacultyID).Skip(itemToSkip).Take(pageSize).ToList();
+        }
+
+        public ActionResult CreateFaculty()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFaculty(FacultyViewModel faculty)
+        {
+            if (ModelState.IsValid)
+            {
+                var tmpFaculty = new FacultyCommon()
+                {
+                    Name = faculty.Name
+                };
+                if (context.CreateFaculty(tmpFaculty) == true)
+                {
+                    ViewBag.Result = "Success Added!";
+                    return RedirectToAction("Index", "Faculty");
+                }
+                else
+                {
+                    ViewBag.Result = "Failed Adding to DataBase!";
+                    return View();
+                }
+            }
+            return View(faculty);
         }
 
         public ActionResult EditFaculty(int id)
         {
             var faculty = context.GetFacultyByID(id);
-			var tmpFaculty = new FacultyViewModel()
-			{
-				FacultyID = faculty.FacultyID,
-				Name = faculty.Name
-			};
+            var tmpFaculty = new FacultyViewModel()
+            {
+                FacultyID = faculty.FacultyID,
+                Name = faculty.Name
+            };
             return View(tmpFaculty);
         }
 
-		[HttpPost]
-		[AllowAnonymous]
-		[ValidateAntiForgeryToken]
-		public ActionResult EditFaculty(FacultyViewModel model)
-		{
-			bool IsChanged = false;
-			var faculty = context.GetFacultyByID(model.FacultyID);
-			var tmpFaculty = new FacultyCommon();
-			if (!faculty.Name.Equals(model.Name))
-			{
-				tmpFaculty.Name = model.Name;
-				IsChanged = true;
-			}
-			if (IsChanged)
-			{
-				tmpFaculty.FacultyID = model.FacultyID;
-				context.UpdateFaculty(tmpFaculty);
-			}
-			return RedirectToAction("Index");
-		}
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditFaculty(FacultyViewModel model)
+        {
+            bool IsChanged = false;
+            var faculty = context.GetFacultyByID(model.FacultyID);
+            var tmpFaculty = new FacultyCommon();
+            if (!faculty.Name.Equals(model.Name))
+            {
+                tmpFaculty.Name = model.Name;
+                IsChanged = true;
+            }
+            if (IsChanged)
+            {
+                tmpFaculty.FacultyID = model.FacultyID;
+                context.UpdateFaculty(tmpFaculty);
+            }
+            return RedirectToAction("Index");
+        }
 
         public ActionResult DeleteFaculty(int id)
         {
