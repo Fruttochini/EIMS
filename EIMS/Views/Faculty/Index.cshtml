@@ -8,15 +8,16 @@
 <p>
     @Html.ActionLink("Create New", "CreateFaculty")
 </p>
-<div class="container well">
-    <div class="col-md-4" style="display: inline">
-        <span>@Html.DisplayNameFor(model => model.FacultyID)</span>
-    </div>
-    <div class="col-md-4" style="display: inline">
-        <span>@Html.DisplayNameFor(model => model.Name)</span>
-    </div>
-</div>
 <div id="ScrollList">
+    <div class="row">
+        <div class="col-md-2">
+            <strong>@Html.DisplayNameFor(model => model.FacultyID)</strong>
+        </div>
+        <div class="col-md-4">
+            <strong>@Html.DisplayNameFor(model => model.Name)</strong>
+        </div>
+        <div class="col-md-4"><strong>Options</strong></div>
+    </div>
     @Html.Partial("GetFaculties")
 </div>
 

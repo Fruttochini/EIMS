@@ -288,12 +288,13 @@
     <Content Include="Views\CourseFill\GetCourseFill.cshtml" />
     <Content Include="Views\CourseFill\CreateCourseFill.cshtml" />
     <Content Include="Views\CourseFill\EditCourseFill.cshtml" />
-    <Content Include="Views\LessonOrder\GetLessonOrders.cshtml" />
     <Content Include="Views\LessonOrder\CreateLessonOrder.cshtml" />
     <Content Include="Views\LessonOrder\EditLessonOrder.cshtml" />
     <Content Include="Views\Subject\Edit.cshtml" />
     <Content Include="Views\Subject\Index.cshtml" />
     <Content Include="Views\Subject\Details.cshtml" />
+    <Content Include="Views\LessonOrder\Index.cshtml" />
+    <Content Include="Views\LessonOrder\GetLessonOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

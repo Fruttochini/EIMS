@@ -11,12 +11,29 @@ namespace EIMS.Controllers
     public class LessonOrderController : Controller
     {
 		public IRepository context = new Repository.Repository();
-		
-        public ActionResult GetLessonOrders()
+		const int pageSize = 25;
+
+		public ActionResult Index()
+		{
+			return View(GetItemsPerPage());
+		}
+        public ActionResult GetLessonOrders(int? id)
         {
+			int page = id ?? 0;
+			if(Request.IsAjaxRequest())
+			{
+				return PartialView("GetLessonOrders", GetItemsPerPage(page));
+			}
+			
+            return PartialView(GetItemsPerPage());
+        }
+
+		private object GetItemsPerPage(int page = 0)
+		{
+			var itemToSkip = page * pageSize;
 			var lessonOrderList = new List<LessonOrderViewModel>();
 			var dblst = context.GetLessonOrder();
-			foreach(var item in dblst)
+			foreach (var item in dblst)
 			{
 				LessonOrderViewModel lovm = new LessonOrderViewModel()
 				{
@@ -26,8 +43,9 @@ namespace EIMS.Controllers
 				};
 				lessonOrderList.Add(lovm);
 			}
-            return View(lessonOrderList);
-        }
+			return lessonOrderList.OrderBy(l => l.lessonOrderID).Skip(itemToSkip).Take(pageSize).ToList();
+
+		}
 
 		public ActionResult CreateLessonOrder()
 		{

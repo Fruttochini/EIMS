@@ -1,0 +1,27 @@
+﻿@model IEnumerable<EIMS.Models.LessonOrderViewModel>
+
+@{
+    ViewBag.Title = "Lesson Order";
+}
+
+<h2>Lesson Order</h2>
+
+p>
+@Html.ActionLink("Create New", "CreateLessonOrder")
+</p>
+<div id="scrollTable">
+    <div class="row">
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.lessonOrderID)</strong> </div>
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.timeStart)</strong></div>
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.timeEnd)</strong></div>
+        <div class="col-md-4"><strong>Options</strong></div>
+    </div>
+
+
+
+    @Html.Partial("GetLessonOrders")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/LessonOrderInfinityScroll.js")
+}

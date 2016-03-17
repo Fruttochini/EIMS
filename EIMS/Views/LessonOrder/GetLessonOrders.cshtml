@@ -1,0 +1,20 @@
+﻿@model IEnumerable<EIMS.Models.LessonOrderViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="row" style="font-size:16px">
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.lessonOrderID)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.timeStart)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.timeEnd)
+        </div>
+        <div class="col-md-4">
+            @Html.ActionLink("Edit", "EditLessonOrder", new { id=item.lessonOrderID }) |
+            @Html.ActionLink("Delete", "DeleteLessonOrder", new { id=item.lessonOrderID })
+        </div>
+    </div>
+}

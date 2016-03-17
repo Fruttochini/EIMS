@@ -8,15 +8,16 @@
 <p>
     @Html.ActionLink("Create New", "CreateCourse")
 </p>
-<div class="container well">
-    <div class="col-md-4" style="display: inline">
-        <span>@Html.DisplayNameFor(model=>model.CourseID)</span>
-    </div>
-    <div class="col-md-4" style="display: inline">
-        <span>@Html.DisplayNameFor(model => model.CourseName)</span>
-    </div>
-</div>
 <div id="ScrollList">
+    <div class="row">
+        <div class="col-md-2">
+            <span>@Html.DisplayNameFor(model => model.CourseID)</span>
+        </div>
+        <div class="col-md-4">
+            <span>@Html.DisplayNameFor(model => model.CourseName)</span>
+        </div>
+        <div class="col-md-4"><strong>Options</strong></div>
+    </div>
     @Html.Partial("GetCourse")
 </div>
 

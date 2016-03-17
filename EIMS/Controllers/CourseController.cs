@@ -11,7 +11,7 @@ namespace EIMS.Controllers
     public class CourseController : Controller
     {
 		private IRepository context = new Repository.Repository();
-		const int pageSize = 9;
+		const int pageSize = 25;
 
 		public ActionResult Index()
 		{
