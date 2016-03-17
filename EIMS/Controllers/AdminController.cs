@@ -193,7 +193,6 @@ namespace EIMS.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditUser(RegisterUserViewModel model)
         {
@@ -329,6 +328,36 @@ namespace EIMS.Controllers
             };
             return View(userVM);
         }
+
+        public ActionResult DeleteUser(long id)
+        {
+            var cUser = context.GetUserByID(id);
+            UserInfoViewModel user = new UserInfoViewModel()
+            {
+                ID = cUser.ID,
+                Email = cUser.Email,
+                Name = cUser.Name,
+                Surname = cUser.Surname,
+                Role = cUser.Roles.FirstOrDefault()
+            };
+            return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<ActionResult> DeleteUser(UserInfoViewModel model)
+        {
+            EIMSUser user = UserManager.Users.Where(u => u.Id == model.ID).Single();
+            var result = await UserManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("GetAllUsers");
+            }
+            return View(model);
+        }
+
+
 
         [HttpPost]
         [AllowAnonymous]
