@@ -1,12 +1,12 @@
 ﻿@model EIMS.Models.CourseFillViewModel
 
 @{
-    ViewBag.Title = "Create Course Fill";
+    ViewBag.Title = "Edit Course Fill";
 }
 
-<h2>Create Course Fill</h2>
+<h2>Edit Course Fill</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
@@ -14,11 +14,12 @@
         <h4>CourseFillViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
             @Html.LabelFor(model => model.courseName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model=>model.courseID, Model.CourseList)
-                @Html.ValidationMessageFor(model => model.courseID, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.courseName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -26,7 +27,7 @@
             @Html.LabelFor(model => model.subjectName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model=>model.subjectID, Model.SubjectList)
-                @Html.ValidationMessageFor(model => model.subjectID, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.subjectName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -40,7 +41,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
