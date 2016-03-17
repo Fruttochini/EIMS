@@ -9,16 +9,17 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<ul class="list-inline" id="scrollTable">
-    <li class="col-md-2">
-        <strong>@Html.DisplayNameFor(model => model.ID)</strong>
-    </li>
-    <li class="col-md-4">
-        <strong>@Html.DisplayNameFor(model => model.Name)</strong>
-    </li>
-    <li class="col-md-2"></li>
+<div id="scrollTable">
+    <div class="row">
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.ID)</strong> </div>
+        <div class="col-md-4"><strong>@Html.DisplayNameFor(model => model.Name)</strong></div>
+        <div class="col-md-4"><strong>Options</strong></div>
+    </div>
+     
+   
+    
         @Html.Partial("GetSubjectList_Partial")
-</ul>
+</div>
 
     @section Scripts {
         @Scripts.Render("~/Scripts/SubjectInfinityScroll.js")
