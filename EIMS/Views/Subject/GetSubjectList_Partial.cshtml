@@ -3,18 +3,19 @@
 
 @foreach (var item in Model)
 {
-    <dt></dt>
-    <dd class="col-md-2">
-        @Html.DisplayFor(modelItem => item.ID)
-    </dd>
-    <dd class="col-md-4">
-        @Html.DisplayFor(modelItem => item.Name)
-    </dd>
-    <dd class="col-md-2">
-        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-    </dd>
+    <ul class="list-inline">
+        <li class="col-md-2">
+            @Html.DisplayFor(modelItem => item.ID)
+        </li>
+        <li class="col-md-4">
+            @Html.DisplayFor(modelItem => item.Name)
+        </li>
+        <li class="col-md-2">
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+        </li>
+    </ul>
 }
 
 
