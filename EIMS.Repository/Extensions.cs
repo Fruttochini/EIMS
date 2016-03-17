@@ -94,5 +94,16 @@ namespace EIMS.Repository
 			return tmpCourseFill;
 		}
 
+		public static Common.LessonOrder ToLessonOrder(this Datalayer.LessonOrder lOrder)
+		{
+			var tmpLessonOrder = new Common.LessonOrder()
+			{
+				lessonOrderID = lOrder.ID,
+				timeStart = lOrder.TimeStart,
+				timeEnd = lOrder.TimeEnd
+			};
+			return tmpLessonOrder;
+		}
+
 	}
 }

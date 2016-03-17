@@ -83,8 +83,6 @@ namespace EIMS.Repository
             foreach (var item in dbLst)
             {
                 var tmpLessOrder = new Common.LessonOrder() { lessonOrderID = item.ID, timeStart = item.TimeStart, timeEnd = item.TimeEnd };
-                var idLst = item.Lesson.Select(lessOrder => lessOrder.lessonID);
-                tmpLessOrder.GetLessonID = idLst;
                 result.Add(tmpLessOrder);
             }
             return result;
@@ -384,6 +382,45 @@ namespace EIMS.Repository
             return false;
 
         }
+
+		public bool? CreateLessonOrder(Common.LessonOrder lOrder)
+		{
+			var dbItem = new Datalayer.LessonOrder()
+			{
+				ID = lOrder.lessonOrderID,
+				TimeStart = lOrder.timeStart,
+				TimeEnd = lOrder.timeEnd
+			};
+			context.LessonOrder.Add(dbItem);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? UpdateLessonOrder (Common.LessonOrder lOrder)
+		{
+			var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == lOrder.lessonOrderID).Single();
+			tmpLessonOrder.TimeStart = lOrder.timeStart;
+			tmpLessonOrder.TimeEnd = lOrder.timeEnd;
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? DeleteLessonOrder (int id)
+		{
+			var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == id).Single();
+			context.LessonOrder.Remove(tmpLessonOrder);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public Common.LessonOrder GetLessonOrderByID (int id)
+		{
+			var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == id).Single();
+			return tmpLessonOrder.ToLessonOrder();
+		}
     }
 }
 
