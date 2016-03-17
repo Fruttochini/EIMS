@@ -73,23 +73,19 @@ namespace EIMS.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-		public ActionResult EditLessonOreder(LessonOrderViewModel model)
+		public ActionResult EditLessonOrder(LessonOrderViewModel model)
 		{
 			bool IsChanged = false;
 			var lessonOrder = context.GetLessonOrderByID(model.lessonOrderID);
 			var tmpLessonOrder = new Common.LessonOrder();
 			if(!lessonOrder.timeStart.Equals(model.timeStart))
-			{
-				tmpLessonOrder.timeStart = model.timeStart;
 				IsChanged = true;
-			}
 			if(!lessonOrder.timeEnd.Equals(model.timeEnd))
-			{
-				tmpLessonOrder.timeEnd = model.timeEnd;
 				IsChanged = true;
-			}
 			if(IsChanged)
 			{
+				tmpLessonOrder.timeStart = model.timeStart;
+				tmpLessonOrder.timeEnd = model.timeEnd;
 				tmpLessonOrder.lessonOrderID = model.lessonOrderID;
 				context.UpdateLessonOrder(tmpLessonOrder);
 			}
