@@ -12,18 +12,21 @@ namespace EIMS.Datalayer
     using System;
     using System.Collections.Generic;
     
-    public partial class DayOfWeek
+    public partial class SRRequirement
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DayOfWeek()
+        public SRRequirement()
         {
-            this.Lesson = new HashSet<Lesson>();
+            this.Room = new HashSet<Room>();
+            this.Subject = new HashSet<Subject>();
         }
     
-        public byte ID { get; set; }
-        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Requirement { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lesson> Lesson { get; set; }
+        public virtual ICollection<Room> Room { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Subject> Subject { get; set; }
     }
 }

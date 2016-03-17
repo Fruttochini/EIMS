@@ -88,6 +88,9 @@
     <Compile Include="Room.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>
+    <Compile Include="SRRequirement.cs">
+      <DependentUpon>University.tt</DependentUpon>
+    </Compile>
     <Compile Include="StudentGroup.cs">
       <DependentUpon>University.tt</DependentUpon>
     </Compile>

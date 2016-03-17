@@ -10,6 +10,8 @@ namespace EIMS.Common
     {
         public int SubjectID { get; set; }
         public string SubjectName { get; set; }
-        public bool[] Requirements { get; set; }
+
+        public IEnumerable<int> Requirements { get; set; }
+
     }
 }

@@ -32,7 +32,24 @@ namespace EIMS.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            CreateSubjectViewModel model = new CreateSubjectViewModel();
+            var reqList = context.GetRequirements();
+            model.Requirements = reqList;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Create(CreateSubjectViewModel model)
+        {
+            var subject = new Subject()
+            {
+                SubjectName = model.Name,
+                Requirements = model.SelectedRequirements
+            };
+            if (context.CreateSubject(subject) == true)
+                return RedirectToAction("GetSubjectList");
+            return View(model);
+
         }
     }
 }

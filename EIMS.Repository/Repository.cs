@@ -38,17 +38,17 @@ namespace EIMS.Repository
             return result;
         }
 
-		public IEnumerable<Common.CourseFill> GetAllCourseFill()
-		{
-			var dbLst = context.CourseFill.ToList();
-			var result = new List<Common.CourseFill>();
-			foreach (var item in dbLst)
-			{
-				var tmpCourseFill = new Common.CourseFill() { courseID = item.courseID, courseName = item.Course.courseName, subjectID = item.subjectID, subjectName = item.Subject.subjectName, SubjectHoursPerWeek = item.subjectHoursPerWeek };
-				result.Add(tmpCourseFill);
-			}
-			return result;
-		}
+        public IEnumerable<Common.CourseFill> GetAllCourseFill()
+        {
+            var dbLst = context.CourseFill.ToList();
+            var result = new List<Common.CourseFill>();
+            foreach (var item in dbLst)
+            {
+                var tmpCourseFill = new Common.CourseFill() { courseID = item.courseID, courseName = item.Course.courseName, subjectID = item.subjectID, subjectName = item.Subject.subjectName, SubjectHoursPerWeek = item.subjectHoursPerWeek };
+                result.Add(tmpCourseFill);
+            }
+            return result;
+        }
 
         public IEnumerable<Common.DayOfWeek> GetDayOfWeek()
         {
@@ -133,13 +133,6 @@ namespace EIMS.Repository
             foreach (var item in dbLst)
             {
                 var tmpSubj = new Common.Subject() { SubjectID = item.subjectID, SubjectName = item.subjectName };
-                int arrLength = item.requirements.Length;
-                var reqList = new bool[arrLength];
-                for (int i = 0; i < arrLength; i++)
-                {
-                    reqList[i] = item.requirements[i] == 1 ? true : false;
-                }
-                tmpSubj.Requirements = reqList;
                 result.Add(tmpSubj);
             }
             return result;
@@ -220,141 +213,177 @@ namespace EIMS.Repository
             return dbusr.ToUser();
         }
 
-		public FacultyCommon GetFacultyByID(int id)
-		{
-			var dbusr = context.Faculty.Where(fclt => fclt.facultyID == id).Single();
-			return dbusr.ToFaculty();
-		}
+        public FacultyCommon GetFacultyByID(int id)
+        {
+            var dbusr = context.Faculty.Where(fclt => fclt.facultyID == id).Single();
+            return dbusr.ToFaculty();
+        }
 
-		public bool? CreateFaculty(FacultyCommon faculty)
-		{
-			var dbItem = new Faculty()
-			{
-				Name = faculty.Name
-			};
-			context.Faculty.Add(dbItem);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? CreateFaculty(FacultyCommon faculty)
+        {
+            var dbItem = new Faculty()
+            {
+                Name = faculty.Name
+            };
+            context.Faculty.Add(dbItem);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? UpdateFaculty(FacultyCommon faculty)
-		{
-			var tmpFaculty = context.Faculty.Where(f => f.facultyID == faculty.FacultyID).Single();
-			tmpFaculty.Name = faculty.Name;
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? UpdateFaculty(FacultyCommon faculty)
+        {
+            var tmpFaculty = context.Faculty.Where(f => f.facultyID == faculty.FacultyID).Single();
+            tmpFaculty.Name = faculty.Name;
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? DeleteFaculty(int id)
-		{
-			var tmpFaculty = context.Faculty.Where(f => f.facultyID == id).Single();
-			context.Faculty.Remove(tmpFaculty);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
-		public Common.Course GetCourseByID(int id)
-		{
-			var dbusr = context.Course.Where(crs => crs.courseID == id).Single();
-			var dct = new Dictionary<string, int>();
-			var course = new Common.Course();
-			foreach(var item in dbusr.CourseFill.Where(cFill => cFill.courseID == id))
-			{
-				dct.Add(item.Subject.subjectName, item.subjectHoursPerWeek);
-			}
-			course.CourseID = dbusr.courseID;
-			course.CourseName = dbusr.courseName;
-			course.SubjectByHours = dct;
-			return course;
-		}
+        public bool? DeleteFaculty(int id)
+        {
+            var tmpFaculty = context.Faculty.Where(f => f.facultyID == id).Single();
+            context.Faculty.Remove(tmpFaculty);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
+        public Common.Course GetCourseByID(int id)
+        {
+            var dbusr = context.Course.Where(crs => crs.courseID == id).Single();
+            var dct = new Dictionary<string, int>();
+            var course = new Common.Course();
+            foreach (var item in dbusr.CourseFill.Where(cFill => cFill.courseID == id))
+            {
+                dct.Add(item.Subject.subjectName, item.subjectHoursPerWeek);
+            }
+            course.CourseID = dbusr.courseID;
+            course.CourseName = dbusr.courseName;
+            course.SubjectByHours = dct;
+            return course;
+        }
 
-		public bool? CreateCourse (Common.Course course)
-		{
-			var dbItem = new Datalayer.Course()
-			{
-				courseName = course.CourseName
-			};
-			context.Course.Add(dbItem);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? CreateCourse(Common.Course course)
+        {
+            var dbItem = new Datalayer.Course()
+            {
+                courseName = course.CourseName
+            };
+            context.Course.Add(dbItem);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? UpdateCourse (Common.Course course)
-		{
-			var tmpCourse = context.Course.Where(c => c.courseID == course.CourseID).Single();
-			tmpCourse.courseName = course.CourseName;
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? UpdateCourse(Common.Course course)
+        {
+            var tmpCourse = context.Course.Where(c => c.courseID == course.CourseID).Single();
+            tmpCourse.courseName = course.CourseName;
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? DeleteCourse (int id)
-		{
-			var tmpCourse = context.Course.Where(c => c.courseID == id).Single();
-			context.Course.Remove(tmpCourse);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? DeleteCourse(int id)
+        {
+            var tmpCourse = context.Course.Where(c => c.courseID == id).Single();
+            context.Course.Remove(tmpCourse);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id)
-		{
-			var dbLst = context.CourseFill.Where(cFill => cFill.courseID == id).ToList();
-			var result = new List<Common.CourseFill>();
-			foreach(var item in dbLst)
-			{
-				var tmpCourseFill = new Common.CourseFill()
-				{
-					courseID = item.courseID,
-					courseName = item.Course.courseName,
-					subjectID = item.subjectID,
-					subjectName = item.Subject.subjectName,
-					SubjectHoursPerWeek = item.subjectHoursPerWeek
-				};
-				result.Add(tmpCourseFill);
-			}
-			return result;
-		}
+        public IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id)
+        {
+            var dbLst = context.CourseFill.Where(cFill => cFill.courseID == id).ToList();
+            var result = new List<Common.CourseFill>();
+            foreach (var item in dbLst)
+            {
+                var tmpCourseFill = new Common.CourseFill()
+                {
+                    courseID = item.courseID,
+                    courseName = item.Course.courseName,
+                    subjectID = item.subjectID,
+                    subjectName = item.Subject.subjectName,
+                    SubjectHoursPerWeek = item.subjectHoursPerWeek
+                };
+                result.Add(tmpCourseFill);
+            }
+            return result;
+        }
 
-		public bool? CreateCourseFill (Common.CourseFill courseFill)
-		{
-			var dbItem = new Datalayer.CourseFill()
-			{
-				courseID = courseFill.courseID,
-				subjectID = courseFill.subjectID,
-				subjectHoursPerWeek = courseFill.SubjectHoursPerWeek
-			};
-			context.CourseFill.Add(dbItem);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? CreateCourseFill(Common.CourseFill courseFill)
+        {
+            var dbItem = new Datalayer.CourseFill()
+            {
+                courseID = courseFill.courseID,
+                subjectID = courseFill.subjectID,
+                subjectHoursPerWeek = courseFill.SubjectHoursPerWeek
+            };
+            context.CourseFill.Add(dbItem);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? UpdateCourseFill (Common.CourseFill courseFill)
-		{
-			var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseID == courseFill.courseID && cFill.subjectID == courseFill.subjectID).Single();
-			tmpCourseFill.subjectHoursPerWeek = courseFill.SubjectHoursPerWeek;
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? UpdateCourseFill(Common.CourseFill courseFill)
+        {
+            var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseID == courseFill.courseID && cFill.subjectID == courseFill.subjectID).Single();
+            tmpCourseFill.subjectHoursPerWeek = courseFill.SubjectHoursPerWeek;
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? DeleteCourseFill(int courseID, int subjectID)
-		{
-			var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseID == courseID && cFill.subjectID == subjectID).Single();
-			context.CourseFill.Remove(tmpCourseFill);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
-		public Common.CourseFill GetCoursFillByCourseSubject(int courseID, int subjectID)
-		{
-			var dbCourseFill = context.CourseFill.Where(cf => cf.courseID == courseID && cf.subjectID == subjectID).Single();
-			return dbCourseFill.ToCourseFill();
-		}
+        public bool? DeleteCourseFill(int courseID, int subjectID)
+        {
+            var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseID == courseID && cFill.subjectID == subjectID).Single();
+            context.CourseFill.Remove(tmpCourseFill);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
+        public Common.CourseFill GetCoursFillByCourseSubject(int courseID, int subjectID)
+        {
+            var dbCourseFill = context.CourseFill.Where(cf => cf.courseID == courseID && cf.subjectID == subjectID).Single();
+            return dbCourseFill.ToCourseFill();
+        }
+
+        public IEnumerable<Requirement> GetRequirements()
+        {
+            var dbList = context.SRRequirement.ToList();
+            var reqList = new List<Requirement>();
+
+            foreach (var item in dbList)
+            {
+                var req = new Requirement() { ID = item.ID, Name = item.Requirement };
+                reqList.Add(req);
+            }
+
+            return reqList;
+        }
+
+        public bool? CreateSubject(Common.Subject subject)
+        {
+            var dbSubject = new Datalayer.Subject()
+            {
+                subjectName = subject.SubjectName
+            };
+
+            var reqList = new List<Datalayer.SRRequirement>();
+            foreach (var item in subject.Requirements)
+            {
+                var srReq = context.SRRequirement.Where(req => req.ID == item).FirstOrDefault();
+                if (srReq != null)
+                    reqList.Add(srReq);
+            }
+            dbSubject.SRRequirement = reqList;
+            context.Subject.Add(dbSubject);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+
+        }
     }
 }
 
