@@ -10,7 +10,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table" id="scrollTable">
-    <thead>
+    
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.ID)
@@ -20,10 +20,10 @@
             </th>
             <th></th>
         </tr>
-    </thead>
-    <tbody>
+    
+    
         @Html.Partial("GetSubjectList_Partial")
-    </tbody>
+    
 </table>
 
     @section Scripts {
