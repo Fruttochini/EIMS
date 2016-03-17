@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace EIMS.Common
+namespace EIMS.Models
 {
-	public class LessonOrder
+	public class LessonOrderViewModel
 	{
 		public int lessonOrderID { get; set; }
 		public TimeSpan timeStart { get; set; }

@@ -31,6 +31,7 @@ namespace EIMS.Common
         FacultyCommon GetFacultyByID(int id);
         Course GetCourseByID(int id);
         Common.CourseFill GetCoursFillByCourseSubject(int courseID, int subjectID);
+		Common.LessonOrder GetLessonOrderByID(int id);
 
         bool? CreateFaculty(FacultyCommon faculty);
         bool? UpdateFaculty(FacultyCommon faculty);
@@ -41,7 +42,9 @@ namespace EIMS.Common
         bool? CreateCourseFill(Common.CourseFill courseFill);
         bool? UpdateCourseFill(Common.CourseFill courseFill);
         bool? DeleteCourseFill(int courseID, int subjectID);
-
+		bool? CreateLessonOrder(Common.LessonOrder lOrder);
+		bool? UpdateLessonOrder(Common.LessonOrder lOrder);
+		bool? DeleteLessonOrder(int id);
         bool? CreateSubject(Common.Subject subject);
         bool? UpdateSubject(Common.Subject subject);
         bool? DeleteSubject(int id);

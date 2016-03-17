@@ -191,6 +191,7 @@
     <Compile Include="Controllers\CourseFillController.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LessonOrderController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Global.asax.cs">
@@ -200,6 +201,7 @@
     <Compile Include="Models\CourseFillViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\FacultyViewModel.cs" />
+    <Compile Include="Models\LessonOrderViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SubjectViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
@@ -286,6 +288,9 @@
     <Content Include="Views\CourseFill\GetCourseFill.cshtml" />
     <Content Include="Views\CourseFill\CreateCourseFill.cshtml" />
     <Content Include="Views\CourseFill\EditCourseFill.cshtml" />
+    <Content Include="Views\LessonOrder\GetLessonOrders.cshtml" />
+    <Content Include="Views\LessonOrder\CreateLessonOrder.cshtml" />
+    <Content Include="Views\LessonOrder\EditLessonOrder.cshtml" />
     <Content Include="Views\Subject\Edit.cshtml" />
     <Content Include="Views\Subject\Index.cshtml" />
   </ItemGroup>
