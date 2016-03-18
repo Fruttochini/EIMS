@@ -2,14 +2,12 @@
 
 @{
     ViewBag.Title = "DetailCourse";
-    Dictionary<string, int> dct = Model.SubjectByHours;
+    ViewBag.CourseID = Model.CourseID;
 }
 
 <h3>Detail Course</h3>
 
-<p>
-    @Html.ActionLink("Create New", "CreateCourseFill")
-</p>
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -29,19 +27,7 @@
             @Html.DisplayFor(model => model.CourseName)
         </dd>
     </dl>
-    @if (dct.Count > 0)
-    {
-        for (int i = 0; i < dct.Count; i++)
-        {
-            foreach (var kv in dct)
-            {
-                <dl class="dl-horizontal">
-                    <dt>@Html.DisplayFor(modelItem => kv.Key) :</dt>
-                    <dd>@Html.DisplayFor(modelItem => kv.Value)</dd>
-                </dl>
-            }
-        }
-    }
+    @Html.ActionLink("To Course Fill", "Index", "CourseFill", new { courseID = Model.CourseID})
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index")

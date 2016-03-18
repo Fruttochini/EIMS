@@ -13,30 +13,31 @@ namespace EIMS.Controllers
 		private IRepository context = new Repository.Repository();
 		const int pageSize = 25;
 
-		public ActionResult Index()
+		public ActionResult Index(int courseID)
         {
-            return View(GetItemsPerPage());
+            return View(GetItemsPerPage(courseID));
         }
 
-		public ActionResult GetCourseFill(int? id)
+		public ActionResult GetCourseFill(int courseID, int? id)
 		{
 			int page = id ?? 0;
 			if (Request.IsAjaxRequest())
 			{
-				return PartialView("GetCourseFill", GetItemsPerPage(page));
+				return PartialView("GetCourseFill", GetItemsPerPage(courseID, page));
 			}
-			return PartialView(GetItemsPerPage());
+			return PartialView(GetItemsPerPage(courseID));
 		}
 
-		public object GetItemsPerPage(int page=0)
+		public object GetItemsPerPage(int courseID, int page=0)
 		{
 			var itemToSkip = page * pageSize;
 			var courseFillList = new List<CourseFillViewModel>();
-			var dbLst = context.GetAllCourseFill();
+			var dbLst = context.GetCourseFillByCourse(courseID);
 			foreach(var item in dbLst)
 			{
 				CourseFillViewModel cfvm = new CourseFillViewModel()
 				{
+
 					courseID=item.courseID,
 					subjectID=item.subjectID,
 					courseName=item.courseName,
@@ -92,6 +93,7 @@ namespace EIMS.Controllers
 			var dbCourse = context.GetCourses().Select(x => new SelectListItem() { Text = x.CourseName, Value = x.CourseID.ToString() }).ToList();
 			var tmpCourseFill = new CourseFillViewModel()
 			{
+				courseFillID = courseFill.courseFillID,
 				courseID = courseFill.courseID,
 				subjectID = courseFill.subjectID,
 				SubjectHoursPerWeek = courseFill.SubjectHoursPerWeek,
@@ -121,6 +123,7 @@ namespace EIMS.Controllers
 			}
 			if (IsChanged)
 			{
+				tmpCourseFill.courseFillID = model.courseFillID;
 				tmpCourseFill.courseID = model.courseID;
 				tmpCourseFill.subjectID = model.subjectID;
 				context.UpdateCourseFill(tmpCourseFill);

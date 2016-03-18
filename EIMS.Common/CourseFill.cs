@@ -8,6 +8,7 @@ namespace EIMS.Common
 {
 	public class CourseFill
 	{
+		public int courseFillID { get; set; }
 		public int courseID { get; set; }
 		public int subjectID { get; set; }
 

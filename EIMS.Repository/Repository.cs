@@ -44,7 +44,7 @@ namespace EIMS.Repository
             var result = new List<Common.CourseFill>();
             foreach (var item in dbLst)
             {
-                var tmpCourseFill = new Common.CourseFill() { courseID = item.courseID, courseName = item.Course.courseName, subjectID = item.subjectID, subjectName = item.Subject.subjectName, SubjectHoursPerWeek = item.subjectHoursPerWeek };
+				var tmpCourseFill = new Common.CourseFill() { courseFillID = item.courseFillID, courseID = item.courseID, courseName = item.Course.courseName, subjectID = item.subjectID, subjectName = item.Subject.subjectName, SubjectHoursPerWeek = item.subjectHoursPerWeek };
                 result.Add(tmpCourseFill);
             }
             return result;
@@ -238,6 +238,17 @@ namespace EIMS.Repository
             return dbusr.ToFaculty();
         }
 
+		public IEnumerable<User> GetStudentByGroup(int groupID)
+		{
+			var dbList = context.EIMSUser.Where(usr => usr.StudentGroup.Where(grp => grp.groupID == groupID) != null && usr.Role.Equals("Student"));
+			var tmpUser = new List<User>();
+			foreach(var item in dbList)
+			{
+				tmpUser.Add(item.ToUser());
+			}
+			return tmpUser;
+		}
+
         public bool? CreateFaculty(FacultyCommon faculty)
         {
             var dbItem = new Faculty()
@@ -320,7 +331,8 @@ namespace EIMS.Repository
             {
                 var tmpCourseFill = new Common.CourseFill()
                 {
-                    courseID = item.courseID,
+					courseFillID = item.courseFillID,
+					courseID = item.courseID,
                     courseName = item.Course.courseName,
                     subjectID = item.subjectID,
                     subjectName = item.Subject.subjectName,
@@ -347,24 +359,26 @@ namespace EIMS.Repository
 
         public bool? UpdateCourseFill(Common.CourseFill courseFill)
         {
-            var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseID == courseFill.courseID && cFill.subjectID == courseFill.subjectID).Single();
-            tmpCourseFill.subjectHoursPerWeek = courseFill.SubjectHoursPerWeek;
+			var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseFillID == courseFill.courseFillID).Single();
+			tmpCourseFill.courseID = courseFill.courseID;
+			tmpCourseFill.subjectID = courseFill.subjectID;
+			tmpCourseFill.subjectHoursPerWeek = courseFill.SubjectHoursPerWeek;
             if (context.SaveChanges() > 0)
                 return true;
             return false;
         }
 
-        public bool? DeleteCourseFill(int courseID, int subjectID)
+        public bool? DeleteCourseFill(int courseFillID)
         {
-            var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseID == courseID && cFill.subjectID == subjectID).Single();
+			var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseFillID == courseFillID).Single();
             context.CourseFill.Remove(tmpCourseFill);
             if (context.SaveChanges() > 0)
                 return true;
             return false;
         }
-        public Common.CourseFill GetCoursFillByCourseSubject(int courseID, int subjectID)
+        public Common.CourseFill GetCoursFillByID(int courseFillID)
         {
-            var dbCourseFill = context.CourseFill.Where(cf => cf.courseID == courseID).Where(cl => cl.subjectID == subjectID).Single();
+            var dbCourseFill = context.CourseFill.Where(cf => cf.courseID == courseFillID).Single();
             return dbCourseFill.ToCourseFill();
         }
 

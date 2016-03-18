@@ -3,15 +3,12 @@
     ViewBag.Title = "Course Fill";
 }
 
-<h2>Course Fill</h2>
+<h2>@Html.DisplayNameFor(model=>model.courseName)</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateCourseFill")
+    @Html.ActionLink("Create New", "CreateCourseFill", new { courseID =  ViewBag.CourseID })
 </p>
 <div class="container well">
-    <div class="col-md-2" style="display: inline">
-        <span>@Html.DisplayNameFor(model=>model.courseName)</span>
-    </div>
     <div class="col-md-2" style="display: inline">
         <span>@Html.DisplayNameFor(model => model.subjectName)</span>
     </div>
@@ -22,7 +19,9 @@
 <div id="ScrollList">
     @Html.Partial("GetCourseFill")
 </div>
-
+<p>
+    @Html.ActionLink("Back to Details", "DetailCourse", "Course", new { courseID = ViewBag.CourseID })
+</p>
 @section Scripts {
     @Scripts.Render("~/Scripts/CourseFillInfinityScrolling.js")
 }
