@@ -99,4 +99,13 @@ namespace EIMS.Models
         [Compare("Password", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class GroupUserInfo
+    {
+        public long ID { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string MiddleName { get; set; }
+
+    }
 }

@@ -608,6 +608,26 @@ namespace EIMS.Repository
             }
             return false;
         }
+
+        public Common.UniversityGroup GetGroupByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool? AddGroup(Common.UniversityGroup group)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool? EditGroup(Common.UniversityGroup group)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool? DeleteGroup(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

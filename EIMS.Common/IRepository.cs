@@ -61,5 +61,11 @@ namespace EIMS.Common
         bool? AddRoom(Common.Room room);
         bool? EditRoom(Common.Room room);
         bool? DeleteRoom(int id);
+
+        ///Groups ops
+        UniversityGroup GetGroupByID(int id);
+        bool? AddGroup(Common.UniversityGroup group);
+        bool? EditGroup(Common.UniversityGroup group);
+        bool? DeleteGroup(int id);
     }
 }
