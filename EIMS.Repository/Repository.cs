@@ -44,7 +44,7 @@ namespace EIMS.Repository
             var result = new List<Common.CourseFill>();
             foreach (var item in dbLst)
             {
-				var tmpCourseFill = new Common.CourseFill() { courseFillID = item.courseFillID, courseID = item.courseID, courseName = item.Course.courseName, subjectID = item.subjectID, subjectName = item.Subject.subjectName, SubjectHoursPerWeek = item.subjectHoursPerWeek };
+                var tmpCourseFill = new Common.CourseFill() { courseFillID = item.courseFillID, courseID = item.courseID, courseName = item.Course.courseName, subjectID = item.subjectID, subjectName = item.Subject.subjectName, SubjectHoursPerWeek = item.subjectHoursPerWeek };
                 result.Add(tmpCourseFill);
             }
             return result;
@@ -238,16 +238,16 @@ namespace EIMS.Repository
             return dbusr.ToFaculty();
         }
 
-		public IEnumerable<User> GetStudentByGroup(int groupID)
-		{
-			var dbList = context.EIMSUser.Where(usr => usr.StudentGroup.Where(grp => grp.groupID == groupID) != null && usr.Role.Equals("Student"));
-			var tmpUser = new List<User>();
-			foreach(var item in dbList)
-			{
-				tmpUser.Add(item.ToUser());
-			}
-			return tmpUser;
-		}
+        public IEnumerable<User> GetStudentByGroup(int groupID)
+        {
+            var dbList = context.EIMSUser.Where(usr => usr.StudentGroup.Where(grp => grp.groupID == groupID) != null && usr.Role.Select(rl => rl.Name).Contains("Student"));
+            var tmpUser = new List<User>();
+            foreach (var item in dbList)
+            {
+                tmpUser.Add(item.ToUser());
+            }
+            return tmpUser;
+        }
 
         public bool? CreateFaculty(FacultyCommon faculty)
         {
@@ -331,8 +331,8 @@ namespace EIMS.Repository
             {
                 var tmpCourseFill = new Common.CourseFill()
                 {
-					courseFillID = item.courseFillID,
-					courseID = item.courseID,
+                    courseFillID = item.courseFillID,
+                    courseID = item.courseID,
                     courseName = item.Course.courseName,
                     subjectID = item.subjectID,
                     subjectName = item.Subject.subjectName,
@@ -359,10 +359,10 @@ namespace EIMS.Repository
 
         public bool? UpdateCourseFill(Common.CourseFill courseFill)
         {
-			var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseFillID == courseFill.courseFillID).Single();
-			tmpCourseFill.courseID = courseFill.courseID;
-			tmpCourseFill.subjectID = courseFill.subjectID;
-			tmpCourseFill.subjectHoursPerWeek = courseFill.SubjectHoursPerWeek;
+            var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseFillID == courseFill.courseFillID).Single();
+            tmpCourseFill.courseID = courseFill.courseID;
+            tmpCourseFill.subjectID = courseFill.subjectID;
+            tmpCourseFill.subjectHoursPerWeek = courseFill.SubjectHoursPerWeek;
             if (context.SaveChanges() > 0)
                 return true;
             return false;
@@ -370,7 +370,7 @@ namespace EIMS.Repository
 
         public bool? DeleteCourseFill(int courseFillID)
         {
-			var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseFillID == courseFillID).Single();
+            var tmpCourseFill = context.CourseFill.Where(cFill => cFill.courseFillID == courseFillID).Single();
             context.CourseFill.Remove(tmpCourseFill);
             if (context.SaveChanges() > 0)
                 return true;
@@ -639,6 +639,16 @@ namespace EIMS.Repository
         }
 
         public bool? DeleteGroup(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Common.CourseFill GetCoursFillByCourseSubject(int courseID, int subjectID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool? DeleteCourseFill(int courseID, int subjectID)
         {
             throw new NotImplementedException();
         }
