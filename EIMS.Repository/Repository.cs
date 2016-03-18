@@ -238,6 +238,17 @@ namespace EIMS.Repository
             return dbusr.ToFaculty();
         }
 
+		public IEnumerable<User> GetStudentByGroup(int groupID)
+		{
+			var dbList = context.EIMSUser.Where(usr => usr.StudentGroup.Where(grp => grp.groupID == groupID) != null && usr.Role.Equals("Student"));
+			var tmpUser = new List<User>();
+			foreach(var item in dbList)
+			{
+				tmpUser.Add(item.ToUser());
+			}
+			return tmpUser;
+		}
+
         public bool? CreateFaculty(FacultyCommon faculty)
         {
             var dbItem = new Faculty()
