@@ -1,0 +1,28 @@
+﻿@model IEnumerable<EIMS.Models.RoomInfoViewModel>
+
+@{
+    ViewBag.Title = "Rooms";
+}
+
+<h2>Rooms</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div id="scrollTable">
+    <div class="row">
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.ID)</strong> </div>
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.RoomNo)</strong></div>
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.Capacity)</strong></div>
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.IsAvailable)</strong></div>
+        <div class="col-md-2"><strong>Options</strong></div>
+    </div>
+
+
+
+    @Html.Partial("_GetRoomsListPartial")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/RoomInfinityScroll.js")
+}

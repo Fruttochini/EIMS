@@ -19,6 +19,11 @@ namespace EIMS.Controllers
             context = new Repository.Repository();
         }
 
+        public SubjectController(IRepository repo)
+        {
+            context = repo;
+        }
+
         public ActionResult Index()
         {
             return View(GetItemsPerPage());
@@ -33,14 +38,7 @@ namespace EIMS.Controllers
                 return PartialView("GetSubjectList_Partial", GetItemsPerPage(page));
             }
             return PartialView(GetItemsPerPage());
-            //var subjList = context.GetSubjects();
-            //var vmlist = new List<SubjectInfoViewModel>();
-            //foreach (var item in subjList)
-            //{
-            //    var vmitem = new SubjectInfoViewModel() { ID = item.SubjectID, Name = item.SubjectName };
-            //    vmlist.Add(vmitem);
-            //}
-            //return View(vmlist);
+
         }
 
         public ActionResult Create()

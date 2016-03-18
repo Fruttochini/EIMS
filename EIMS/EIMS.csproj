@@ -193,6 +193,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LessonOrderController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -203,6 +204,7 @@
     <Compile Include="Models\FacultyViewModel.cs" />
     <Compile Include="Models\LessonOrderViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RoomsViewModels.cs" />
     <Compile Include="Models\SubjectViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -231,6 +233,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\RoomInfinityScroll.js" />
     <Content Include="Scripts\SubjectInfinityScroll.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\CourseFill\Index.cshtml" />
@@ -295,6 +298,11 @@
     <Content Include="Views\Subject\Details.cshtml" />
     <Content Include="Views\LessonOrder\Index.cshtml" />
     <Content Include="Views\LessonOrder\GetLessonOrders.cshtml" />
+    <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Room\_GetRoomsListPartial.cshtml" />
+    <Content Include="Views\Room\Create.cshtml" />
+    <Content Include="Views\Room\Edit.cshtml" />
+    <Content Include="Views\Room\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

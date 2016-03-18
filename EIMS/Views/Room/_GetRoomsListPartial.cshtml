@@ -1,0 +1,25 @@
+﻿@model IEnumerable<EIMS.Models.RoomInfoViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="row" style="font-size:16px">
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.ID)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.RoomNo)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.Capacity)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.IsAvailable)
+        </div>
+        <div class="col-md-2">
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+        </div>
+    </div>
+
+}
