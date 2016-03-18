@@ -118,6 +118,19 @@ namespace EIMS.Repository
         {
             var dblst = context.Room.ToList();
             var result = new List<Common.Room>();
+            foreach (var item in dblst)
+            {
+                var tmpr = new Common.Room()
+                {
+                    ID = item.roomID,
+                    Capacity = item.capacity,
+                    IsAvailable = item.isAvailable,
+                    RoomNo = item.roomNo,
+                    SelectedPossibilities = item.SRRequirement.Select(r => r.ID).ToList()
+
+                };
+                result.Add(tmpr);
+            }
 
             return result;
         }
@@ -488,6 +501,112 @@ namespace EIMS.Repository
         {
             var tmpLessonOrder = context.LessonOrder.Where(lo => lo.ID == id).Single();
             return tmpLessonOrder.ToLessonOrder();
+        }
+
+        public Common.Room GetRoomByID(int id)
+        {
+            var dbroom = context.Room.Where(r => r.roomID == id).Single();
+            if (dbroom != null)
+            {
+                var rm = new Common.Room()
+                {
+                    ID = dbroom.roomID,
+                    RoomNo = dbroom.roomNo,
+                    Capacity = dbroom.capacity,
+                    IsAvailable = dbroom.isAvailable,
+                    SelectedPossibilities = dbroom.SRRequirement.Select(r => r.ID).ToList()
+                };
+                return rm;
+            }
+            return null;
+        }
+
+        public bool? AddRoom(Common.Room room)
+        {
+            var item = new Datalayer.Room()
+            {
+                capacity = room.Capacity,
+                isAvailable = room.IsAvailable,
+                roomNo = room.RoomNo
+            };
+            var pList = new List<SRRequirement>();
+            foreach (var p in room.SelectedPossibilities)
+            {
+                var pos = context.SRRequirement.Where(ps => ps.ID == p).FirstOrDefault();
+                if (pos != null)
+                    pList.Add(pos);
+                else
+                    return false;
+
+            }
+            item.SRRequirement = pList;
+            context.Room.Add(item);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
+
+        public bool? EditRoom(Common.Room room)
+        {
+            var rm = context.Room.Where(r => r.roomID == room.ID).FirstOrDefault();
+            if (rm != null)
+            {
+                if (!string.IsNullOrWhiteSpace(room.RoomNo) && !rm.roomNo.Equals(room.RoomNo))
+                    rm.roomNo = room.RoomNo;
+                if (room.Capacity > 0)
+                    rm.capacity = room.Capacity;
+                rm.isAvailable = room.IsAvailable;
+
+
+                if (room.SelectedPossibilities != null)
+                {
+                    var removeList = new List<SRRequirement>();
+                    foreach (var item in rm.SRRequirement)
+                    {
+                        if (room.SelectedPossibilities.Contains(item.ID))
+                            continue;
+                        else
+                            removeList.Add(item);
+                    }
+                    foreach (var item in removeList)
+                    {
+                        rm.SRRequirement.Remove(item);
+                    }
+                    var reqList = rm.SRRequirement.Select(r => r.ID);
+                    var fullreqList = context.SRRequirement.ToList();
+                    foreach (var item in room.SelectedPossibilities)
+                    {
+                        if (!reqList.Contains(item))
+                        {
+                            var tmp = fullreqList.Where(r => r.ID == item).FirstOrDefault();
+                            if (tmp != null)
+                                rm.SRRequirement.Add(tmp);
+                        }
+                    }
+
+                }
+                else
+                {
+                    rm.SRRequirement.Clear();
+                }
+                if (context.SaveChanges() > 0)
+                    return true;
+
+            }
+
+            return false;
+        }
+
+        public bool? DeleteRoom(int id)
+        {
+            var subj = context.Room.Where(s => s.roomID == id).FirstOrDefault();
+            if (subj != null)
+            {
+                context.Room.Remove(subj);
+                if (context.SaveChanges() > 0)
+                    return true;
+            }
+            return false;
         }
     }
 }

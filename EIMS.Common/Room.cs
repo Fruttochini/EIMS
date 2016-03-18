@@ -10,8 +10,9 @@ namespace EIMS.Common
     {
         public int ID { get; set; }
         public string RoomNo { get; set; }
-        public bool[] Features { get; set; }
+
         public short Capacity { get; set; }
         public bool IsAvailable { get; set; }
+        public IEnumerable<int> SelectedPossibilities { get; set; }
     }
 }
