@@ -12,18 +12,12 @@ namespace EIMS.Datalayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Faculty
+    public partial class UserLogin
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Faculty()
-        {
-            this.UniversityGroup = new HashSet<UniversityGroup>();
-        }
+        public long UserId { get; set; }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
     
-        public int facultyID { get; set; }
-        public string Name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UniversityGroup> UniversityGroup { get; set; }
+        public virtual EIMSUser EIMSUser { get; set; }
     }
 }

@@ -14,9 +14,9 @@
         </EntityType>
         <EntityType Name="CourseFill">
           <Key>
-            <PropertyRef Name="courseID" />
-            <PropertyRef Name="subjectID" />
+            <PropertyRef Name="courseFillID" />
           </Key>
+          <Property Name="courseFillID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="courseID" Type="int" Nullable="false" />
           <Property Name="subjectID" Type="int" Nullable="false" />
           <Property Name="subjectHoursPerWeek" Type="int" Nullable="false" />
@@ -54,9 +54,9 @@
         </EntityType>
         <EntityType Name="GroupCourse">
           <Key>
-            <PropertyRef Name="courseID" />
-            <PropertyRef Name="groupID" />
+            <PropertyRef Name="groupCourseID" />
           </Key>
+          <Property Name="groupCourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="courseID" Type="int" Nullable="false" />
           <Property Name="groupID" Type="int" Nullable="false" />
           <Property Name="startDate" Type="datetime" />
@@ -133,10 +133,9 @@
         </EntityType>
         <EntityType Name="StudentGroup">
           <Key>
-            <PropertyRef Name="groupID" />
-            <PropertyRef Name="studentID" />
-            <PropertyRef Name="enrollmentDate" />
+            <PropertyRef Name="studentGroupID" />
           </Key>
+          <Property Name="studentGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="groupID" Type="int" Nullable="false" />
           <Property Name="studentID" Type="bigint" Nullable="false" />
           <Property Name="enrollmentDate" Type="datetime" Nullable="false" />
@@ -193,6 +192,16 @@
           <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="ClaimType" Type="nvarchar(max)" />
           <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -548,6 +557,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserLogin_EIMSUser">
+          <End Role="EIMSUser" Type="Self.EIMSUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EIMSUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRole_EIMSUser">
           <End Role="EIMSUser" Type="Self.EIMSUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -576,188 +599,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="DeleteCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteCourseFill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="courseID" Type="int" Mode="In" />
-          <Parameter Name="subjectID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="tinyint" Mode="In" />
-        </Function>
-        <Function Name="DeleteFaculty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteGroupCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="courseID" Type="int" Mode="In" />
-          <Parameter Name="groupID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteLesson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteLessonDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteLessonOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteLessonPresence" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="lessonDateID" Type="int" Mode="In" />
-          <Parameter Name="studentID" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="DeleteRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteStudentGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="groupID" Type="int" Mode="In" />
-          <Parameter Name="studentID" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="DeleteSubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteTeacherSubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="subjectID" Type="int" Mode="In" />
-          <Parameter Name="teacherID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteUniversityGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="GetCourseByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetDayOfWeekByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="dayOfWeek" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetFacultyByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="facultyID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetGroupByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetLessonByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="lessonID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetLessonOrderByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="orderID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetLessonPreesenceByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="lessonPresenceID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetRoleByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="role" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetRoomByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="roomID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetStudentByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="studentID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetSubjectByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetSubjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetSuperuserByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="superuserID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetTaskByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="taskID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetTeacherByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="teacherID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetUsersByRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Role" Type="tinyint" Mode="In" />
-        </Function>
-        <Function Name="InsertCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="coursename" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="InsertCourseFill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="courseID" Type="int" Mode="In" />
-          <Parameter Name="subjectID" Type="int" Mode="In" />
-          <Parameter Name="subjectHPW" Type="int" Mode="In" />
-        </Function>
-        <Function Name="InsertDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="dayName" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="InsertFaculty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="facultyName" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="InsertGroupCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="groupID" Type="int" Mode="In" />
-          <Parameter Name="startDate" Type="datetime" Mode="In" />
-          <Parameter Name="endDate" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="InsertLesson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="subjectID" Type="int" Mode="In" />
-          <Parameter Name="groupID" Type="int" Mode="In" />
-          <Parameter Name="teacherID" Type="bigint" Mode="In" />
-          <Parameter Name="roomID" Type="int" Mode="In" />
-          <Parameter Name="lessonOrder" Type="int" Mode="In" />
-          <Parameter Name="dayOfWeek" Type="tinyint" Mode="In" />
-        </Function>
-        <Function Name="InsertLessonDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="lessonID" Type="bigint" Mode="In" />
-          <Parameter Name="date" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="InsertLessonPresence" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="lessonDateID" Type="bigint" Mode="In" />
-          <Parameter Name="studentID" Type="bigint" Mode="In" />
-          <Parameter Name="presence" Type="bit" Mode="In" />
-          <Parameter Name="mark" Type="tinyint" Mode="In" />
-        </Function>
-        <Function Name="InsertRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="roomNo" Type="nvarchar" Mode="In" />
-          <Parameter Name="features" Type="binary" Mode="In" />
-          <Parameter Name="capacity" Type="smallint" Mode="In" />
-          <Parameter Name="isAvialable" Type="bit" Mode="In" />
-        </Function>
-        <Function Name="InsertStudentGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="groupID" Type="int" Mode="In" />
-          <Parameter Name="studentID" Type="int" Mode="In" />
-          <Parameter Name="enrollmentDate" Type="datetime" Mode="In" />
-          <Parameter Name="graduationDate" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="InsertSubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="subjectname" Type="nvarchar" Mode="In" />
-          <Parameter Name="requirements" Type="binary" Mode="In" />
-        </Function>
-        <Function Name="InsertTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="lessonDateID" Type="bigint" Mode="In" />
-          <Parameter Name="homeTask" Type="nvarchar" Mode="In" />
-          <Parameter Name="expiryDate" Type="date" Mode="In" />
-        </Function>
-        <Function Name="InsertTeacherSubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="subjectID" Type="int" Mode="In" />
-          <Parameter Name="teacherID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="InsertUniversityGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="groupName" Type="nvarchar" Mode="In" />
-          <Parameter Name="supervisorID" Type="bigint" Mode="In" />
-          <Parameter Name="creationDate" Type="date" Mode="In" />
-          <Parameter Name="elderID" Type="bigint" Mode="In" />
-          <Parameter Name="facultyID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="InsertUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="username" Type="nvarchar" Mode="In" />
-          <Parameter Name="email" Type="nvarchar" Mode="In" />
-          <Parameter Name="password" Type="nvarchar" Mode="In" />
-          <Parameter Name="roleID" Type="tinyint" Mode="In" />
-          <Parameter Name="creationDate" Type="date" Mode="In" />
-          <Parameter Name="name" Type="nvarchar" Mode="In" />
-          <Parameter Name="surname" Type="nvarchar" Mode="In" />
-          <Parameter Name="middlename" Type="nvarchar" Mode="In" />
-          <Parameter Name="photoLink" Type="nvarchar" Mode="In" />
-          <Parameter Name="address" Type="nvarchar" Mode="In" />
-          <Parameter Name="sex" Type="bit" Mode="In" />
-          <Parameter Name="lastEdit" Type="datetime" Mode="In" />
-        </Function>
         <EntityContainer Name="EIMSDatalayerStoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseFill" EntityType="Self.CourseFill" Schema="dbo" store:Type="Tables" />
@@ -780,6 +621,7 @@
           <EntitySet Name="TeacherSubject" EntityType="Self.TeacherSubject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UniversityGroup" EntityType="Self.UniversityGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Course_Subject" Association="Self.FK_Course_Subject">
             <End Role="Subject" EntitySet="Subject" />
@@ -884,6 +726,10 @@
           <AssociationSet Name="FK_UserClaim_EIMSUser" Association="Self.FK_UserClaim_EIMSUser">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
             <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogin_EIMSUser" Association="Self.FK_UserLogin_EIMSUser">
+            <End Role="EIMSUser" EntitySet="EIMSUser" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRole_EIMSUser" Association="Self.FK_UserRole_EIMSUser">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
@@ -1099,6 +945,7 @@
           <EntitySet Name="Task" EntityType="EIMS.Datalayer.Task" />
           <EntitySet Name="UniversityGroup" EntityType="EIMS.Datalayer.UniversityGroup" />
           <EntitySet Name="UserClaim" EntityType="EIMS.Datalayer.UserClaim" />
+          <EntitySet Name="UserLogin" EntityType="EIMS.Datalayer.UserLogin" />
           <AssociationSet Name="FK_CourseFill_Course" Association="EIMS.Datalayer.FK_CourseFill_Course">
             <End Role="Course" EntitySet="Course" />
             <End Role="CourseFill" EntitySet="CourseFill" />
@@ -1138,6 +985,10 @@
           <AssociationSet Name="FK_UserClaim_EIMSUser" Association="EIMS.Datalayer.FK_UserClaim_EIMSUser">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
             <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogin_EIMSUser" Association="EIMS.Datalayer.FK_UserLogin_EIMSUser">
+            <End Role="EIMSUser" EntitySet="EIMSUser" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
           </AssociationSet>
           <AssociationSet Name="FK_Group_Faculty" Association="EIMS.Datalayer.FK_Group_Faculty">
             <End Role="Faculty" EntitySet="Faculty" />
@@ -1207,9 +1058,9 @@
         </EntityType>
         <EntityType Name="CourseFill">
           <Key>
-            <PropertyRef Name="courseID" />
-            <PropertyRef Name="subjectID" />
+            <PropertyRef Name="courseFillID" />
           </Key>
+          <Property Name="courseFillID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="courseID" Type="Int32" Nullable="false" />
           <Property Name="subjectID" Type="Int32" Nullable="false" />
           <Property Name="subjectHoursPerWeek" Type="Int32" Nullable="false" />
@@ -1246,6 +1097,7 @@
           <NavigationProperty Name="UniversityGroup" Relationship="EIMS.Datalayer.FK_UniversityGroup_EIMSUser" FromRole="EIMSUser" ToRole="UniversityGroup" />
           <NavigationProperty Name="UniversityGroup1" Relationship="EIMS.Datalayer.FK_UniversityGroup_EIMSUser1" FromRole="EIMSUser" ToRole="UniversityGroup" />
           <NavigationProperty Name="UserClaim" Relationship="EIMS.Datalayer.FK_UserClaim_EIMSUser" FromRole="EIMSUser" ToRole="UserClaim" />
+          <NavigationProperty Name="UserLogin" Relationship="EIMS.Datalayer.FK_UserLogin_EIMSUser" FromRole="EIMSUser" ToRole="UserLogin" />
           <NavigationProperty Name="Subject" Relationship="EIMS.Datalayer.TeacherSubject" FromRole="EIMSUser" ToRole="Subject" />
           <NavigationProperty Name="Role" Relationship="EIMS.Datalayer.UserRole" FromRole="EIMSUser" ToRole="Role" />
         </EntityType>
@@ -1259,9 +1111,9 @@
         </EntityType>
         <EntityType Name="GroupCourse">
           <Key>
-            <PropertyRef Name="courseID" />
-            <PropertyRef Name="groupID" />
+            <PropertyRef Name="groupCourseID" />
           </Key>
+          <Property Name="groupCourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="courseID" Type="Int32" Nullable="false" />
           <Property Name="groupID" Type="Int32" Nullable="false" />
           <Property Name="startDate" Type="DateTime" Precision="3" />
@@ -1350,10 +1202,9 @@
         </EntityType>
         <EntityType Name="StudentGroup">
           <Key>
-            <PropertyRef Name="groupID" />
-            <PropertyRef Name="studentID" />
-            <PropertyRef Name="enrollmentDate" />
+            <PropertyRef Name="studentGroupID" />
           </Key>
+          <Property Name="studentGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="groupID" Type="Int32" Nullable="false" />
           <Property Name="studentID" Type="Int64" Nullable="false" />
           <Property Name="enrollmentDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -1408,6 +1259,17 @@
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EIMSUser" Relationship="EIMS.Datalayer.FK_UserClaim_EIMSUser" FromRole="UserClaim" ToRole="EIMSUser" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EIMSUser" Relationship="EIMS.Datalayer.FK_UserLogin_EIMSUser" FromRole="UserLogin" ToRole="EIMSUser" />
         </EntityType>
         <Association Name="FK_CourseFill_Course">
           <End Type="EIMS.Datalayer.Course" Role="Course" Multiplicity="1">
@@ -1533,6 +1395,20 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogin_EIMSUser">
+          <End Type="EIMS.Datalayer.EIMSUser" Role="EIMSUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EIMS.Datalayer.UserLogin" Role="UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EIMSUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogin">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1695,69 +1571,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EIMSDatalayerStoreContainer" CdmEntityContainer="EIMSEntitiesContext">
-          <FunctionImportMapping FunctionImportName="GetUsersByRole" FunctionName="EIMS.Datalayer.Store.GetUsersByRole">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetCourseByID" FunctionName="EIMS.Datalayer.Store.GetCourseByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetGroupByID" FunctionName="EIMS.Datalayer.Store.GetGroupByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSubjectByID" FunctionName="EIMS.Datalayer.Store.GetSubjectByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSubjects" FunctionName="EIMS.Datalayer.Store.GetSubjects">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DeleteCourse" FunctionName="EIMS.Datalayer.Store.DeleteCourse" />
-          <FunctionImportMapping FunctionImportName="DeleteCourseFill" FunctionName="EIMS.Datalayer.Store.DeleteCourseFill" />
-          <FunctionImportMapping FunctionImportName="DeleteDayOfWeek" FunctionName="EIMS.Datalayer.Store.DeleteDayOfWeek" />
-          <FunctionImportMapping FunctionImportName="DeleteFaculty" FunctionName="EIMS.Datalayer.Store.DeleteFaculty" />
-          <FunctionImportMapping FunctionImportName="DeleteGroupCourse" FunctionName="EIMS.Datalayer.Store.DeleteGroupCourse" />
-          <FunctionImportMapping FunctionImportName="DeleteLesson" FunctionName="EIMS.Datalayer.Store.DeleteLesson" />
-          <FunctionImportMapping FunctionImportName="DeleteLessonDate" FunctionName="EIMS.Datalayer.Store.DeleteLessonDate" />
-          <FunctionImportMapping FunctionImportName="DeleteLessonOrder" FunctionName="EIMS.Datalayer.Store.DeleteLessonOrder" />
-          <FunctionImportMapping FunctionImportName="DeleteLessonPresence" FunctionName="EIMS.Datalayer.Store.DeleteLessonPresence" />
-          <FunctionImportMapping FunctionImportName="DeleteRoom" FunctionName="EIMS.Datalayer.Store.DeleteRoom" />
-          <FunctionImportMapping FunctionImportName="DeleteStudentGroup" FunctionName="EIMS.Datalayer.Store.DeleteStudentGroup" />
-          <FunctionImportMapping FunctionImportName="DeleteSubject" FunctionName="EIMS.Datalayer.Store.DeleteSubject" />
-          <FunctionImportMapping FunctionImportName="DeleteTask" FunctionName="EIMS.Datalayer.Store.DeleteTask" />
-          <FunctionImportMapping FunctionImportName="DeleteTeacherSubject" FunctionName="EIMS.Datalayer.Store.DeleteTeacherSubject" />
-          <FunctionImportMapping FunctionImportName="DeleteUniversityGroup" FunctionName="EIMS.Datalayer.Store.DeleteUniversityGroup" />
-          <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="EIMS.Datalayer.Store.DeleteUser" />
-          <FunctionImportMapping FunctionImportName="GetDayOfWeekByID" FunctionName="EIMS.Datalayer.Store.GetDayOfWeekByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetFacultyByID" FunctionName="EIMS.Datalayer.Store.GetFacultyByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetLessonByID" FunctionName="EIMS.Datalayer.Store.GetLessonByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetLessonOrderByID" FunctionName="EIMS.Datalayer.Store.GetLessonOrderByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetLessonPreesenceByID" FunctionName="EIMS.Datalayer.Store.GetLessonPreesenceByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetRoleByID" FunctionName="EIMS.Datalayer.Store.GetRoleByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetRoomByID" FunctionName="EIMS.Datalayer.Store.GetRoomByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetStudentByID" FunctionName="EIMS.Datalayer.Store.GetStudentByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSuperuserByID" FunctionName="EIMS.Datalayer.Store.GetSuperuserByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetTaskByID" FunctionName="EIMS.Datalayer.Store.GetTaskByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetTeacherByID" FunctionName="EIMS.Datalayer.Store.GetTeacherByID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertCourse" FunctionName="EIMS.Datalayer.Store.InsertCourse" />
-          <FunctionImportMapping FunctionImportName="InsertCourseFill" FunctionName="EIMS.Datalayer.Store.InsertCourseFill" />
-          <FunctionImportMapping FunctionImportName="InsertDayOfWeek" FunctionName="EIMS.Datalayer.Store.InsertDayOfWeek" />
-          <FunctionImportMapping FunctionImportName="InsertFaculty" FunctionName="EIMS.Datalayer.Store.InsertFaculty" />
-          <FunctionImportMapping FunctionImportName="InsertGroupCourse" FunctionName="EIMS.Datalayer.Store.InsertGroupCourse" />
-          <FunctionImportMapping FunctionImportName="InsertLesson" FunctionName="EIMS.Datalayer.Store.InsertLesson" />
-          <FunctionImportMapping FunctionImportName="InsertLessonDate" FunctionName="EIMS.Datalayer.Store.InsertLessonDate" />
-          <FunctionImportMapping FunctionImportName="InsertLessonPresence" FunctionName="EIMS.Datalayer.Store.InsertLessonPresence" />
-          <FunctionImportMapping FunctionImportName="InsertRoom" FunctionName="EIMS.Datalayer.Store.InsertRoom" />
-          <FunctionImportMapping FunctionImportName="InsertStudentGroup" FunctionName="EIMS.Datalayer.Store.InsertStudentGroup" />
-          <FunctionImportMapping FunctionImportName="InsertSubject" FunctionName="EIMS.Datalayer.Store.InsertSubject" />
-          <FunctionImportMapping FunctionImportName="InsertTask" FunctionName="EIMS.Datalayer.Store.InsertTask" />
-          <FunctionImportMapping FunctionImportName="InsertTeacherSubject" FunctionName="EIMS.Datalayer.Store.InsertTeacherSubject" />
-          <FunctionImportMapping FunctionImportName="InsertUniversityGroup" FunctionName="EIMS.Datalayer.Store.InsertUniversityGroup" />
-          <FunctionImportMapping FunctionImportName="InsertUser" FunctionName="EIMS.Datalayer.Store.InsertUser" />
           <EntitySetMapping Name="Course">
             <EntityTypeMapping TypeName="EIMS.Datalayer.Course">
               <MappingFragment StoreEntitySet="Course">
@@ -1772,6 +1585,7 @@
                 <ScalarProperty Name="subjectHoursPerWeek" ColumnName="subjectHoursPerWeek" />
                 <ScalarProperty Name="subjectID" ColumnName="subjectID" />
                 <ScalarProperty Name="courseID" ColumnName="courseID" />
+                <ScalarProperty Name="courseFillID" ColumnName="courseFillID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1816,6 +1630,7 @@
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
                 <ScalarProperty Name="groupID" ColumnName="groupID" />
                 <ScalarProperty Name="courseID" ColumnName="courseID" />
+                <ScalarProperty Name="groupCourseID" ColumnName="groupCourseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1893,6 +1708,7 @@
                 <ScalarProperty Name="enrollmentDate" ColumnName="enrollmentDate" />
                 <ScalarProperty Name="studentID" ColumnName="studentID" />
                 <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="studentGroupID" ColumnName="studentGroupID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1936,6 +1752,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserLogin">
+            <EntityTypeMapping TypeName="EIMS.Datalayer.UserLogin">
+              <MappingFragment StoreEntitySet="UserLogin">
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="RoomPossibility" TypeName="EIMS.Datalayer.RoomPossibility" StoreEntitySet="RoomPossibility">
             <EndProperty Name="SRRequirement">
               <ScalarProperty Name="ID" ColumnName="ReqID" />
@@ -1968,7 +1793,7 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
