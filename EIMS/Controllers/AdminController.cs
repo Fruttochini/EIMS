@@ -110,7 +110,11 @@ namespace EIMS.Controllers
                 }
 
             }
-
+            var roles = new List<string>();
+            roles.Add("");
+            var iroles = RoleManager.Roles.Select(rol => rol.Name);
+            roles.AddRange(iroles);
+            model.Roles = roles;
             // If we got this far, something failed, redisplay form
             return View(model);
         }
