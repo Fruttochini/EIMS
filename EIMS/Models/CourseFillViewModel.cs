@@ -8,6 +8,7 @@ namespace EIMS.Models
 {
 	public class CourseFillViewModel
 	{
+		public int courseFillID { get; set; }
 		public int courseID { get; set; }
 		public int subjectID { get; set; }
 

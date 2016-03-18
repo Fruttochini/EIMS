@@ -4,12 +4,11 @@
 {
     <div class="container">
         <div class="well">
-            <span class="col-md-2">@Html.DisplayFor(modelItem => item.courseName)</span>
             <span class="col-md-2">@Html.DisplayFor(modelItem => item.subjectName)</span>
             <span class="col-md-2">@Html.DisplayFor(modelItem => item.SubjectHoursPerWeek)</span>
             <span>
-                @Html.ActionLink("Edit", "EditCourseFill", new { courseID = item.courseID, subjectID = item.subjectID }) |
-                @Html.ActionLink("Delete", "DeleteCourseFill", new { courseID = item.courseID, subjectID = item.subjectID })
+                @Html.ActionLink("Edit", "EditCourseFill", new { id = item.courseFillID }) |
+                @Html.ActionLink("Delete", "DeleteCourseFill", new { id = item.courseFillID })
             </span>
         </div>
     </div>
