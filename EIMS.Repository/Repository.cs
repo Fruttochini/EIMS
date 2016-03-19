@@ -396,6 +396,20 @@ namespace EIMS.Repository
             return reqList;
         }
 
+        public bool AddRequirement(Common.Requirement model)
+        {
+            var dbreq = new Datalayer.SRRequirement()
+            {
+                Requirement = model.Name
+            };
+            context.SRRequirement.Add(dbreq);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+
+        }
+
+
         public bool? CreateSubject(Common.Subject subject)
         {
             var dbSubject = new Datalayer.Subject()
@@ -543,17 +557,21 @@ namespace EIMS.Repository
                 isAvailable = room.IsAvailable,
                 roomNo = room.RoomNo
             };
-            var pList = new List<SRRequirement>();
-            foreach (var p in room.SelectedPossibilities)
+            
+            if (room.SelectedPossibilities != null)
             {
-                var pos = context.SRRequirement.Where(ps => ps.ID == p).FirstOrDefault();
-                if (pos != null)
-                    pList.Add(pos);
-                else
-                    return false;
+                var pList = new List<SRRequirement>();
+                foreach (var p in room.SelectedPossibilities)
+                {
+                    var pos = context.SRRequirement.Where(ps => ps.ID == p).FirstOrDefault();
+                    if (pos != null)
+                        pList.Add(pos);
+                    else
+                        return false;
 
+                }
+                item.SRRequirement = pList;
             }
-            item.SRRequirement = pList;
             context.Room.Add(item);
             if (context.SaveChanges() > 0)
                 return true;

@@ -112,6 +112,24 @@ namespace EIMS.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AddRequirement()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddRequirement(RequirementViewModel model)
+        {
+            Requirement req = new Requirement()
+            {
+                Name = model.Name
+            };
+            if (context.AddRequirement(req))
+                return RedirectToAction("Index");
+            return View(model);
+
+        }
+
         private object GetItemsPerPage(int page = 0)
         {
             var itemToSkip = page * pageSize;
@@ -128,6 +146,8 @@ namespace EIMS.Controllers
             }
             return subjectList.OrderBy(f => f.ID).Skip(itemToSkip).Take(pageSize).ToList();
         }
+
+  
 
     }
 }

@@ -22,4 +22,11 @@ namespace EIMS.Models
         public IEnumerable<int> SelectedRequirements { get; set; }
 
     }
+
+    public class RequirementViewModel
+    {
+        public int ID { get; set; }
+        [Required]
+        public string Name { get; set; }
+    }
 }
