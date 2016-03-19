@@ -190,6 +190,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseFillController.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
+    <Compile Include="Controllers\GroupCourseController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LessonOrderController.cs" />
@@ -221,9 +222,11 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\CourseFillInfinityScroll.js" />
+    <Content Include="Scripts\CourseFillInfinityScrolling.js" />
     <Content Include="Scripts\CourseInfinityScrolling.js" />
+    <Content Include="Scripts\DatePickerForAspNet.js" />
     <Content Include="Scripts\FacultyInfinityScrolling.js" />
+    <Content Include="Scripts\GroupCourseInfinityScrolling.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -305,6 +308,10 @@
     <Content Include="Views\Room\Edit.cshtml" />
     <Content Include="Views\Room\Details.cshtml" />
     <Content Include="Views\Subject\AddRequirement.cshtml" />
+    <Content Include="Views\GroupCourse\Index.cshtml" />
+    <Content Include="Views\GroupCourse\GetGroupCourse.cshtml" />
+    <Content Include="Views\GroupCourse\CreateGroupCourse.cshtml" />
+    <Content Include="Views\GroupCourse\EditGroupCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

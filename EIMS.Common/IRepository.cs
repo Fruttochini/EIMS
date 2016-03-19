@@ -24,8 +24,10 @@ namespace EIMS.Common
         IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id);
         IEnumerable<Common.CourseFill> GetAllCourseFill();
         IEnumerable<Common.Requirement> GetRequirements();
+		IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID);
 
-        bool AddRequirement(Common.Requirement model);
+
+		bool AddRequirement(Common.Requirement model);
 
         User GetUserByID(long ID);
         FacultyCommon GetFacultyByID(int id);
@@ -33,9 +35,11 @@ namespace EIMS.Common
 		Common.CourseFill GetCoursFillByID(int courseFillID);
         Common.LessonOrder GetLessonOrderByID(int id);
         Common.Room GetRoomByID(int id);
+		Common.GroupCourse GetGroupCoursByID(int id);
+		UniversityGroup GetGroupByID(int id);
 
-        ///Faculty ops
-        bool? CreateFaculty(FacultyCommon faculty);
+		///Faculty ops
+		bool? CreateFaculty(FacultyCommon faculty);
         bool? UpdateFaculty(FacultyCommon faculty);
         bool? DeleteFaculty(int id);
 
@@ -65,9 +69,13 @@ namespace EIMS.Common
         bool? DeleteRoom(int id);
 
         ///Groups ops
-        UniversityGroup GetGroupByID(int id);
         bool? AddGroup(Common.UniversityGroup group);
         bool? EditGroup(Common.UniversityGroup group);
         bool? DeleteGroup(int id);
-    }
+
+		///GroupCours ops
+		bool? CreateGroupCours(Common.GroupCourse gCourse);
+		bool? UpdateGroupCours(Common.GroupCourse gCourse);
+		bool? DeleteGroupCours(int id);
+	}
 }

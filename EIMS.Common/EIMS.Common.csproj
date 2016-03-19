@@ -44,6 +44,7 @@
     <Compile Include="CourseFill.cs" />
     <Compile Include="DayOfWeek.cs" />
     <Compile Include="Faculty.cs" />
+    <Compile Include="GroupCourse.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Lesson.cs" />
     <Compile Include="LessonDate.cs" />

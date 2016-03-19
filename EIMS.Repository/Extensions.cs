@@ -94,6 +94,19 @@ namespace EIMS.Repository
 			return tmpCourseFill;
 		}
 
+		public static Common.GroupCourse ToGroupCourse(this Datalayer.GroupCourse gCourse)
+		{
+			var tmpGroupCourse = new Common.GroupCourse()
+			{
+				GroupCourseID = gCourse.groupCourseID,
+				CourseID = gCourse.courseID,
+				GroupID = gCourse.groupID,
+				StartDate = gCourse.startDate,
+				EndDate = gCourse.endDate
+			};
+			return tmpGroupCourse;
+		}
+
 		public static Common.LessonOrder ToLessonOrder(this Datalayer.LessonOrder lOrder)
 		{
 			var tmpLessonOrder = new Common.LessonOrder()

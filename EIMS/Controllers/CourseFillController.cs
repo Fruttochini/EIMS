@@ -53,14 +53,14 @@ namespace EIMS.Controllers
 				CourseName = tmpCourse.CourseName
 			};
 			courseFill.SelectCourse = cvm;
-			courseFill.subjectList = subjectByCoursList.OrderBy(cf => cf.courseID).Skip(itemToSkip).Take(pageSize).ToList();
+			courseFill.subjectList = subjectByCoursList.OrderBy(cf => cf.courseFillID).Skip(itemToSkip).Take(pageSize).ToList();
 			return courseFill;
 		}
 
 		public ActionResult CreateCourseFill(int id)
 		{
 			var dbSubject = context.GetSubjects().Select(x => new SelectListItem() { Text = x.SubjectName, Value = x.SubjectID.ToString() }).ToList();
-			CreateEditCourseFillViewModel model = new CreateEditCourseFillViewModel
+			CreateEditCourseFillViewModel model = new CreateEditCourseFillViewModel()
 			{
 				courseID = id,
 				SubjectList = dbSubject,

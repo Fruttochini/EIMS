@@ -8,15 +8,16 @@
 <p>
     @Html.ActionLink("Create New", "CreateCourseFill", new { id = Model.SelectCourse.CourseID })
 </p>
-<div class="container well">
-    <div class="col-md-2" style="display: inline">
-        <span>@Html.DisplayNameFor(model => model.SubjectName)</span>
-    </div>
-    <div class="col-md-2" style="display: inline">
-        <span>@Html.DisplayNameFor(model => model.SubjectHoursPerWeek)</span>
-    </div>
-</div>
 <div id="ScrollList">
+    <div class="row">
+        <div class="col-md-2">
+            <span>@Html.DisplayNameFor(model => model.SubjectName)</span>
+        </div>
+        <div class="col-md-4">
+            <span>@Html.DisplayNameFor(model => model.SubjectHoursPerWeek)</span>
+        </div>
+        <div class="col-md-4"><strong>Options</strong></div>
+    </div>
     @Html.Partial("GetCourseFill")
 </div>
 <p>

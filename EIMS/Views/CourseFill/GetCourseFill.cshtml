@@ -1,14 +1,12 @@
 ﻿@model EIMS.Models.CourseFillViewModel
 @foreach (var item in Model.subjectList)
 {
-    <div class="container">
-        <div class="well">
-            <span class="col-md-2">@Html.DisplayFor(modelItem => item.subjectName)</span>
-            <span class="col-md-2">@Html.DisplayFor(modelItem => item.SubjectHoursPerWeek)</span>
-            <span>
-                @Html.ActionLink("Edit", "EditCourseFill", new { courseFillID = item.courseFillID }) |
-                @Html.ActionLink("Delete", "DeleteCourseFill", new { courseFillID = item.courseFillID })
-            </span>
+    <div class="row" style="font-size:16px">
+        <div class="col-md-2">@Html.DisplayFor(modelItem => item.subjectName)</div>
+        <div class="col-md-2">@Html.DisplayFor(modelItem => item.SubjectHoursPerWeek)</div>
+        <div class="col-md-4">
+            @Html.ActionLink("Edit", "EditCourseFill", new { courseFillID = item.courseFillID }) |
+            @Html.ActionLink("Delete", "DeleteCourseFill", new { courseFillID = item.courseFillID })
         </div>
     </div>
 }

@@ -6,7 +6,12 @@
 }
 
 <h3>Detail Course</h3>
-
+<p>
+    @Html.ActionLink("To Course Fill", "Index", "CourseFill", new { courseID = Model.CourseID }, null)
+</p>
+<p>
+    @Html.ActionLink("To Group in Course", "Index", "GroupCourse", new { courseID = Model.CourseID }, null)
+</p>
 
 <div>
     <hr />
@@ -27,7 +32,7 @@
             @Html.DisplayFor(model => model.CourseName)
         </dd>
     </dl>
-    @Html.ActionLink("To Course Fill", "Index", "CourseFill", new { courseID = Model.CourseID}, null)
+    
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index")

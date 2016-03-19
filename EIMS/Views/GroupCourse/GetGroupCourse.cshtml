@@ -1,0 +1,14 @@
+﻿@model EIMS.Models.GroupCoursViewModel
+
+@foreach (var item in Model.groupList)
+{
+    <div class="row" style="font-size:16px">
+        <div class="col-md-2">@Html.DisplayFor(modelItem => item.GroupName)</div>
+        <div class="col-md-2">@Html.DisplayFor(modelItem => item.startDate)</div>
+        <div class="col-md-2">@Html.DisplayFor(modelItem => item.endDate)</div>
+        <div class="col-md-4">
+            @Html.ActionLink("Edit", "EditGroupCourse", new { id = item.groupCourseID }) |
+            @Html.ActionLink("Delete", "DeleteGroupCourse", new { id = item.groupCourseID })
+        </div>
+    </div>
+}

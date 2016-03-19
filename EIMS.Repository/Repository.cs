@@ -323,6 +323,27 @@ namespace EIMS.Repository
             return false;
         }
 
+		public IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID)
+		{
+			var dbLst = context.GroupCourse.Where(gCourse => gCourse.courseID == courseID).ToList();
+			var result = new List<Common.GroupCourse>();
+			foreach(var item in dbLst)
+			{
+				var tmpGroupCourse = new Common.GroupCourse()
+				{
+					GroupCourseID = item.groupCourseID,
+					CourseID = item.courseID,
+					CourseName = item.Course.courseName,
+					GroupID = item.groupID,
+					GroupName = item.UniversityGroup.groupName,
+					StartDate = item.startDate,
+					EndDate = item.endDate
+				};
+				result.Add(tmpGroupCourse);
+			}
+			return result;
+		}
+
         public IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id)
         {
             var dbLst = context.CourseFill.Where(cFill => cFill.courseID == id).ToList();
@@ -381,6 +402,12 @@ namespace EIMS.Repository
             var dbCourseFill = context.CourseFill.Where(cf => cf.courseFillID == courseFillID).Single();
             return dbCourseFill.ToCourseFill();
         }
+
+		public Common.GroupCourse GetGroupCoursByID(int id)
+		{
+			var dbGroupCourse = context.GroupCourse.Where(gc => gc.groupCourseID == id).Single();
+			return dbGroupCourse.ToGroupCourse();
+		}
 
         public IEnumerable<Requirement> GetRequirements()
         {
@@ -491,6 +518,42 @@ namespace EIMS.Repository
             }
             return false;
         }
+
+		public bool? CreateGroupCours(Common.GroupCourse gCourse)
+		{
+			var dbItem = new Datalayer.GroupCourse()
+			{
+				courseID = gCourse.CourseID,
+				groupID = gCourse.GroupID,
+				startDate = gCourse.StartDate,
+				endDate = gCourse.EndDate
+			};
+			context.GroupCourse.Add(dbItem);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? UpdateGroupCours(Common.GroupCourse gCourse)
+		{
+			var tmpGroupCours = context.GroupCourse.Where(gc => gc.groupCourseID == gCourse.GroupCourseID).Single();
+			tmpGroupCours.courseID = gCourse.CourseID;
+			tmpGroupCours.groupID = gCourse.GroupID;
+			tmpGroupCours.startDate = gCourse.StartDate;
+			tmpGroupCours.endDate = gCourse.EndDate;
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? DeleteGroupCours(int id)
+		{
+			var tmpGroupCours = context.GroupCourse.Where(gc => gc.groupCourseID == id).Single();
+			context.GroupCourse.Remove(tmpGroupCours);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
 
         public bool? CreateLessonOrder(Common.LessonOrder lOrder)
         {
