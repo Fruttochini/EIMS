@@ -17,6 +17,6 @@ namespace EIMS.Models
 		public int SubjectHoursPerWeek { get; set; }
 
 		public IEnumerable<SelectListItem> SubjectList { get; set; }
-		public IEnumerable<SelectListItem> CourseList { get; set; }
+		//public IEnumerable<SelectListItem> CourseList { get; set; }
 	}
 }

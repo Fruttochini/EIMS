@@ -85,7 +85,7 @@ namespace EIMS.Controllers
 		}
 
 		[HttpPost]
-		[AllowAnonymous]
+		
 		[ValidateAntiForgeryToken]
 		public ActionResult EditCourse(CourseViewModel model)
 		{
@@ -119,11 +119,26 @@ namespace EIMS.Controllers
 		public ActionResult DetailCourse(int id)
 		{
 			var courseFill = context.GetCourseByID(id);
-			var tmpCourseFill = new CourseViewModel()
+            var dbCourseFill = context.GetCourseFillByCourse(id);
+            var courseFillList = new List<CourseFillViewModel>();
+            var dbSubject = context.GetSubjects().Select(x => new SelectListItem() { Text = x.SubjectName, Value = x.SubjectID.ToString() }).ToList();
+            foreach (var item in dbCourseFill)
+            {
+                CourseFillViewModel tmpCourseFillViewModel = new CourseFillViewModel()
+                {
+                     courseFillID = item.courseFillID,
+                     courseID = item.courseID,
+                     courseName = item.courseName,
+                     SubjectList = dbSubject,
+                     SubjectHoursPerWeek = item.SubjectHoursPerWeek                      
+                };
+                courseFillList.Add(tmpCourseFillViewModel);
+            }
+            var tmpCourseFill = new CourseViewModel()
 			{
 				CourseID = courseFill.CourseID,
 				CourseName = courseFill.CourseName,
-				SubjectByHours = courseFill.SubjectByHours
+                Subjects = courseFillList,
 			};
 			return View(tmpCourseFill);
 		}

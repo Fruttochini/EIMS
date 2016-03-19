@@ -30,7 +30,7 @@ namespace EIMS.Common
         User GetUserByID(long ID);
         FacultyCommon GetFacultyByID(int id);
         Course GetCourseByID(int id);
-        Common.CourseFill GetCoursFillByCourseSubject(int courseID, int subjectID);
+        Common.CourseFill GetCoursFillByID(int courseFillID);
         Common.LessonOrder GetLessonOrderByID(int id);
         Common.Room GetRoomByID(int id);
 
@@ -47,7 +47,7 @@ namespace EIMS.Common
         ///CourseFill ops
         bool? CreateCourseFill(Common.CourseFill courseFill);
         bool? UpdateCourseFill(Common.CourseFill courseFill);
-        bool? DeleteCourseFill(int courseID, int subjectID);
+        bool? DeleteCourseFill(int id);
 
         ///LessonOrder ops
         bool? CreateLessonOrder(Common.LessonOrder lOrder);

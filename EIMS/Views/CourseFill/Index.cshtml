@@ -1,26 +1,26 @@
-﻿@model IEnumerable<EIMS.Models.CourseFillViewModel>
+﻿@model EIMS.Models.CourseViewModel
 @{
     ViewBag.Title = "Course Fill";
 }
 
-<h2>@Html.DisplayNameFor(model=>model.courseName)</h2>
+<h2>@Html.DisplayTextFor(model=>model.CourseName)</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateCourseFill", new { courseID =  ViewBag.CourseID })
+    @Html.ActionLink("Create New", "CreateCourseFill", new { courseID =  Model.CourseID })
 </p>
 <div class="container well">
     <div class="col-md-2" style="display: inline">
         <span>@Html.DisplayNameFor(model => model.subjectName)</span>
     </div>
     <div class="col-md-2" style="display: inline">
-        <span>@Html.DisplayNameFor(model => model.SubjectHoursPerWeek)</span>
+        <span>@Html.DisplayNameFor(model => model.subjectHoursPerWeek)</span>
     </div>
 </div>
 <div id="ScrollList">
     @Html.Partial("GetCourseFill")
 </div>
 <p>
-    @Html.ActionLink("Back to Details", "DetailCourse", "Course", new { courseID = ViewBag.CourseID })
+    @Html.ActionLink("Back to Details", "DetailCourse", "Course", new { courseID = Model.CourseID })
 </p>
 @section Scripts {
     @Scripts.Render("~/Scripts/CourseFillInfinityScrolling.js")

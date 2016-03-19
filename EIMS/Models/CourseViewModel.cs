@@ -9,7 +9,10 @@ namespace EIMS.Models
 	{
 		public int CourseID { get; set; }
 		public string CourseName { get; set; }
+        public string subjectName { get; set; }
+        public string subjectHoursPerWeek { get; set; }
 
-		public Dictionary<string,int> SubjectByHours { get; set; } 
-	}
+        public CourseFillViewModel selectedSubject { get; set; }
+        public IEnumerable<CourseFillViewModel> Subjects { get; set; }
+    }
 }

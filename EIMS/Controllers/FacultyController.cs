@@ -52,7 +52,7 @@ namespace EIMS.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        
         [ValidateAntiForgeryToken]
         public ActionResult CreateFaculty(FacultyViewModel faculty)
         {
@@ -88,7 +88,7 @@ namespace EIMS.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        
         [ValidateAntiForgeryToken]
         public ActionResult EditFaculty(FacultyViewModel model)
         {
