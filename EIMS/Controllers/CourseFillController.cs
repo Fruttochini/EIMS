@@ -31,85 +31,87 @@ namespace EIMS.Controllers
 		public object GetItemsPerPage(int courseID, int page=0)
 		{
 			var itemToSkip = page * pageSize;
-			var courseFillList = new List<CourseFillViewModel>();
+			var subjectByCoursList = new List<CourseFillList>();
+			var courseFill = new CourseFillViewModel();
 			var dbLst = context.GetCourseFillByCourse(courseID);
 			foreach(var item in dbLst)
 			{
-				CourseFillViewModel cfvm = new CourseFillViewModel()
+				CourseFillList cf = new CourseFillList()
 				{
-
-					courseID=item.courseID,
-					subjectID=item.subjectID,
-					courseName=item.courseName,
-					subjectName=item.subjectName,
-					SubjectHoursPerWeek=item.SubjectHoursPerWeek,
+					courseFillID = item.courseFillID,
+					courseID = item.courseID,
+					subjectID = item.subjectID,
+					subjectName = item.subjectName,
+					SubjectHoursPerWeek = item.SubjectHoursPerWeek
 				};
-				courseFillList.Add(cfvm);
+				subjectByCoursList.Add(cf);
 			}
-			return courseFillList.OrderBy(cf => cf.courseID).Skip(itemToSkip).Take(pageSize).ToList();
+			var tmpCourse = context.GetCourseByID(courseID);
+			CourseViewModel cvm = new CourseViewModel()
+			{
+				CourseID = tmpCourse.CourseID,
+				CourseName = tmpCourse.CourseName
+			};
+			courseFill.SelectCourse = cvm;
+			courseFill.subjectList = subjectByCoursList.OrderBy(cf => cf.courseID).Skip(itemToSkip).Take(pageSize).ToList();
+			return courseFill;
 		}
 
-		public ActionResult CreateCourseFill()
+		public ActionResult CreateCourseFill(int id)
 		{
 			var dbSubject = context.GetSubjects().Select(x => new SelectListItem() { Text = x.SubjectName, Value = x.SubjectID.ToString() }).ToList();
-			var dbCourse = context.GetCourses().Select(x => new SelectListItem() { Text = x.CourseName, Value = x.CourseID.ToString() }).ToList();
-			CourseFillViewModel cfvm = new CourseFillViewModel()
+			CreateEditCourseFillViewModel model = new CreateEditCourseFillViewModel
 			{
+				courseID = id,
 				SubjectList = dbSubject,
-				CourseList = dbCourse,
 			};
-			return View(cfvm);
+			return View(model);
 		}
 
 		[HttpPost]
-		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-		public ActionResult CreateCourseFill(CourseFillViewModel courseFill)
+		public ActionResult CreateCourseFill(CreateEditCourseFillViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
 				var tmpCourseFill = new Common.CourseFill()
 				{
-					courseID = courseFill.courseID,
-					subjectID = courseFill.subjectID,
-					SubjectHoursPerWeek = courseFill.SubjectHoursPerWeek
+					courseID = model.courseID,
+					subjectID = model.subjectID,
+					SubjectHoursPerWeek = model.SubjectHoursPerWeek
 				};
 				if (context.CreateCourseFill(tmpCourseFill) == true)
 				{
-					return RedirectToAction("Index", "CourseFill");
+					return RedirectToAction("Index", new { courseID = model.courseID });
 				}
 				else
 				{
 					return View();
 				}
 			}
-			return View(courseFill);
+			return View(model);
 		}
 
-		public ActionResult EditCourseFill(int courseID, int subjectID)
+		public ActionResult EditCourseFill(int courseFillID)
 		{
-			var courseFill = context.GetCoursFillByCourseSubject(courseID, subjectID);
+			var courseFill = context.GetCoursFillByID(courseFillID);
 			var dbSubject = context.GetSubjects().Select(x => new SelectListItem() { Text = x.SubjectName, Value = x.SubjectID.ToString() }).ToList();
-			var dbCourse = context.GetCourses().Select(x => new SelectListItem() { Text = x.CourseName, Value = x.CourseID.ToString() }).ToList();
-			var tmpCourseFill = new CourseFillViewModel()
+			var tmpCourseFill = new CreateEditCourseFillViewModel()
 			{
 				courseFillID = courseFill.courseFillID,
 				courseID = courseFill.courseID,
-				subjectID = courseFill.subjectID,
 				SubjectHoursPerWeek = courseFill.SubjectHoursPerWeek,
-				SubjectList = dbSubject,
-				CourseList = dbCourse
+				SubjectList = dbSubject
 			};
 			return View(tmpCourseFill);
 		}
 
 		[HttpPost]
-		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-		public ActionResult EditCourseFill(CourseFillViewModel model)
+		public ActionResult EditCourseFill(CreateEditCourseFillViewModel model)
 		{
 			bool IsChanged = false;
-			var courseFill = context.GetCoursFillByCourseSubject(model.courseID, model.subjectID);
+			var courseFill = context.GetCoursFillByID(model.courseFillID);
 			var tmpCourseFill = new Common.CourseFill();
 			if(!courseFill.subjectID.Equals(model.subjectID))
 			{
@@ -128,13 +130,15 @@ namespace EIMS.Controllers
 				tmpCourseFill.subjectID = model.subjectID;
 				context.UpdateCourseFill(tmpCourseFill);
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", new { courseID = model.courseID });
 		}
 
-		public ActionResult DeleteCourseFill(int courseID, int subjectID)
+		public ActionResult DeleteCourseFill(int courseFillID)
 		{
-			context.DeleteCourseFill(courseID, subjectID);
-			return RedirectToAction("Index");
+			var model = context.GetCoursFillByID(courseFillID);
+			if(context.DeleteCourseFill(courseFillID) == true)
+				return RedirectToAction("Index", new { courseID = model.courseID });
+			return View();
 		}
 	}
 }

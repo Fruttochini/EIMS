@@ -26,13 +26,13 @@ namespace EIMS.Repository
             foreach (var item in dbLst)
             {
                 var tmpCrs = new Common.Course() { CourseID = item.courseID, CourseName = item.courseName };
-                var dct = new Dictionary<string, int>();
-                var tmpLst = item.CourseFill.Select(course => new { course.Subject.subjectName, course.subjectHoursPerWeek });
-                foreach (var anonim in tmpLst)
-                {
-                    dct.Add(anonim.subjectName, anonim.subjectHoursPerWeek);
-                }
-                tmpCrs.SubjectByHours = dct;
+                //var dct = new Dictionary<string, int>();
+                //var tmpLst = item.CourseFill.Select(course => new { course.Subject.subjectName, course.subjectHoursPerWeek });
+                //foreach (var anonim in tmpLst)
+                //{
+                //    dct.Add(anonim.subjectName, anonim.subjectHoursPerWeek);
+                //}
+                //tmpCrs.SubjectByHours = dct;
                 result.Add(tmpCrs);
             }
             return result;
@@ -281,15 +281,15 @@ namespace EIMS.Repository
         public Common.Course GetCourseByID(int id)
         {
             var dbusr = context.Course.Where(crs => crs.courseID == id).Single();
-            var dct = new Dictionary<string, int>();
+            //var dct = new Dictionary<string, int>();
             var course = new Common.Course();
-            foreach (var item in dbusr.CourseFill.Where(cFill => cFill.courseID == id))
-            {
-                dct.Add(item.Subject.subjectName, item.subjectHoursPerWeek);
-            }
+            //foreach (var item in dbusr.CourseFill.Where(cFill => cFill.courseID == id))
+            //{
+            //    dct.Add(item.Subject.subjectName, item.subjectHoursPerWeek);
+            //}
             course.CourseID = dbusr.courseID;
             course.CourseName = dbusr.courseName;
-            course.SubjectByHours = dct;
+            //course.SubjectByHours = dct;
             return course;
         }
 
@@ -378,7 +378,7 @@ namespace EIMS.Repository
         }
         public Common.CourseFill GetCoursFillByID(int courseFillID)
         {
-            var dbCourseFill = context.CourseFill.Where(cf => cf.courseID == courseFillID).Single();
+            var dbCourseFill = context.CourseFill.Where(cf => cf.courseFillID == courseFillID).Single();
             return dbCourseFill.ToCourseFill();
         }
 
@@ -657,16 +657,6 @@ namespace EIMS.Repository
         }
 
         public bool? DeleteGroup(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Common.CourseFill GetCoursFillByCourseSubject(int courseID, int subjectID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool? DeleteCourseFill(int courseID, int subjectID)
         {
             throw new NotImplementedException();
         }

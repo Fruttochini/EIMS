@@ -27,7 +27,7 @@
             @Html.DisplayFor(model => model.CourseName)
         </dd>
     </dl>
-    @Html.ActionLink("To Course Fill", "Index", "CourseFill", new { courseID = Model.CourseID})
+    @Html.ActionLink("To Course Fill", "Index", "CourseFill", new { courseID = Model.CourseID}, null)
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index")

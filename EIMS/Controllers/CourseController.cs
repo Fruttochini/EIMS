@@ -111,11 +111,6 @@ namespace EIMS.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public ActionResult GetCourseByID(int id)
-		{
-			return View(context.GetCourseByID(id));
-		}
-
 		public ActionResult DetailCourse(int id)
 		{
 			var courseFill = context.GetCourseByID(id);
@@ -123,7 +118,7 @@ namespace EIMS.Controllers
 			{
 				CourseID = courseFill.CourseID,
 				CourseName = courseFill.CourseName,
-				SubjectByHours = courseFill.SubjectByHours
+				//SubjectByHours = courseFill.SubjectByHours
 			};
 			return View(tmpCourseFill);
 		}
