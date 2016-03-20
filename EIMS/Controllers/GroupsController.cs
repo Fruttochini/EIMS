@@ -85,10 +85,10 @@ namespace EIMS.Controllers
                 {
                     GroupName = model.Name,
                     CreationDate = DateTime.Now.Date,
-                    FacultyID = model.SelectedFaculty.FacultyID
+                    FacultyID = model.SelectedFaculty
                 };
-                if (model.Supervisor != null)
-                    gr.SupervisorID = model.Supervisor.ID;
+                if (model.Supervisor > 0)
+                    gr.SupervisorID = model.Supervisor;
 
                 if (context.AddGroup(gr) == true)
                     return RedirectToAction("Index");
@@ -118,7 +118,7 @@ namespace EIMS.Controllers
                     Surname = dbsupervisor.Surname,
                     MiddleName = dbsupervisor.MiddleName
                 };
-                model.Supervisor = supervisor;
+                model.Supervisor = supervisor.ID;
             }
 
             if (group.elderID != null)
@@ -131,7 +131,7 @@ namespace EIMS.Controllers
                     Surname = dbelder.Surname,
                     MiddleName = dbelder.MiddleName
                 };
-                model.Supervisor = elder;
+                model.Elder = elder.ID;
             }
 
 
