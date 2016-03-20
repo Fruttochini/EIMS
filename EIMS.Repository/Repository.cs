@@ -711,7 +711,21 @@ namespace EIMS.Repository
 
         public bool? AddGroup(Common.UniversityGroup group)
         {
-            throw new NotImplementedException();
+            Datalayer.UniversityGroup dbGr = new Datalayer.UniversityGroup()
+            {
+                groupName = group.GroupName,
+                facultyID = group.FacultyID,
+                creationDate = group.CreationDate,
+                supervisorID = group.SupervisorID,
+                elderID = group.elderID
+                
+            };
+            context.UniversityGroup.Add(dbGr);
+            if (context.SaveChanges() > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public bool? EditGroup(Common.UniversityGroup group)

@@ -227,6 +227,7 @@
     <Content Include="Scripts\DatePickerForAspNet.js" />
     <Content Include="Scripts\FacultyInfinityScrolling.js" />
     <Content Include="Scripts\GroupCourseInfinityScrolling.js" />
+    <Content Include="Scripts\GroupInfinityScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -312,10 +313,12 @@
     <Content Include="Views\GroupCourse\GetGroupCourse.cshtml" />
     <Content Include="Views\GroupCourse\CreateGroupCourse.cshtml" />
     <Content Include="Views\GroupCourse\EditGroupCourse.cshtml" />
+    <Content Include="Views\Groups\Index.cshtml" />
+    <Content Include="Views\Groups\_GetGroupsListPartial.cshtml" />
+    <Content Include="Views\Groups\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Groups\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

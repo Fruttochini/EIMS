@@ -35,13 +35,13 @@ namespace EIMS.Models
 
         [Required]
         [Display(Name = "Faculty")]
-        public FacultyViewModel SelectedFaculty { get; set; }
+        public int SelectedFaculty { get; set; }
 
         public IEnumerable<GroupUserInfo> TeacherList { get; set; }
-        public GroupUserInfo Supervisor { get; set; }
-
+        public long Supervisor { get; set; }
+    
         public IEnumerable<GroupUserInfo> Students { get; set; }
-        public GroupUserInfo Elder { get; set; }
+        public long Elder { get; set; }
     }
     //source model
     //public class GroupViewModel
