@@ -14,6 +14,7 @@ namespace EIMS.Datalayer
     
     public partial class LessonPresence
     {
+        public long lessonPresenceID { get; set; }
         public long lessonDateID { get; set; }
         public long studentID { get; set; }
         public bool presence { get; set; }

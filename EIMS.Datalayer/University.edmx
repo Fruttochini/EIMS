@@ -92,9 +92,9 @@
         </EntityType>
         <EntityType Name="LessonPresence">
           <Key>
-            <PropertyRef Name="lessonDateID" />
-            <PropertyRef Name="studentID" />
+            <PropertyRef Name="lessonPresenceID" />
           </Key>
+          <Property Name="lessonPresenceID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="lessonDateID" Type="bigint" Nullable="false" />
           <Property Name="studentID" Type="bigint" Nullable="false" />
           <Property Name="presence" Type="bit" Nullable="false" />
@@ -1162,9 +1162,9 @@
         </EntityType>
         <EntityType Name="LessonPresence">
           <Key>
-            <PropertyRef Name="lessonDateID" />
-            <PropertyRef Name="studentID" />
+            <PropertyRef Name="lessonPresenceID" />
           </Key>
+          <Property Name="lessonPresenceID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="lessonDateID" Type="Int64" Nullable="false" />
           <Property Name="studentID" Type="Int64" Nullable="false" />
           <Property Name="presence" Type="Boolean" Nullable="false" />
@@ -1672,6 +1672,7 @@
                 <ScalarProperty Name="presence" ColumnName="presence" />
                 <ScalarProperty Name="studentID" ColumnName="studentID" />
                 <ScalarProperty Name="lessonDateID" ColumnName="lessonDateID" />
+                <ScalarProperty Name="lessonPresenceID" ColumnName="lessonPresenceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
