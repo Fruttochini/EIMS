@@ -264,11 +264,34 @@ namespace EIMS.Controllers
         [HttpPost]
         public ActionResult AssignStudents(StudentGroupAssignmentViewModel model)
         {
-            if (model.StudentsToAssing != null)
+
+
+            if (model.StudinGroupIDs != null)
             {
-                foreach (var item in model.StudentsToAssing)
+                var studInGrIDs = context.GetStudentByGroup(model.ID).Select(u => u.ID).ToList();
+                if (studInGrIDs.Count != model.StudinGroupIDs.ToList().Count)
                 {
-                    
+                    var deasignList = studInGrIDs.Except(model.StudinGroupIDs);
+                    foreach (var item in deasignList)
+                    {
+                        context.DeassignStudent(model.ID, item);
+                    }
+                }
+            }
+            else
+            {
+                var studInGrIDs = context.GetStudentByGroup(model.ID).Select(u => u.ID).ToList();
+                foreach (var item in studInGrIDs)
+                {
+                    context.DeassignStudent(model.ID, item);
+                }
+            }
+
+            if (model.StudentsToAssign != null)
+            {
+                foreach (var item in model.StudentsToAssign)
+                {
+                    context.AssignStudent(model.ID, item);
                 }
             }
             return RedirectToAction("Index");

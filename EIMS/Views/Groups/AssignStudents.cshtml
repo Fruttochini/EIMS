@@ -55,7 +55,7 @@
                         <li>
                             <input type="checkbox"
                                    name="StudentsToAssign" value="@item.ID" id="@item.ID"
-                                   @{if (Model.StudentsToAssing != null && Model.StudentsToAssing.Contains(item.ID)) { <text> checked='checked' </text>       } } />
+                                   @{if (Model.StudentsToAssign != null && Model.StudentsToAssign.Contains(item.ID)) { <text> checked='checked' </text>       } } />
                             <label for="@item.ID">@item.FullName</label>
                         </li>
     }

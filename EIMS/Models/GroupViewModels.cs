@@ -54,7 +54,7 @@ namespace EIMS.Models
         public IEnumerable<long> StudinGroupIDs { get; set; }
 
         public IEnumerable<GroupUserInfo> Students { get; set; }
-        public IEnumerable<long> StudentsToAssing { get; set; }
+        public IEnumerable<long> StudentsToAssign { get; set; }
 
     }
     //source model
