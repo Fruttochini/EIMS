@@ -1,0 +1,81 @@
+﻿@model EIMS.Models.StudentGroupAssignmentViewModel
+
+@{
+    ViewBag.Title = "AssignStudents";
+}
+
+<h2>AssignStudents</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>StudentGroupAssignmentViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Faculty, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.Faculty, new { htmlAttributes = new { @class = "form-control" } })
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-5">
+                <ul>
+                    @foreach (var item in Model.GroupStudents)
+                {
+                        <li>
+                            <input type="checkbox"
+                                   name="StudinGroupIDs" value="@item.ID" id="@item.ID"
+                                   @{if (Model.StudinGroupIDs != null && Model.StudinGroupIDs.Contains(item.ID)) { <text> checked='checked' </text>      } } />
+                            <label for="@item.ID">@item.FullName</label>
+                        </li>
+    }
+                </ul>
+            </div>
+
+            <div class="col-md-5">
+                <ul>
+                    @foreach (var item in Model.Students)
+                {
+                        <li>
+                            <input type="checkbox"
+                                   name="StudentsToAssign" value="@item.ID" id="@item.ID"
+                                   @{if (Model.StudentsToAssign != null && Model.StudentsToAssign.Contains(item.ID)) { <text> checked='checked' </text>       } } />
+                            <label for="@item.ID">@item.FullName</label>
+                        </li>
+    }
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Assign Students" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

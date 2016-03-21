@@ -24,7 +24,7 @@ namespace EIMS.Common
         IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id);
         IEnumerable<Common.CourseFill> GetAllCourseFill();
         IEnumerable<Common.Requirement> GetRequirements();
-		IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID);
+        IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID);
 
         IEnumerable<User> GetStudentByGroup(int groupID);
 
@@ -34,14 +34,17 @@ namespace EIMS.Common
         User GetUserByID(long ID);
         FacultyCommon GetFacultyByID(int id);
         Course GetCourseByID(int id);
-		Common.CourseFill GetCoursFillByID(int courseFillID);
+        Common.CourseFill GetCoursFillByID(int courseFillID);
         Common.LessonOrder GetLessonOrderByID(int id);
         Common.Room GetRoomByID(int id);
-		Common.GroupCourse GetGroupCoursByID(int id);
-		UniversityGroup GetGroupByID(int id);
+        Common.GroupCourse GetGroupCoursByID(int id);
+        UniversityGroup GetGroupByID(int id);
 
-		///Faculty ops
-		bool? CreateFaculty(FacultyCommon faculty);
+        void SeedValues();
+
+
+        ///Faculty ops
+        bool? CreateFaculty(FacultyCommon faculty);
         bool? UpdateFaculty(FacultyCommon faculty);
         bool? DeleteFaculty(int id);
 
@@ -75,9 +78,14 @@ namespace EIMS.Common
         bool? EditGroup(Common.UniversityGroup group);
         bool? DeleteGroup(int id);
 
-		///GroupCours ops
-		bool? CreateGroupCours(Common.GroupCourse gCourse);
-		bool? UpdateGroupCours(Common.GroupCourse gCourse);
-		bool? DeleteGroupCours(int id);
-	}
+        ///GroupCours ops
+        bool? CreateGroupCours(Common.GroupCourse gCourse);
+        bool? UpdateGroupCours(Common.GroupCourse gCourse);
+        bool? DeleteGroupCours(int id);
+
+        ///Studnet ops
+        IEnumerable<User> GetStudentsWOGroups();
+        bool AssignStudent(int groupID, long studentID);
+        bool DeassignStudent(int groupID, long studentID);
+    }
 }
