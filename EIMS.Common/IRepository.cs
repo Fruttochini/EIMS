@@ -19,7 +19,7 @@ namespace EIMS.Common
         IEnumerable<LessonPresence> GetLessonPresence();
         IEnumerable<FacultyCommon> GetFaculties();
         IEnumerable<UniversityGroup> GetGroups();
-        IEnumerable<Lesson> GetLessons();
+
         IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
         IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id);
         IEnumerable<Common.CourseFill> GetAllCourseFill();
@@ -87,5 +87,10 @@ namespace EIMS.Common
         IEnumerable<User> GetStudentsWOGroups();
         bool AssignStudent(int groupID, long studentID);
         bool DeassignStudent(int groupID, long studentID);
+
+        ///Lesson - Schedule ops
+        IEnumerable<Lesson> GetLessonsByGroup(int id);
+        IEnumerable<Lesson> GetLessonByTeacher(long id);
+
     }
 }

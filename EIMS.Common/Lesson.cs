@@ -13,8 +13,8 @@ namespace EIMS.Common
         public int GroupID { get; set; }
         public long TeacherID { get; set; }
         public int RoomID { get; set; }
-		public int LessonOrder { get; set; }
-		public byte DayOfWeek { get; set; }
+        public int LessonOrder { get; set; }
+        public byte DayOfWeek { get; set; }
 
 
         public string SubjectName { get; set; }
@@ -22,6 +22,6 @@ namespace EIMS.Common
         public string TeacherFullName { get; set; }
         public string RoomNo { get; set; }
 
-		public IEnumerable<long> LessonDateID { get; set; }
+        public IEnumerable<long> LessonDateID { get; set; }
     }
 }

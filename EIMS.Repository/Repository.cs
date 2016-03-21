@@ -827,6 +827,21 @@ namespace EIMS.Repository
             }
             return false;
         }
+
+
+
+        public IEnumerable<Common.Lesson> GetLessonsByGroup(int id)
+        {
+            List<Common.Lesson> lList = new List<Common.Lesson>();
+
+
+            return lList;
+        }
+
+        public IEnumerable<Common.Lesson> GetLessonByTeacher(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

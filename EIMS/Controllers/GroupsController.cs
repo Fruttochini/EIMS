@@ -305,6 +305,61 @@ namespace EIMS.Controllers
         //    return RedirectToAction("Index");
         //}
 
+        public ActionResult Schedule(int id)
+        {
+            var dbList = context.GetLessonsByGroup(id);
+            var model = new ScheduleViewModel()
+            {
+                GroupID = id
+            };
+            List<LessonInfoViewModel> lessons = new List<LessonInfoViewModel>();
+            foreach (var item in dbList)
+            {
+                LessonInfoViewModel lesson = new LessonInfoViewModel()
+                {
+                    LessonID = item.LessonID,
+                    DayID = item.DayOfWeek,
+                    OrderID = item.LessonOrder,
+                    RoomNo = item.RoomNo,
+                    Subject = item.SubjectName,
+                    Teacher = item.TeacherFullName
+                };
+                lessons.Add(lesson);
+            }
+
+            var dbDays = context.GetDayOfWeek();
+            List<DayVm> days = new List<DayVm>();
+            foreach (var item in dbDays)
+            {
+                var tmp = new DayVm()
+                {
+                    ID = item.DayID,
+                    Name = item.DayName
+                };
+                days.Add(tmp);
+            }
+            days.OrderBy(f => f.ID);
+
+            var dbOrdnung = context.GetLessonOrder();
+            List<LessonOrderViewModel> order = new List<LessonOrderViewModel>();
+            foreach (var item in dbOrdnung)
+            {
+                var tmp = new LessonOrderViewModel()
+                {
+                    lessonOrderID = item.lessonOrderID,
+                    timeStart = item.timeStart,
+                    timeEnd = item.timeEnd
+                };
+                order.Add(tmp);
+            }
+            order.OrderBy(o => o.timeStart);
+
+            model.Order = order;
+            model.LessonList = lessons;
+            model.Days = days;
+            return View(model);
+        }
+
         private object GetItemsPerPage(int page = 0)
         {
             var itemToSkip = page * pageSize;

@@ -1,0 +1,38 @@
+﻿@model EIMS.Models.ScheduleViewModel
+
+@{
+    ViewBag.Title = "Schedule";
+}
+
+<h2>Schedule</h2>
+
+<div>
+    <h4>ScheduleViewModel</h4>
+    <hr />
+    @*<dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupID)
+        </dd>
+
+    </dl>*@
+    <table class="table">
+        <thead>
+            <tr>
+                <td></td>
+                @foreach (var item in Model.Days)
+                {
+                    <td><strong>@item.Name</strong></td>
+                }
+            </tr>
+        </thead>
+    </table>
+
+</div>
+<p>
+    
+    @Html.ActionLink("Back to List", "Index")
+</p>
