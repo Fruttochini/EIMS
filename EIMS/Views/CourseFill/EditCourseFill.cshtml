@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group ui-widget">
             @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model=>model.subjectID, Model.SubjectList)
@@ -49,3 +49,8 @@
 <div>
     @Html.ActionLink("Back to List", "Index","CourseFill", new { courseID = Model.courseID }, null)
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-ui.js")
+    @Scripts.Render("~/Scripts/JQueryCombobox.js")
+}

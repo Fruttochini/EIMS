@@ -49,3 +49,8 @@
 <div>
     @Html.ActionLink("Back to List", "Index", "CourseFill", new { courseID = Model.courseID }, null)
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/JQueryCombobox.js")
+    @Scripts.Render("~/Scripts/jquery-1.10.2.js")
+}
