@@ -39,9 +39,23 @@ namespace EIMS.Models
 
         public IEnumerable<GroupUserInfo> TeacherList { get; set; }
         public long Supervisor { get; set; }
-    
+
         public IEnumerable<GroupUserInfo> Students { get; set; }
         public long Elder { get; set; }
+    }
+
+    public class StudentGroupAssignmentViewModel
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Faculty { get; set; }
+
+        public IEnumerable<GroupUserInfo> GroupStudents { get; set; }
+        public IEnumerable<long> StudinGroupIDs { get; set; }
+
+        public IEnumerable<GroupUserInfo> Students { get; set; }
+        public IEnumerable<long> StudentsToAssing { get; set; }
+
     }
     //source model
     //public class GroupViewModel

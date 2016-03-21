@@ -105,7 +105,7 @@ namespace EIMS.Controllers
             {
                 ID = group.GroupID,
                 Name = group.GroupName,
-                
+
             };
 
             if (group.SupervisorID != null)
@@ -135,7 +135,7 @@ namespace EIMS.Controllers
                 //};
                 //model.Elder = elder.ID;
             }
-            
+
             var dbTech = context.GetUsers().Where(u => u.Roles.Contains("Teacher"));
             var supList = new List<GroupUserInfo>();
             supList.Add(new GroupUserInfo());
@@ -190,25 +190,97 @@ namespace EIMS.Controllers
 
         public ActionResult Details(int id)
         {
-            var room = context.GetRoomByID(id);
-            RoomViewModel model = new RoomViewModel()
+            var group = context.GetGroupByID(id);
+            GroupInfoViewModel model = new GroupInfoViewModel()
             {
-                ID = room.ID,
-                RoomNo = room.RoomNo,
-                Capacity = room.Capacity,
-                IsAvailable = room.IsAvailable,
-                Possibilities = context.GetRequirements(),
-                SelectedPossibilities = room.SelectedPossibilities
+                ID = group.GroupID,
+                CreationDate = group.CreationDate.Date.ToString(),
+                Name = group.GroupName,
             };
+            model.Faculty = context.GetFacultyByID(group.FacultyID).Name;
+
+            if (group.SupervisorID != null)
+            {
+                var super = context.GetUserByID((long)group.SupervisorID);
+                model.Supervisor = super.Name + " " + super.MiddleName + " " + super.Surname;
+            }
+            if (group.elderID != null)
+            {
+                var super = context.GetUserByID((long)group.elderID);
+                model.Elder = super.Name + " " + super.MiddleName + " " + super.Surname;
+            }
             return View(model);
         }
 
-
-        public ActionResult Delete(int id)
+        public ActionResult AssignStudents(int id)
         {
-            context.DeleteRoom(id);
+            var dbNonGroupStudList = context.GetStudentsWOGroups();
+            List<GroupUserInfo> students = new List<GroupUserInfo>();
+            foreach (var stud in dbNonGroupStudList)
+            {
+                var tmpstud = new GroupUserInfo()
+                {
+                    ID = stud.ID,
+                    Name = stud.Name,
+                    Surname = stud.Surname,
+                    MiddleName = stud.MiddleName
+                };
+                students.Add(tmpstud);
+            }
+
+            var dbStudInGroup = context.GetStudentByGroup(id);
+            List<GroupUserInfo> stInGr = new List<GroupUserInfo>();
+            foreach (var stud in dbStudInGroup)
+            {
+                var tmpstud = new GroupUserInfo()
+                {
+                    ID = stud.ID,
+                    Name = stud.Name,
+                    Surname = stud.Surname,
+                    MiddleName = stud.MiddleName
+                };
+                stInGr.Add(tmpstud);
+            }
+
+            var stingrids = dbStudInGroup.Select(st => st.ID);
+
+            var grp = context.GetGroupByID(id);
+
+            var fac = context.GetFacultyByID(grp.FacultyID);
+
+            StudentGroupAssignmentViewModel model = new StudentGroupAssignmentViewModel()
+            {
+                ID = grp.GroupID,
+                Name = grp.GroupName,
+                GroupStudents = stInGr,
+                StudinGroupIDs = stingrids,
+                Students = students,
+                Faculty = fac.Name
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AssignStudents(StudentGroupAssignmentViewModel model)
+        {
+            if (model.StudentsToAssing != null)
+            {
+                foreach (var item in model.StudentsToAssing)
+                {
+                    
+                }
+            }
             return RedirectToAction("Index");
         }
+
+
+
+        //public ActionResult Delete(int id)
+        //{
+        //    context.DeleteRoom(id);
+        //    return RedirectToAction("Index");
+        //}
 
         private object GetItemsPerPage(int page = 0)
         {

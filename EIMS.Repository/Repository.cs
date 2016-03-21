@@ -325,26 +325,26 @@ namespace EIMS.Repository
             return false;
         }
 
-		public IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID)
-		{
-			var dbLst = context.GroupCourse.Where(gCourse => gCourse.courseID == courseID).ToList();
-			var result = new List<Common.GroupCourse>();
-			foreach(var item in dbLst)
-			{
-				var tmpGroupCourse = new Common.GroupCourse()
-				{
-					GroupCourseID = item.groupCourseID,
-					CourseID = item.courseID,
-					CourseName = item.Course.courseName,
-					GroupID = item.groupID,
-					GroupName = item.UniversityGroup.groupName,
-					StartDate = item.startDate,
-					EndDate = item.endDate
-				};
-				result.Add(tmpGroupCourse);
-			}
-			return result;
-		}
+        public IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID)
+        {
+            var dbLst = context.GroupCourse.Where(gCourse => gCourse.courseID == courseID).ToList();
+            var result = new List<Common.GroupCourse>();
+            foreach (var item in dbLst)
+            {
+                var tmpGroupCourse = new Common.GroupCourse()
+                {
+                    GroupCourseID = item.groupCourseID,
+                    CourseID = item.courseID,
+                    CourseName = item.Course.courseName,
+                    GroupID = item.groupID,
+                    GroupName = item.UniversityGroup.groupName,
+                    StartDate = item.startDate,
+                    EndDate = item.endDate
+                };
+                result.Add(tmpGroupCourse);
+            }
+            return result;
+        }
 
         public IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id)
         {
@@ -405,11 +405,11 @@ namespace EIMS.Repository
             return dbCourseFill.ToCourseFill();
         }
 
-		public Common.GroupCourse GetGroupCoursByID(int id)
-		{
-			var dbGroupCourse = context.GroupCourse.Where(gc => gc.groupCourseID == id).Single();
-			return dbGroupCourse.ToGroupCourse();
-		}
+        public Common.GroupCourse GetGroupCoursByID(int id)
+        {
+            var dbGroupCourse = context.GroupCourse.Where(gc => gc.groupCourseID == id).Single();
+            return dbGroupCourse.ToGroupCourse();
+        }
 
         public IEnumerable<Requirement> GetRequirements()
         {
@@ -521,41 +521,41 @@ namespace EIMS.Repository
             return false;
         }
 
-		public bool? CreateGroupCours(Common.GroupCourse gCourse)
-		{
-			var dbItem = new Datalayer.GroupCourse()
-			{
-				courseID = gCourse.CourseID,
-				groupID = gCourse.GroupID,
-				startDate = gCourse.StartDate,
-				endDate = gCourse.EndDate
-			};
-			context.GroupCourse.Add(dbItem);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? CreateGroupCours(Common.GroupCourse gCourse)
+        {
+            var dbItem = new Datalayer.GroupCourse()
+            {
+                courseID = gCourse.CourseID,
+                groupID = gCourse.GroupID,
+                startDate = gCourse.StartDate,
+                endDate = gCourse.EndDate
+            };
+            context.GroupCourse.Add(dbItem);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? UpdateGroupCours(Common.GroupCourse gCourse)
-		{
-			var tmpGroupCours = context.GroupCourse.Where(gc => gc.groupCourseID == gCourse.GroupCourseID).Single();
-			tmpGroupCours.courseID = gCourse.CourseID;
-			tmpGroupCours.groupID = gCourse.GroupID;
-			tmpGroupCours.startDate = gCourse.StartDate;
-			tmpGroupCours.endDate = gCourse.EndDate;
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? UpdateGroupCours(Common.GroupCourse gCourse)
+        {
+            var tmpGroupCours = context.GroupCourse.Where(gc => gc.groupCourseID == gCourse.GroupCourseID).Single();
+            tmpGroupCours.courseID = gCourse.CourseID;
+            tmpGroupCours.groupID = gCourse.GroupID;
+            tmpGroupCours.startDate = gCourse.StartDate;
+            tmpGroupCours.endDate = gCourse.EndDate;
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? DeleteGroupCours(int id)
-		{
-			var tmpGroupCours = context.GroupCourse.Where(gc => gc.groupCourseID == id).Single();
-			context.GroupCourse.Remove(tmpGroupCours);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? DeleteGroupCours(int id)
+        {
+            var tmpGroupCours = context.GroupCourse.Where(gc => gc.groupCourseID == id).Single();
+            context.GroupCourse.Remove(tmpGroupCours);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
         public bool? CreateLessonOrder(Common.LessonOrder lOrder)
         {
@@ -622,7 +622,7 @@ namespace EIMS.Repository
                 isAvailable = room.IsAvailable,
                 roomNo = room.RoomNo
             };
-            
+
             if (room.SelectedPossibilities != null)
             {
                 var pList = new List<SRRequirement>();
@@ -710,7 +710,7 @@ namespace EIMS.Repository
         {
             var result = new Common.UniversityGroup();
             var dbgr = context.UniversityGroup.Where(g => g.groupID == id).FirstOrDefault();
-            if (dbgr!=null)
+            if (dbgr != null)
             {
                 result.GroupID = id;
                 result.GroupName = dbgr.groupName;
@@ -731,7 +731,7 @@ namespace EIMS.Repository
                 creationDate = group.CreationDate,
                 supervisorID = group.SupervisorID,
                 elderID = group.elderID
-                
+
             };
             context.UniversityGroup.Add(dbGr);
             if (context.SaveChanges() > 0)
@@ -762,7 +762,8 @@ namespace EIMS.Repository
                     if (group.elderID == 0)
                         dbgr.elderID = null;
                     else
-                        dbgr.elderID = group.elderID; IsChanged = true; }
+                        dbgr.elderID = group.elderID; IsChanged = true;
+                }
                 if (IsChanged)
                 {
                     if (context.SaveChanges() > 0)
@@ -771,13 +772,60 @@ namespace EIMS.Repository
                 }
 
             }
-            
+
             return false;
         }
 
         public bool? DeleteGroup(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<User> GetStudentsWOGroups()
+        {
+            //var role = context.Role.Where(rl => rl.Name == "Student").ToList().First();
+            var studInGroupsList = context.StudentGroup.Select(st => st.EIMSUser).ToList();
+            var dbStudList = context.EIMSUser.Where(usr => usr.Role.Select(r => r.Name).Contains("Student")).ToList().Except(studInGroupsList).ToList();
+
+            List<Common.User> result = new List<User>();
+            foreach (var item in dbStudList)
+            {
+                var tmp = item.ToUser();
+                result.Add(tmp);
+            }
+
+            return result;
+        }
+
+        public void SeedValues()
+        {
+
+        }
+
+        public bool AssignStudent(int groupID, long studentID)
+        {
+            StudentGroup assignment = new StudentGroup()
+            {
+                groupID = groupID,
+                studentID = studentID,
+                enrollmentDate = DateTime.Today.Date,
+            };
+            context.StudentGroup.Add(assignment);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
+
+        public bool DeassignStudent(int groupID, long studentID)
+        {
+            var deassignment = context.StudentGroup.Where(d => d.groupID == groupID && d.studentID == studentID).FirstOrDefault();
+            if (deassignment != null)
+            {
+                context.StudentGroup.Remove(deassignment);
+                if (context.SaveChanges() > 0)
+                    return true;
+            }
+            return false;
         }
     }
 }
