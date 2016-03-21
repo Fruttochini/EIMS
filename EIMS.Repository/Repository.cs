@@ -240,7 +240,9 @@ namespace EIMS.Repository
 
         public IEnumerable<User> GetStudentByGroup(int groupID)
         {
-            var dbList = context.EIMSUser.Where(usr => usr.StudentGroup.Where(grp => grp.groupID == groupID) != null && usr.Role.Select(rl => rl.Name).Contains("Student"));
+            //var dbList = context.EIMSUser.Where(usr => usr.StudentGroup.Where(grp => grp.groupID == groupID) != null && usr.Role.Select(rl => rl.Name).Contains("Student"));
+            var dbList = context.StudentGroup.Where(gr => gr.groupID == groupID).Select(st => st.EIMSUser);
+
             var tmpUser = new List<User>();
             foreach (var item in dbList)
             {
@@ -706,7 +708,18 @@ namespace EIMS.Repository
 
         public Common.UniversityGroup GetGroupByID(int id)
         {
-            throw new NotImplementedException();
+            var result = new Common.UniversityGroup();
+            var dbgr = context.UniversityGroup.Where(g => g.groupID == id).FirstOrDefault();
+            if (dbgr!=null)
+            {
+                result.GroupID = id;
+                result.GroupName = dbgr.groupName;
+                result.SupervisorID = dbgr.supervisorID;
+                result.CreationDate = dbgr.creationDate;
+                result.elderID = dbgr.elderID;
+                result.FacultyID = dbgr.facultyID;
+            }
+            return result;
         }
 
         public bool? AddGroup(Common.UniversityGroup group)
@@ -730,7 +743,36 @@ namespace EIMS.Repository
 
         public bool? EditGroup(Common.UniversityGroup group)
         {
-            throw new NotImplementedException();
+            var dbgr = context.UniversityGroup.Where(g => g.groupID == group.GroupID).FirstOrDefault();
+            if (dbgr != null)
+            {
+                bool IsChanged = false;
+                if (!dbgr.groupName.Equals(group.GroupName))
+                { dbgr.groupName = group.GroupName; IsChanged = true; }
+                if (dbgr.supervisorID != group.SupervisorID)
+                {
+                    if (group.SupervisorID == 0)
+                        dbgr.supervisorID = null;
+                    else
+                        dbgr.supervisorID = group.SupervisorID;
+                    IsChanged = true;
+                }
+                if (dbgr.elderID != group.elderID && group.elderID != 0)
+                {
+                    if (group.elderID == 0)
+                        dbgr.elderID = null;
+                    else
+                        dbgr.elderID = group.elderID; IsChanged = true; }
+                if (IsChanged)
+                {
+                    if (context.SaveChanges() > 0)
+                        return true;
+                    else return false;
+                }
+
+            }
+            
+            return false;
         }
 
         public bool? DeleteGroup(int id)

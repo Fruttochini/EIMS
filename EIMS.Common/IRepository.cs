@@ -26,8 +26,10 @@ namespace EIMS.Common
         IEnumerable<Common.Requirement> GetRequirements();
 		IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID);
 
+        IEnumerable<User> GetStudentByGroup(int groupID);
 
-		bool AddRequirement(Common.Requirement model);
+
+        bool AddRequirement(Common.Requirement model);
 
         User GetUserByID(long ID);
         FacultyCommon GetFacultyByID(int id);

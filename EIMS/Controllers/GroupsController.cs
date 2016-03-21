@@ -105,37 +105,37 @@ namespace EIMS.Controllers
             {
                 ID = group.GroupID,
                 Name = group.GroupName,
-
+                
             };
 
             if (group.SupervisorID != null)
             {
-                var dbsupervisor = context.GetUserByID((long)group.SupervisorID);
-                var supervisor = new GroupUserInfo()
-                {
-                    ID = (long)group.SupervisorID,
-                    Name = dbsupervisor.Name,
-                    Surname = dbsupervisor.Surname,
-                    MiddleName = dbsupervisor.MiddleName
-                };
-                model.Supervisor = supervisor.ID;
+                model.Supervisor = (long)group.SupervisorID;
+                //var dbsupervisor = context.GetUserByID((long)group.SupervisorID);
+                //var supervisor = new GroupUserInfo()
+                //{
+                //    ID = (long)group.SupervisorID,
+                //    Name = dbsupervisor.Name,
+                //    Surname = dbsupervisor.Surname,
+                //    MiddleName = dbsupervisor.MiddleName
+                //};
+                //model.Supervisor = supervisor.ID;
             }
 
             if (group.elderID != null)
             {
-                var dbelder = context.GetUserByID((long)group.elderID);
-                var elder = new GroupUserInfo()
-                {
-                    ID = (long)group.elderID,
-                    Name = dbelder.Name,
-                    Surname = dbelder.Surname,
-                    MiddleName = dbelder.MiddleName
-                };
-                model.Elder = elder.ID;
+                model.Elder = (long)group.elderID;
+                //var dbelder = context.GetUserByID((long)group.elderID);
+                //var elder = new GroupUserInfo()
+                //{
+                //    ID = (long)group.elderID,
+                //    Name = dbelder.Name,
+                //    Surname = dbelder.Surname,
+                //    MiddleName = dbelder.MiddleName
+                //};
+                //model.Elder = elder.ID;
             }
-
-
-
+            
             var dbTech = context.GetUsers().Where(u => u.Roles.Contains("Teacher"));
             var supList = new List<GroupUserInfo>();
             supList.Add(new GroupUserInfo());
@@ -151,28 +151,40 @@ namespace EIMS.Controllers
                 supList.Add(tmpsup);
             }
 
-            var dbstuds = context.GetUsers().Where(u => u.Roles.Contains("Teacher"));
+            //var dbstuds = context.GetUsers().Where(u => u.Roles.Contains("Student"));
+            var dbstuds = context.GetStudentByGroup(id);
+            var studList = new List<GroupUserInfo>();
+            studList.Add(new GroupUserInfo());
+            foreach (var item in dbstuds)
+            {
+                var tmpstud = new GroupUserInfo()
+                {
+                    ID = item.ID,
+                    Name = item.Name,
+                    Surname = item.Surname,
+                    MiddleName = item.MiddleName
+                };
+                studList.Add(tmpstud);
+            }
 
+            model.Students = studList;
             model.TeacherList = supList;
             return View(model);
 
         }
 
         [HttpPost]
-        public ActionResult Edit(RoomViewModel model)
+        public ActionResult Edit(CRUGroupViewModel model)
         {
-            var obj = new Room()
+            var obj = new UniversityGroup()
             {
-                ID = model.ID,
-                RoomNo = model.RoomNo,
-                Capacity = model.Capacity,
-                SelectedPossibilities = model.SelectedPossibilities,
-                IsAvailable = model.IsAvailable
-
+                GroupID = model.ID,
+                elderID = model.Elder,
+                GroupName = model.Name,
+                SupervisorID = model.Supervisor
             };
-            if (context.EditRoom(obj) == true)
+            if (context.EditGroup(obj) == true)
                 return RedirectToAction("Index");
-            model.Possibilities = context.GetRequirements();
             return View(model);
         }
 
