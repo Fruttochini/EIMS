@@ -260,6 +260,7 @@
     <Content Include="Scripts\SubjectInfinityScroll.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\CourseFill\Index.cshtml" />
+    <Content Include="Views\Schedule\GetTeachers.cshtml" />
     <Content Include="Views\Subject\GetSubjectList_Partial.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -337,7 +338,6 @@
     <Content Include="Views\Groups\Details.cshtml" />
     <Content Include="Views\Groups\AssignStudents.cshtml" />
     <Content Include="Views\Groups\Schedule.cshtml" />
-    <Content Include="Views\Schedule\GetTeachers.cshtml" />
     <Content Include="Views\Groups\ScheduleAddLesson.cshtml" />
     <Content Include="Views\GroupCourse\Index.cshtml" />
   </ItemGroup>
