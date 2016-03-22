@@ -219,6 +219,41 @@ namespace EIMS.Repository
             return result;
         }
 
+		public Common.LessonDate GetLessonDateByID(long id)
+		{
+			var dbItem = context.LessonDate.Where(ld => ld.lessonDateID == id).Single();
+			return dbItem.ToLessonDate();
+		}
+
+		public IEnumerable<Common.LessonPresence> GetLessonPrecenseByLessonDate(long lessonDate)
+		{
+			var result = new List<Common.LessonPresence>();
+			var dbList = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).ToList();
+			foreach (var item in dbList)
+			{
+				Common.LessonPresence lp = new Common.LessonPresence()
+				{
+					lessonPresenseID = item.lessonPresenceID,
+					lessonDateID = item.lessonDateID,
+					studentID = item.studentID,
+					presence = item.presence,
+					mark = item.mark,
+					LessonDate = item.LessonDate.date,
+					SubjectName = item.LessonDate.Lesson.Subject.subjectName,
+				};
+				User student = new User();
+				var tmpStudent = context.EIMSUser.Where(usr => usr.Id == item.studentID).Single();
+				student = tmpStudent.ToUser();
+				User teacher = new User();
+				var tmpTeacher = context.EIMSUser.Where(usr => usr.Id == item.LessonDate.Lesson.teacherID).Single();
+				teacher = tmpTeacher.ToUser();
+				lp.StudentName = student.Surname + student.Name + student.MiddleName;
+				lp.TeacherName = teacher.Surname + teacher.Name + teacher.MiddleName;
+				result.Add(lp);
+			}
+			return result;
+		}
+
         public void Dispose()
         {
             context.Dispose();

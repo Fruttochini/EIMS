@@ -42,9 +42,11 @@ namespace EIMS.Common
         UniversityGroup GetGroupByID(int id);
 		Common.LessonPresence GetLessonPrecenseByID(long id);
 		Common.Task GetTaskByID(long id);
+		Common.LessonDate GetLessonDateByID(long id);
 
 
-        void SeedValues();
+
+		void SeedValues();
 
 
         ///Faculty ops
