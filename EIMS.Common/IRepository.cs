@@ -14,7 +14,7 @@ namespace EIMS.Common
         IEnumerable<Room> GetRooms();
         IEnumerable<Course> GetCourses();
         IEnumerable<DayOfWeek> GetDayOfWeek();
-        IEnumerable<Common.Task> GetTaskForGroupByDate(int groupID, DateTime selectDate);
+		IEnumerable<Common.Task> GetTaskForGroupByDate(int groupID, DateTime selectDate);
         IEnumerable<LessonOrder> GetLessonOrder();
         IEnumerable<LessonPresence> GetLessonPresence();
         IEnumerable<FacultyCommon> GetFaculties();
@@ -40,8 +40,10 @@ namespace EIMS.Common
         Common.Room GetRoomByID(int id);
 
         UniversityGroup GetGroupByID(int id);
-        Common.LessonPresence GetLessonPrecenseByID(long id);
-        Common.Task GetTaskByID(long id);
+		Common.LessonPresence GetLessonPrecenseByID(long id);
+		Common.Task GetTaskByID(long id);
+		Common.LessonDate GetLessonDateByID(long id);
+
 
 
         void SeedValues();
@@ -105,9 +107,9 @@ namespace EIMS.Common
         bool AssignTeacherSubjects(Teacher teacher);
 
 
-        ///Task ops
-        bool? CreateTask(Common.Task task);
-        bool? UpdateTask(Common.Task task);
-        bool? DeleteTask(long id);
+		///Task ops
+		bool? CreateTask(Common.Task task);
+		bool? UpdateTask(Common.Task task);
+		bool? DeleteTask(long id);
     }
 }
