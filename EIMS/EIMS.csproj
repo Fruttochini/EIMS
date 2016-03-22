@@ -196,11 +196,13 @@
     <Compile Include="Controllers\LessonOrderController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ScheduleViewModels.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\FacultyViewModel.cs" />
     <Compile Include="Models\GroupViewModels.cs" />
@@ -333,6 +335,8 @@
     <Content Include="Views\Groups\Details.cshtml" />
     <Content Include="Views\Groups\AssignStudents.cshtml" />
     <Content Include="Views\Groups\Schedule.cshtml" />
+    <Content Include="Views\Schedule\GetTeachers.cshtml" />
+    <Content Include="Views\Groups\ScheduleAddLesson.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
