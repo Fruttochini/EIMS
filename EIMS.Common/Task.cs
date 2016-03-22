@@ -12,5 +12,8 @@ namespace EIMS.Common
 		public long lessonDateID { get; set; }
 		public string homeTask { get; set; }
 		public DateTime expiryDate { get; set; }
+
+		public string subjectName { get; set; }
+		public string groupName { get; set; }
 	}
 }

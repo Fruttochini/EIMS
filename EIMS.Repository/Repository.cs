@@ -64,17 +64,29 @@ namespace EIMS.Repository
             return result;
         }
 
-        public IEnumerable<Common.Task> GetTask()
+        public IEnumerable<Common.Task> GetTaskForGroupByDate(int groupID, DateTime selectDate)
         {
-            var dbLst = context.Task.ToList();
+			var dbLst = context.Task.Where(t => t.LessonDate.Lesson.groupID == groupID && t.LessonDate.date == selectDate).ToList();
             var result = new List<Common.Task>();
             foreach (var item in dbLst)
             {
-                var tmpTsk = new Common.Task() { taskID = item.taskID, lessonDateID = item.lessonDateID, homeTask = item.homeTask, expiryDate = item.expiryDate };
+                var tmpTsk = new Common.Task() { taskID = item.taskID, lessonDateID = item.lessonDateID, homeTask = item.homeTask, expiryDate = item.expiryDate, subjectName = item.LessonDate.Lesson.Subject.subjectName, groupName = item.LessonDate.Lesson.UniversityGroup.groupName };
                 result.Add(tmpTsk);
             }
             return result;
         }
+
+		public Common.LessonPresence GetLessonPrecenseByID(long id)
+		{
+			var dbItem = context.LessonPresence.Where(lp => lp.lessonPresenceID == id).Single();
+			return dbItem.ToLessonPrecense();
+		}
+
+		public Common.Task GetTaskByID(long id)
+		{
+			var dbItem = context.Task.Where(t => t.taskID == id).Single();
+			return dbItem.ToTask();
+		}
 
         public IEnumerable<Common.LessonOrder> GetLessonOrder()
         {
@@ -589,6 +601,40 @@ namespace EIMS.Repository
                 return true;
             return false;
         }
+
+		public bool? CreateTask (Common.Task task)
+		{
+			var dbItem = new Datalayer.Task()
+			{
+				lessonDateID = task.lessonDateID,
+				homeTask = task.homeTask,
+				expiryDate = task.expiryDate
+			};
+			context.Task.Add(dbItem);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? UpdateTask (Common.Task task)
+		{
+			var tmpTask = context.Task.Where(t => t.taskID == task.taskID).Single();
+			tmpTask.lessonDateID = task.lessonDateID;
+			tmpTask.homeTask = task.homeTask;
+			tmpTask.expiryDate = task.expiryDate;
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? DeleteTask (long id)
+		{
+			var tmpTask = context.Task.Where(t => t.taskID == id).Single();
+			context.Task.Remove(tmpTask);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
 
         public Common.LessonOrder GetLessonOrderByID(int id)
         {
