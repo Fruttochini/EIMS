@@ -310,7 +310,9 @@ namespace EIMS.Controllers
             var dbList = context.GetLessonsByGroup(id);
             var model = new ScheduleViewModel()
             {
-                GroupID = id
+                GroupID = id,
+                GroupName = context.GetGroupByID(id).GroupName
+
             };
             List<LessonInfoViewModel> lessons = new List<LessonInfoViewModel>();
             foreach (var item in dbList)
@@ -358,6 +360,12 @@ namespace EIMS.Controllers
             model.LessonList = lessons;
             model.Days = days;
             return View(model);
+        }
+
+        public ActionResult ScheduleAddLesson(int groupID, byte dayID, int LOID)
+        {
+
+            return View();
         }
 
         private object GetItemsPerPage(int page = 0)

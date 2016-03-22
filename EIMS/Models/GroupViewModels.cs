@@ -61,10 +61,12 @@ namespace EIMS.Models
     public class ScheduleViewModel
     {
         public int GroupID { get; set; }
+        public string GroupName { get; set; }
         public IEnumerable<DayVm> Days { get; set; }
         public IEnumerable<LessonOrderViewModel> Order { get; set; }
         public IEnumerable<LessonInfoViewModel> LessonList
         { get; set; }
+        public IEnumerable<LessonInfoViewModel> tmpList { get; set; }
 
     }
 
