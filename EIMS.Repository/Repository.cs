@@ -886,7 +886,86 @@ namespace EIMS.Repository
 
         public IEnumerable<Common.Lesson> GetLessonByTeacher(long id)
         {
-            throw new NotImplementedException();
+            List<Common.Lesson> result = new List<Common.Lesson>();
+            var dblist = context.Lesson.Where(l => l.teacherID == id);
+            foreach (var item in dblist)
+            {
+                var lesn = new Common.Lesson()
+                {
+                    DayOfWeek = item.DayOfWeek,
+                    GroupID = item.groupID,
+                    GroupName = item.UniversityGroup.groupName,
+                    LessonID = item.lessonID,
+                    RoomID = item.roomID,
+                    RoomNo = item.Room.roomNo,
+                    SubjectID = item.subjectID,
+                    SubjectName = item.Subject.subjectName,
+                    TeacherID = item.teacherID,
+                    LessonOrder = item.LessonOrder
+                };
+                result.Add(lesn);
+            }
+            return result;
+        }
+
+
+        public IEnumerable<Common.Subject> GetSubjectsByGroupID(int id)
+        {
+            var courseID = context.GroupCourse.Where(gc => gc.groupID == id && gc.endDate > DateTime.Today).Select(gc => gc.courseID).FirstOrDefault();
+            List<Common.Subject> result = new List<Common.Subject>();
+            if (courseID != 0)
+            {
+                var sl = context.CourseFill.Where(cf => cf.courseID == courseID).Select(s => s.Subject);
+                foreach (var item in sl)
+                {
+                    var subject = new Common.Subject()
+                    {
+                        SubjectID = item.subjectID,
+                        SubjectName = item.subjectName,
+                        Requirements = item.SRRequirement
+                        .Select(req => req.ID)
+                        .ToList()
+                    };
+                    result.Add(subject);
+                }
+            }
+            return result;
+
+        }
+
+        public IEnumerable<User> GetTeacherBySubject(int id)
+        {
+            var result = new List<User>();
+            var teachlist = context.Subject.Where(s => s.subjectID == id).FirstOrDefault().EIMSUser;
+            foreach (var item in teachlist)
+            {
+                result.Add(item.ToUser());
+            }
+            return result;
+        }
+
+        public IEnumerable<Common.Lesson> GetLessonByDay(byte dayid)
+        {
+            List<Common.Lesson> result = new List<Common.Lesson>();
+            var dblist = context.Lesson.Where(l => l.DayOfWeek == dayid);
+            foreach (var item in dblist)
+            {
+                var lesn = new Common.Lesson()
+                {
+                    DayOfWeek = item.DayOfWeek,
+                    GroupID = item.groupID,
+                    GroupName = item.UniversityGroup.groupName,
+                    LessonID = item.lessonID,
+                    RoomID = item.roomID,
+                    RoomNo = item.Room.roomNo,
+                    SubjectID = item.subjectID,
+                    SubjectName = item.Subject.subjectName,
+                    TeacherID = item.teacherID,
+                    LessonOrder = item.LessonOrder
+                };
+                result.Add(lesn);
+            }
+            return result;
         }
     }
 }

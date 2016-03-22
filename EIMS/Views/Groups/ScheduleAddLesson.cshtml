@@ -1,0 +1,52 @@
+﻿@model EIMS.Models.NewLessonViewModel
+
+@{
+    ViewBag.Title = "ScheduleAddLesson";
+}
+
+<h2>ScheduleAddLesson</h2>
+
+<div class="col-md-10">
+    @Html.DisplayFor(m=>m.Day.Name)
+    @Html.DisplayFor(m=>m.LesOrd.timeStart) - @Html.DisplayFor(m=>m.LesOrd.timeEnd)
+    @Html.DisplayFor(m=>m.Group.Name)
+</div>
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>NewLessonViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.SelectedSubject, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SelectedSubject, new SelectList(Model.Subjects), new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SelectedSubject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.SelectedRoom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SelectedRoom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SelectedRoom, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

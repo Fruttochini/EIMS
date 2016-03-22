@@ -38,7 +38,7 @@ namespace EIMS.Common
         Common.CourseFill GetCoursFillByID(int courseFillID);
         Common.LessonOrder GetLessonOrderByID(int id);
         Common.Room GetRoomByID(int id);
-        Common.GroupCourse GetGroupCoursByID(int id);
+
         UniversityGroup GetGroupByID(int id);
 		Common.LessonPresence GetLessonPrecenseByID(long id);
 		Common.Task GetTaskByID(long id);
@@ -83,6 +83,8 @@ namespace EIMS.Common
         bool? DeleteGroup(int id);
 
         ///GroupCours ops
+        IEnumerable<Common.Subject> GetSubjectsByGroupID(int id);
+        Common.GroupCourse GetGroupCoursByID(int id);
         bool? CreateGroupCours(Common.GroupCourse gCourse);
         bool? UpdateGroupCours(Common.GroupCourse gCourse);
         bool? DeleteGroupCours(int id);
@@ -95,6 +97,10 @@ namespace EIMS.Common
         ///Lesson - Schedule ops
         IEnumerable<Lesson> GetLessonsByGroup(int id);
         IEnumerable<Lesson> GetLessonByTeacher(long id);
+        IEnumerable<Lesson> GetLessonByDay(byte dayid);
+
+        ///Teacher ops
+        IEnumerable<User> GetTeacherBySubject(int id);
 
 
 		///Task ops

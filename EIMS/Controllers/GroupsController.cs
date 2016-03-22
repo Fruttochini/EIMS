@@ -364,8 +364,43 @@ namespace EIMS.Controllers
 
         public ActionResult ScheduleAddLesson(int groupID, byte dayID, int LOID)
         {
+            NewLessonViewModel LVM = new NewLessonViewModel();
+            var group = context.GetGroupByID(groupID);
+            var lo = context.GetLessonOrderByID(LOID);
+            var day = context.GetDayOfWeek().Where(d => d.DayID == dayID).FirstOrDefault();
 
-            return View();
+            LVM.Group = new GroupInfoViewModel()
+            {
+                ID = groupID,
+                Name = group.GroupName
+            };
+
+            LVM.LesOrd = new LessonOrderViewModel()
+            {
+                lessonOrderID = lo.lessonOrderID,
+                timeStart = lo.timeStart,
+                timeEnd = lo.timeEnd
+            };
+            LVM.Day = new DayVm()
+            {
+                ID = day.DayID,
+                Name = day.DayName
+            };
+
+            List<SubjectInfoViewModel> sublist = new List<SubjectInfoViewModel>();
+            foreach (var item in context.GetSubjectsByGroupID(groupID))
+            {
+                var svm = new SubjectInfoViewModel()
+                {
+                    ID = item.SubjectID,
+                    Name = item.SubjectName
+                };
+                sublist.Add(svm);
+            }
+
+            LVM.Subjects = sublist;
+
+            return View(LVM);
         }
 
         private object GetItemsPerPage(int page = 0)

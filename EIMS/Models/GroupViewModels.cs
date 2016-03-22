@@ -58,34 +58,7 @@ namespace EIMS.Models
 
     }
 
-    public class ScheduleViewModel
-    {
-        public int GroupID { get; set; }
-        public string GroupName { get; set; }
-        public IEnumerable<DayVm> Days { get; set; }
-        public IEnumerable<LessonOrderViewModel> Order { get; set; }
-        public IEnumerable<LessonInfoViewModel> LessonList
-        { get; set; }
-        public IEnumerable<LessonInfoViewModel> tmpList { get; set; }
 
-    }
-
-    public class LessonInfoViewModel
-    {
-        public long LessonID { get; set; }
-        public byte DayID { get; set; }
-        public int OrderID { get; set; }
-        public string Subject { get; set; }
-        public string Teacher { get; set; }
-        public string RoomNo { get; set; }
-
-    }
-
-    public class DayVm
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-    }
 
 
 }
