@@ -14,7 +14,7 @@ namespace EIMS.Common
         IEnumerable<Room> GetRooms();
         IEnumerable<Course> GetCourses();
         IEnumerable<DayOfWeek> GetDayOfWeek();
-		IEnumerable<Common.Task> GetTaskForGroupByDate(long groupID, DateTime selectDate);
+		IEnumerable<Common.Task> GetTaskForGroupByDate(int groupID, DateTime selectDate);
         IEnumerable<LessonOrder> GetLessonOrder();
         IEnumerable<LessonPresence> GetLessonPresence();
         IEnumerable<FacultyCommon> GetFaculties();
