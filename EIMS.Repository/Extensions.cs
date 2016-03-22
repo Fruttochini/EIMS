@@ -118,5 +118,29 @@ namespace EIMS.Repository
 			return tmpLessonOrder;
 		}
 
+		public static Common.LessonPresence ToLessonPrecense(this Datalayer.LessonPresence lPrecense)
+		{
+			var tmpLessonPrecense = new Common.LessonPresence()
+			{
+				lessonPresenseID = lPrecense.lessonPresenceID,
+				lessonDateID = lPrecense.lessonDateID,
+				studentID = lPrecense.studentID,
+				presence = lPrecense.presence,
+				mark = lPrecense.mark
+			};
+			return tmpLessonPrecense;
+		}
+
+		public static Common.Task ToTask(this Datalayer.Task task)
+		{
+			var tmpTask = new Common.Task()
+			{
+				taskID = task.taskID,
+				lessonDateID = task.lessonDateID,
+				homeTask = task.homeTask,
+				expiryDate = task.expiryDate
+			};
+			return tmpTask;
+		}
 	}
 }
