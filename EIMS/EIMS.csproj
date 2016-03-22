@@ -199,6 +199,7 @@
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -340,6 +341,7 @@
     <Content Include="Views\Groups\Schedule.cshtml" />
     <Content Include="Views\Groups\ScheduleAddLesson.cshtml" />
     <Content Include="Views\GroupCourse\Index.cshtml" />
+    <Content Include="Views\Teacher\AssignSubjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -66,7 +66,7 @@ namespace EIMS.Repository
 
         public IEnumerable<Common.Task> GetTaskForGroupByDate(int groupID, DateTime selectDate)
         {
-			var dbLst = context.Task.Where(t => t.LessonDate.Lesson.groupID == groupID && t.LessonDate.date == selectDate).ToList();
+            var dbLst = context.Task.Where(t => t.LessonDate.Lesson.groupID == groupID && t.LessonDate.date == selectDate).ToList();
             var result = new List<Common.Task>();
             foreach (var item in dbLst)
             {
@@ -76,17 +76,17 @@ namespace EIMS.Repository
             return result;
         }
 
-		public Common.LessonPresence GetLessonPrecenseByID(long id)
-		{
-			var dbItem = context.LessonPresence.Where(lp => lp.lessonPresenceID == id).Single();
-			return dbItem.ToLessonPrecense();
-		}
+        public Common.LessonPresence GetLessonPrecenseByID(long id)
+        {
+            var dbItem = context.LessonPresence.Where(lp => lp.lessonPresenceID == id).Single();
+            return dbItem.ToLessonPrecense();
+        }
 
-		public Common.Task GetTaskByID(long id)
-		{
-			var dbItem = context.Task.Where(t => t.taskID == id).Single();
-			return dbItem.ToTask();
-		}
+        public Common.Task GetTaskByID(long id)
+        {
+            var dbItem = context.Task.Where(t => t.taskID == id).Single();
+            return dbItem.ToTask();
+        }
 
         public IEnumerable<Common.LessonOrder> GetLessonOrder()
         {
@@ -602,39 +602,39 @@ namespace EIMS.Repository
             return false;
         }
 
-		public bool? CreateTask (Common.Task task)
-		{
-			var dbItem = new Datalayer.Task()
-			{
-				lessonDateID = task.lessonDateID,
-				homeTask = task.homeTask,
-				expiryDate = task.expiryDate
-			};
-			context.Task.Add(dbItem);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? CreateTask(Common.Task task)
+        {
+            var dbItem = new Datalayer.Task()
+            {
+                lessonDateID = task.lessonDateID,
+                homeTask = task.homeTask,
+                expiryDate = task.expiryDate
+            };
+            context.Task.Add(dbItem);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? UpdateTask (Common.Task task)
-		{
-			var tmpTask = context.Task.Where(t => t.taskID == task.taskID).Single();
-			tmpTask.lessonDateID = task.lessonDateID;
-			tmpTask.homeTask = task.homeTask;
-			tmpTask.expiryDate = task.expiryDate;
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? UpdateTask(Common.Task task)
+        {
+            var tmpTask = context.Task.Where(t => t.taskID == task.taskID).Single();
+            tmpTask.lessonDateID = task.lessonDateID;
+            tmpTask.homeTask = task.homeTask;
+            tmpTask.expiryDate = task.expiryDate;
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? DeleteTask (long id)
-		{
-			var tmpTask = context.Task.Where(t => t.taskID == id).Single();
-			context.Task.Remove(tmpTask);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? DeleteTask(long id)
+        {
+            var tmpTask = context.Task.Where(t => t.taskID == id).Single();
+            context.Task.Remove(tmpTask);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
         public Common.LessonOrder GetLessonOrderByID(int id)
         {
@@ -966,6 +966,63 @@ namespace EIMS.Repository
                 result.Add(lesn);
             }
             return result;
+        }
+
+        public Teacher GetTeacherByID(long id)
+        {
+            var result = new Teacher();
+            var usr = GetUserByID(id);
+
+            result.ID = usr.ID;
+            result.MiddleName = usr.MiddleName;
+            result.Name = usr.Name;
+            result.Surname = usr.Surname;
+
+            var dbsubjIDsList = context.EIMSUser.Where(u => u.Id == id).FirstOrDefault().Subject.Select(s => s.subjectID);
+            result.AssignedSubjects = dbsubjIDsList;
+            return result;
+        }
+
+        public bool AssignTeacherSubjects(Teacher teacher)
+        {
+            var dbTeacher = context.EIMSUser.Where(subj => subj.Id == teacher.ID).FirstOrDefault();
+            if (dbTeacher != null)
+            {
+                if (teacher.AssignedSubjects != null)
+                {
+                    var removeList = new List<Datalayer.Subject>();
+                    foreach (var item in dbTeacher.Subject)
+                    {
+                        if (teacher.AssignedSubjects.Contains(item.subjectID))
+                            continue;
+                        else
+                            removeList.Add(item);
+                    }
+                    foreach (var item in removeList)
+                    {
+                        dbTeacher.Subject.Remove(item);
+                    }
+                    var subjList = dbTeacher.Subject.Select(r => r.subjectID);
+                    var fullsubjList = context.Subject.ToList();
+                    foreach (var item in teacher.AssignedSubjects)
+                    {
+                        if (!subjList.Contains(item))
+                        {
+                            var tmp = fullsubjList.Where(r => r.subjectID == item).FirstOrDefault();
+                            if (tmp != null)
+                                dbTeacher.Subject.Add(tmp);
+                        }
+                    }
+
+                }
+                else
+                {
+                    dbTeacher.Subject.Clear();
+                }
+            }
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
         }
     }
 }
