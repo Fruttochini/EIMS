@@ -327,7 +327,6 @@
     <Content Include="Views\Room\Edit.cshtml" />
     <Content Include="Views\Room\Details.cshtml" />
     <Content Include="Views\Subject\AddRequirement.cshtml" />
-    <Content Include="Views\GroupCourse\Index.cshtml" />
     <Content Include="Views\GroupCourse\GetGroupCourse.cshtml" />
     <Content Include="Views\GroupCourse\CreateGroupCourse.cshtml" />
     <Content Include="Views\GroupCourse\EditGroupCourse.cshtml" />
@@ -340,6 +339,7 @@
     <Content Include="Views\Groups\Schedule.cshtml" />
     <Content Include="Views\Schedule\GetTeachers.cshtml" />
     <Content Include="Views\Groups\ScheduleAddLesson.cshtml" />
+    <Content Include="Views\GroupCourse\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

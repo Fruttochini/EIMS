@@ -17,5 +17,6 @@ namespace EIMS.Common
 		public DateTime LessonDate { get; set; }
 		public string StudentName { get; set; }
 		public string TeacherName { get; set; }
+		public string SubjectName { get; set; }
 	}
 }
