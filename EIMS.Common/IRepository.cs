@@ -15,11 +15,11 @@ namespace EIMS.Common
         IEnumerable<Course> GetCourses();
         IEnumerable<DayOfWeek> GetDayOfWeek();
 		IEnumerable<Common.Task> GetTaskForGroupByDate(long groupID, DateTime selectDate);
-		IEnumerable<LessonOrder> GetLessonOrder();
+        IEnumerable<LessonOrder> GetLessonOrder();
         IEnumerable<LessonPresence> GetLessonPresence();
         IEnumerable<FacultyCommon> GetFaculties();
         IEnumerable<UniversityGroup> GetGroups();
-        IEnumerable<Lesson> GetLessons();
+
         IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
         IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id);
         IEnumerable<Common.CourseFill> GetAllCourseFill();
@@ -32,7 +32,7 @@ namespace EIMS.Common
         bool AddRequirement(Common.Requirement model);
 
 
-		User GetUserByID(long ID);
+        User GetUserByID(long ID);
         FacultyCommon GetFacultyByID(int id);
         Course GetCourseByID(int id);
         Common.CourseFill GetCoursFillByID(int courseFillID);
@@ -44,7 +44,7 @@ namespace EIMS.Common
 		Common.Task GetTaskByID(long id);
 
 
-		void SeedValues();
+        void SeedValues();
 
 
         ///Faculty ops
@@ -92,9 +92,14 @@ namespace EIMS.Common
         bool AssignStudent(int groupID, long studentID);
         bool DeassignStudent(int groupID, long studentID);
 
+        ///Lesson - Schedule ops
+        IEnumerable<Lesson> GetLessonsByGroup(int id);
+        IEnumerable<Lesson> GetLessonByTeacher(long id);
+
+
 		///Task ops
 		bool? CreateTask(Common.Task task);
 		bool? UpdateTask(Common.Task task);
 		bool? DeleteTask(long id);
-	}
+    }
 }

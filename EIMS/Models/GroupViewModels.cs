@@ -57,19 +57,35 @@ namespace EIMS.Models
         public IEnumerable<long> StudentsToAssign { get; set; }
 
     }
-    //source model
-    //public class GroupViewModel
-    //{
-    //    public int ID { get; set; }
 
-    //    [Required]
-    //    [Display(Name = "Group name")]
-    //    public string Name { get; set; }
+    public class ScheduleViewModel
+    {
+        public int GroupID { get; set; }
+        public string GroupName { get; set; }
+        public IEnumerable<DayVm> Days { get; set; }
+        public IEnumerable<LessonOrderViewModel> Order { get; set; }
+        public IEnumerable<LessonInfoViewModel> LessonList
+        { get; set; }
+        public IEnumerable<LessonInfoViewModel> tmpList { get; set; }
 
-    //    public FacultyViewModel Faculty { get; set; }
-    //    public string CreationDate { get; set; }
+    }
 
-    //    public GroupUserInfo Supervisor { get; set; }
-    //    public GroupUserInfo Elder { get; set; }
-    //}
+    public class LessonInfoViewModel
+    {
+        public long LessonID { get; set; }
+        public byte DayID { get; set; }
+        public int OrderID { get; set; }
+        public string Subject { get; set; }
+        public string Teacher { get; set; }
+        public string RoomNo { get; set; }
+
+    }
+
+    public class DayVm
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
+
+
 }

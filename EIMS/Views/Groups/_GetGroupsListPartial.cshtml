@@ -8,10 +8,10 @@
         <div class="col-md-1">
             @Html.DisplayFor(modelItem => item.ID)
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
          @Html.DisplayFor(modelItem => item.Name)
          </div>
-         <div class="col-md-2">
+         <div class="col-md-1">
          @Html.DisplayFor(modelItem => item.Faculty)
          </div>
          <div class="col-md-2">
@@ -20,10 +20,11 @@
          <div class="col-md-2">
          @Html.DisplayFor(modelItem => item.Elder)
          </div>
-         <div class="col-md-1">
+         <div class="col-md-2">
              @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
              @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+             @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+             @Html.ActionLink("Schedule", "Schedule", new { id = item.ID})
              </div>
             </div>
 }
