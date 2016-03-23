@@ -1,0 +1,21 @@
+﻿@model IEnumerable<EIMS.Models.UserInfoViewModel>
+
+@{
+    ViewBag.Title = "Teachers";
+}
+
+<h2>Teachers</h2>
+
+<div id="scrollTable">
+    <div class="row">
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model=>model.ID)</strong></div>
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.Name)</strong></div>
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.Surname)</strong></div>
+        <div class="col-md-2"><strong>@Html.DisplayNameFor(model => model.Email)</strong></div>
+        <div class="col-md-2"><strong>Options</strong></div>
+    </div>
+    @Html.Partial("_GetTeacherListPartial")
+</div>
+@section Scripts {
+    @Scripts.Render("~/Scripts/TeacherScroll.js")
+}
