@@ -14,9 +14,15 @@ namespace EIMS.Common
 		public bool presence { get; set; }
 		public byte? mark { get; set; }
 
-		public DateTime LessonDate { get; set; }
 		public string StudentName { get; set; }
+	}
+
+	public class LessonPrecenseWithOptions
+	{
+		public DateTime LessonDate { get; set; }
 		public string TeacherName { get; set; }
 		public string SubjectName { get; set; }
+
+		public IEnumerable<LessonPresence> StudentList { get; set; }
 	}
 }

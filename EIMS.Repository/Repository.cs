@@ -225,9 +225,12 @@ namespace EIMS.Repository
 			return dbItem.ToLessonDate();
 		}
 
-		public IEnumerable<Common.LessonPresence> GetLessonPrecenseByLessonDate(long lessonDate)
+		public Common.LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate)
 		{
-			var result = new List<Common.LessonPresence>();
+			var result = new Common.LessonPrecenseWithOptions();
+			var tmpList = new List<Common.LessonPresence>();
+			var subjectID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.subjectID).FirstOrDefault();
+			var teacherID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.teacherID).FirstOrDefault();
 			var dbList = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).ToList();
 			foreach (var item in dbList)
 			{
@@ -238,19 +241,20 @@ namespace EIMS.Repository
 					studentID = item.studentID,
 					presence = item.presence,
 					mark = item.mark,
-					LessonDate = item.LessonDate.date,
-					SubjectName = item.LessonDate.Lesson.Subject.subjectName,
 				};
 				User student = new User();
 				var tmpStudent = context.EIMSUser.Where(usr => usr.Id == item.studentID).Single();
 				student = tmpStudent.ToUser();
-				User teacher = new User();
-				var tmpTeacher = context.EIMSUser.Where(usr => usr.Id == item.LessonDate.Lesson.teacherID).Single();
-				teacher = tmpTeacher.ToUser();
-				lp.StudentName = student.Surname + student.Name + student.MiddleName;
-				lp.TeacherName = teacher.Surname + teacher.Name + teacher.MiddleName;
-				result.Add(lp);
+				lp.StudentName = student.Surname + " " + student.Name + " " + student.MiddleName;
+				tmpList.Add(lp);
 			}
+			result.StudentList = tmpList;
+			result.LessonDate = context.LessonDate.Where(ld => ld.lessonDateID == lessonDate).Select(ld => ld.date).FirstOrDefault();
+			result.SubjectName = context.Subject.Where(s => s.subjectID == subjectID).Select(s => s.subjectName).FirstOrDefault();
+			User teacher = new User();
+			var tmpTeacher = context.EIMSUser.Where(usr => usr.Id == teacherID).Single();
+			teacher = tmpTeacher.ToUser();
+			result.TeacherName = teacher.Surname + " " + teacher.Name + " " + teacher.MiddleName;
 			return result;
 		}
 

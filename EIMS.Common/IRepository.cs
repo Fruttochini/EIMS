@@ -14,35 +14,33 @@ namespace EIMS.Common
         IEnumerable<Room> GetRooms();
         IEnumerable<Course> GetCourses();
         IEnumerable<DayOfWeek> GetDayOfWeek();
-		IEnumerable<Common.Task> GetTaskForGroupByDate(int groupID, DateTime selectDate);
+		IEnumerable<Task> GetTaskForGroupByDate(int groupID, DateTime selectDate);
         IEnumerable<LessonOrder> GetLessonOrder();
         IEnumerable<LessonPresence> GetLessonPresence();
         IEnumerable<FacultyCommon> GetFaculties();
         IEnumerable<UniversityGroup> GetGroups();
-
-        IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
-        IEnumerable<Common.CourseFill> GetCourseFillByCourse(int id);
-        IEnumerable<Common.CourseFill> GetAllCourseFill();
-        IEnumerable<Common.Requirement> GetRequirements();
-        IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID);
-
+		IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
+        IEnumerable<CourseFill> GetCourseFillByCourse(int id);
+        IEnumerable<CourseFill> GetAllCourseFill();
+        IEnumerable<Requirement> GetRequirements();
+        IEnumerable<GroupCourse> GetGroupByCourse(int courseID);
         IEnumerable<User> GetStudentByGroup(int groupID);
 
 
-        bool AddRequirement(Common.Requirement model);
+        bool AddRequirement(Requirement model);
 
 
         User GetUserByID(long ID);
         FacultyCommon GetFacultyByID(int id);
         Course GetCourseByID(int id);
-        Common.CourseFill GetCoursFillByID(int courseFillID);
-        Common.LessonOrder GetLessonOrderByID(int id);
-        Common.Room GetRoomByID(int id);
-
-        UniversityGroup GetGroupByID(int id);
-		Common.LessonPresence GetLessonPrecenseByID(long id);
-		Common.Task GetTaskByID(long id);
-		Common.LessonDate GetLessonDateByID(long id);
+        CourseFill GetCoursFillByID(int courseFillID);
+        LessonOrder GetLessonOrderByID(int id);
+        Room GetRoomByID(int id);
+		LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate);
+		UniversityGroup GetGroupByID(int id);
+		LessonPresence GetLessonPrecenseByID(long id);
+		Task GetTaskByID(long id);
+		LessonDate GetLessonDateByID(long id);
 
 
 
@@ -60,35 +58,35 @@ namespace EIMS.Common
         bool? DeleteCourse(int id);
 
         ///CourseFill ops
-        bool? CreateCourseFill(Common.CourseFill courseFill);
-        bool? UpdateCourseFill(Common.CourseFill courseFill);
+        bool? CreateCourseFill(CourseFill courseFill);
+        bool? UpdateCourseFill(CourseFill courseFill);
         bool? DeleteCourseFill(int courseFillID);
 
         ///LessonOrder ops
-        bool? CreateLessonOrder(Common.LessonOrder lOrder);
-        bool? UpdateLessonOrder(Common.LessonOrder lOrder);
+        bool? CreateLessonOrder(LessonOrder lOrder);
+        bool? UpdateLessonOrder(LessonOrder lOrder);
         bool? DeleteLessonOrder(int id);
 
         ///Subject ops
-        bool? CreateSubject(Common.Subject subject);
-        bool? UpdateSubject(Common.Subject subject);
+        bool? CreateSubject(Subject subject);
+        bool? UpdateSubject(Subject subject);
         bool? DeleteSubject(int id);
 
         ///Room ops
-        bool? AddRoom(Common.Room room);
-        bool? EditRoom(Common.Room room);
+        bool? AddRoom(Room room);
+        bool? EditRoom(Room room);
         bool? DeleteRoom(int id);
 
         ///Groups ops
-        bool? AddGroup(Common.UniversityGroup group);
-        bool? EditGroup(Common.UniversityGroup group);
+        bool? AddGroup(UniversityGroup group);
+        bool? EditGroup(UniversityGroup group);
         bool? DeleteGroup(int id);
 
         ///GroupCours ops
-        IEnumerable<Common.Subject> GetSubjectsByGroupID(int id);
-        Common.GroupCourse GetGroupCoursByID(int id);
-        bool? CreateGroupCours(Common.GroupCourse gCourse);
-        bool? UpdateGroupCours(Common.GroupCourse gCourse);
+        IEnumerable<Subject> GetSubjectsByGroupID(int id);
+        GroupCourse GetGroupCoursByID(int id);
+        bool? CreateGroupCours(GroupCourse gCourse);
+        bool? UpdateGroupCours(GroupCourse gCourse);
         bool? DeleteGroupCours(int id);
 
         ///Studnet ops
@@ -106,8 +104,8 @@ namespace EIMS.Common
 
 
 		///Task ops
-		bool? CreateTask(Common.Task task);
-		bool? UpdateTask(Common.Task task);
+		bool? CreateTask(Task task);
+		bool? UpdateTask(Task task);
 		bool? DeleteTask(long id);
     }
 }
