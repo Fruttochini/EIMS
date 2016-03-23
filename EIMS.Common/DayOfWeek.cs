@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace EIMS.Common
 {
-	public class DayOfWeek
-	{
-		public int DayID { get; set; }
-		public string DayName { get; set; }
+    public class DayOfWeek
+    {
+        public byte DayID { get; set; }
+        public string DayName { get; set; }
 
-		public IEnumerable<long> LessonID { get; set; }
-	}
+        public IEnumerable<long> LessonID { get; set; }
+    }
 }

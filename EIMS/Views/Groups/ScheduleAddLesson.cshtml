@@ -22,9 +22,13 @@
         @Html.HiddenFor(model=>model.Day.ID,new { id ="dayid"})
         @Html.HiddenFor(model => model.LesOrd.lessonOrderID, new { id = "lesOrid" })
         @Html.HiddenFor(model => model.Group.StudentCount, new { id = "stdCount" })
+        @Html.HiddenFor(model => model.Group.ID)
+        
+        @*@Html.HiddenFor(model=>model.Group.ID)*@
         <div class="form-group">
             @*@Html.LabelFor(model => model.SelectedSubject, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
+                Choose subject:
                 @Html.DropDownListFor(model => model.SelectedSubject, new SelectList(Model.Subjects,"ID", "Name"), new { @class = "form-control",  onchange = "OnSubjectChange(this.value)"})
                 @Html.ValidationMessageFor(model => model.SelectedSubject, "", new { @class = "text-danger" })
             </div>
@@ -32,6 +36,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
+                Choose teacher:
                 @Html.DropDownListFor(model => model.SelectedTeacher, Model.Teachers!=null?
                new SelectList(Model.Teachers, "ID", "FullName", Model.SelectedTeacher):
                new SelectList(new List<SelectListItem>(),"Value","Text"),
@@ -40,15 +45,18 @@
             </div>
         </div>
 
-        @*@Html.Partial("~/Views/Schedule/GetTeachers.cshtml",Model.TeacherList as EIMS.Models.TeacherVM)*@
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.SelectedRoom, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SelectedRoom, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SelectedRoom, "", new { @class = "text-danger" })
+                Choose room:
+                @Html.DropDownListFor(model => model.SelectedRoom, Model.Rooms != null ?
+               new SelectList(Model.Rooms, "ID", "RoomNo", Model.SelectedTeacher) :
+               new SelectList(new List<SelectListItem>(), "Value", "Text"),
+               new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SelectedSubject, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
+       
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -58,7 +66,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Schedule", "Schedule","Groups", new { id = Model.Group.ID },null)
 </div>
 
 @section Scripts {

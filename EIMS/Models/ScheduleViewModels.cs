@@ -30,7 +30,7 @@ namespace EIMS.Models
 
     public class DayVm
     {
-        public int ID { get; set; }
+        public byte ID { get; set; }
         public string Name { get; set; }
     }
 

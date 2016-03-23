@@ -376,32 +376,32 @@ namespace EIMS.Repository
             return false;
         }
 
-		public bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense)
-		{
-			var dbItem = new Datalayer.LessonPresence()
-			{
-				lessonDateID = lessonPrecense.lessonDateID,
-				studentID = lessonPrecense.studentID,
-				presence = lessonPrecense.presence,
-				mark = lessonPrecense.mark
-			};
-			context.LessonPresence.Add(dbItem);
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense)
+        {
+            var dbItem = new Datalayer.LessonPresence()
+            {
+                lessonDateID = lessonPrecense.lessonDateID,
+                studentID = lessonPrecense.studentID,
+                presence = lessonPrecense.presence,
+                mark = lessonPrecense.mark
+            };
+            context.LessonPresence.Add(dbItem);
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
 
-		public bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense)
-		{
-			var tmpLessonPrecense = context.LessonPresence.Where(lp => lp.lessonPresenceID == lessonPrecense.lessonPresenseID).Single();
-			tmpLessonPrecense.lessonDateID = lessonPrecense.lessonDateID;
-			tmpLessonPrecense.studentID = lessonPrecense.studentID;
-			tmpLessonPrecense.presence = lessonPrecense.presence;
-			tmpLessonPrecense.mark = lessonPrecense.mark;
-			if (context.SaveChanges() > 0)
-				return true;
-			return false;
-		}
+        public bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense)
+        {
+            var tmpLessonPrecense = context.LessonPresence.Where(lp => lp.lessonPresenceID == lessonPrecense.lessonPresenseID).Single();
+            tmpLessonPrecense.lessonDateID = lessonPrecense.lessonDateID;
+            tmpLessonPrecense.studentID = lessonPrecense.studentID;
+            tmpLessonPrecense.presence = lessonPrecense.presence;
+            tmpLessonPrecense.mark = lessonPrecense.mark;
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
         public IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID)
         {
             var dbLst = context.GroupCourse.Where(gCourse => gCourse.courseID == courseID).ToList();
@@ -820,7 +820,15 @@ namespace EIMS.Repository
         public Common.UniversityGroup GetGroupByID(int id)
         {
             var result = new Common.UniversityGroup();
+
             var dbgr = context.UniversityGroup.Where(g => g.groupID == id).FirstOrDefault();
+            var dbgrcourse = dbgr.GroupCourse.ToList();
+            List<Common.GroupCourse> grcourses = new List<Common.GroupCourse>();
+            foreach (var item in dbgrcourse)
+            {
+                grcourses.Add(item.ToGroupCourse());
+            }
+
             if (dbgr != null)
             {
                 result.GroupID = id;
@@ -829,6 +837,7 @@ namespace EIMS.Repository
                 result.CreationDate = dbgr.creationDate;
                 result.elderID = dbgr.elderID;
                 result.FacultyID = dbgr.facultyID;
+                result.Courses = grcourses;
             }
             return result;
         }
@@ -944,8 +953,25 @@ namespace EIMS.Repository
         public IEnumerable<Common.Lesson> GetLessonsByGroup(int id)
         {
             List<Common.Lesson> lList = new List<Common.Lesson>();
-
-
+            var dblessons = context.Lesson.Where(l => l.groupID == id);
+            foreach (var item in dblessons)
+            {
+                var nles = new Common.Lesson()
+                {
+                    LessonID = item.lessonID,
+                    GroupID = item.groupID,
+                    RoomID = item.roomID,
+                    TeacherID = item.teacherID,
+                    GroupName = item.UniversityGroup.groupName,
+                    DayOfWeek = item.DayOfWeek,
+                    LessonOrder = item.LessonOrder,
+                    RoomNo = item.Room.roomNo,
+                    SubjectID = item.subjectID,
+                    SubjectName = item.Subject.subjectName,
+                    TeacherFullName = item.EIMSUser.ToUser().Name + " " + item.EIMSUser.ToUser().Surname
+                };
+                lList.Add(nles);
+            }
             return lList;
         }
 
@@ -1087,6 +1113,23 @@ namespace EIMS.Repository
                     dbTeacher.Subject.Clear();
                 }
             }
+            if (context.SaveChanges() > 0)
+                return true;
+            return false;
+        }
+
+        public bool CreateLesson(Common.Lesson lesson)
+        {
+            Datalayer.Lesson nlesson = new Datalayer.Lesson()
+            {
+                groupID = lesson.GroupID,
+                subjectID = lesson.SubjectID,
+                teacherID = lesson.TeacherID,
+                roomID = lesson.RoomID,
+                LessonOrder = lesson.LessonOrder,
+                DayOfWeek = lesson.DayOfWeek
+            };
+            context.Lesson.Add(nlesson);
             if (context.SaveChanges() > 0)
                 return true;
             return false;

@@ -362,6 +362,7 @@ namespace EIMS.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult ScheduleAddLesson(int groupID, byte dayID, int LOID)
         {
             NewLessonViewModel LVM = new NewLessonViewModel();
@@ -403,6 +404,70 @@ namespace EIMS.Controllers
             LVM.Subjects = sublist;
 
             return View(LVM);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ScheduleAddLesson(NewLessonViewModel model)
+        {
+            var course = context.GetGroupByID(model.Group.ID).Courses.Where(c => c.StartDate <= DateTime.Today).FirstOrDefault();
+            var cf = context.GetCourseFillByCourse(course.CourseID).Where(c => c.subjectID == model.SelectedSubject).FirstOrDefault();
+            var totalHours = context.GetLessonsByGroup(model.Group.ID).Where(l => l.SubjectID == model.SelectedSubject).ToList().Count;
+            if (model.SelectedSubject != 0 && model.SelectedTeacher != 0 && model.SelectedRoom != 0 && totalHours < cf.SubjectHoursPerWeek)
+            {
+                var lesson = new Lesson()
+                {
+                    GroupID = model.Group.ID,
+                    RoomID = model.SelectedRoom,
+                    TeacherID = model.SelectedTeacher,
+                    SubjectID = model.SelectedSubject,
+                    LessonOrder = model.LesOrd.lessonOrderID,
+                    DayOfWeek = model.Day.ID
+                };
+
+                if (context.CreateLesson(lesson))
+                    return RedirectToAction("Schedule", "Groups", new { ID = model.Group.ID });
+            }
+
+            var group = context.GetGroupByID(model.Group.ID);
+            var lo = context.GetLessonOrderByID(model.LesOrd.lessonOrderID);
+            var day = context.GetDayOfWeek().Where(d => d.DayID == model.Day.ID).FirstOrDefault();
+
+            model.Group = new GroupInfoViewModel()
+            {
+                ID = group.GroupID,
+                Name = group.GroupName,
+                StudentCount = context.GetStudentByGroup(group.GroupID).ToList().Count
+
+            };
+
+            model.LesOrd = new LessonOrderViewModel()
+            {
+                lessonOrderID = lo.lessonOrderID,
+                timeStart = lo.timeStart,
+                timeEnd = lo.timeEnd
+            };
+            model.Day = new DayVm()
+            {
+                ID = day.DayID,
+                Name = day.DayName
+            };
+
+            List<SubjectInfoViewModel> sublist = new List<SubjectInfoViewModel>();
+            foreach (var item in context.GetSubjectsByGroupID(model.Group.ID))
+            {
+                var svm = new SubjectInfoViewModel()
+                {
+                    ID = item.SubjectID,
+                    Name = item.SubjectName
+                };
+                sublist.Add(svm);
+            }
+
+            model.Subjects = sublist;
+
+            return View(model);
+
         }
 
         private object GetItemsPerPage(int page = 0)

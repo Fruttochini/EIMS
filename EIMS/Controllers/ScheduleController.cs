@@ -81,11 +81,24 @@ namespace EIMS.Controllers
             var subjReqs = context.GetSubjects().Single(s => s.SubjectID == subjectID).Requirements;
             var PossibleRooms = context.GetRooms()
                 .Where(r => r.IsAvailable == true)
-                .Where(r => r.Capacity > stCount)
-                .Where(r => r.SelectedPossibilities.Intersect(subjReqs).ToList().Count == r.SelectedPossibilities.ToList().Count)
-                .Select(r => r.ID);
+                .Where(r => r.Capacity > stCount);
+
+            List<int> PossibleRoomsID = new List<int>();
+            foreach (var item in PossibleRooms)
+            {
+                bool toogle = true;
+                foreach (var req in subjReqs)
+                {
+                    if (!item.SelectedPossibilities.Contains(req))
+                        toogle &= false;
+                }
+                if (toogle)
+                    PossibleRoomsID.Add(item.ID);
+
+            }
+
             var exceptionList = context.GetLessonByDay(dayofweek).Where(l => l.LessonOrder == loid).Select(r => r.RoomID);
-            var resRooms = PossibleRooms.Except(exceptionList);
+            var resRooms = PossibleRoomsID.Except(exceptionList);
             foreach (var item in resRooms)
             {
                 result.Add(context.GetRoomByID(item));
