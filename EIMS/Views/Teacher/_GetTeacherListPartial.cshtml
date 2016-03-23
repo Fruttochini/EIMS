@@ -1,0 +1,27 @@
+﻿@model IEnumerable<EIMS.Models.UserInfoViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.ID)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.Name)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.Surname)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.Email)
+        </div>
+        <div class="col-md-2">
+            @Html.ActionLink("Details", "UserDetails", "Admin", new { id = item.ID },null) | 
+            @Html.ActionLink("Assign Subjects", "AssignSubjects", new { id = item.ID })
+        </div>
+
+    </div>
+}
+      
+
+

@@ -9,6 +9,7 @@
             <br /><br /><br />
             <ul class="nav navbar-left" style="font-size:24px">
                 <li>@Html.ActionLink("Users", "GetAllUsers", "Admin")</li>
+                <li>@Html.ActionLink("Teachers", "Index", "Teacher")</li>
                 <li>@Html.ActionLink("Subjects", "Index", "Subject")</li>
                 <li>@Html.ActionLink("Rooms", "Index", "Room")</li>
                 <li>@Html.ActionLink("Courses", "Index", "Course")</li>
@@ -33,14 +34,14 @@ else if (User.IsInRole("Superuser"))
         </div>
     </aside>
 }
-else if (User.IsInRole("3"))
+else if (User.IsInRole("Teacher"))
 {
     <aside class="col-md-2">
         <div class="navbar navbar-pills nav-stacked navbar-left">
         </div>
     </aside>
 }
-else if (User.IsInRole("4"))
+else if (User.IsInRole("Student"))
 {
     <aside class="col-md-2">
         <div class="navbar navbar-pills nav-stacked navbar-left">

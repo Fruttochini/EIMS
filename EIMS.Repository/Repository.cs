@@ -219,44 +219,44 @@ namespace EIMS.Repository
             return result;
         }
 
-		public Common.LessonDate GetLessonDateByID(long id)
-		{
-			var dbItem = context.LessonDate.Where(ld => ld.lessonDateID == id).Single();
-			return dbItem.ToLessonDate();
-		}
+        public Common.LessonDate GetLessonDateByID(long id)
+        {
+            var dbItem = context.LessonDate.Where(ld => ld.lessonDateID == id).Single();
+            return dbItem.ToLessonDate();
+        }
 
-		public Common.LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate)
-		{
-			var result = new Common.LessonPrecenseWithOptions();
-			var tmpList = new List<Common.LessonPresence>();
-			var subjectID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.subjectID).FirstOrDefault();
-			var teacherID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.teacherID).FirstOrDefault();
-			var dbList = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).ToList();
-			foreach (var item in dbList)
-			{
-				Common.LessonPresence lp = new Common.LessonPresence()
-				{
-					lessonPresenseID = item.lessonPresenceID,
-					lessonDateID = item.lessonDateID,
-					studentID = item.studentID,
-					presence = item.presence,
-					mark = item.mark,
-				};
-				User student = new User();
-				var tmpStudent = context.EIMSUser.Where(usr => usr.Id == item.studentID).Single();
-				student = tmpStudent.ToUser();
-				lp.StudentName = student.Surname + " " + student.Name + " " + student.MiddleName;
-				tmpList.Add(lp);
-			}
-			result.StudentList = tmpList;
-			result.LessonDate = context.LessonDate.Where(ld => ld.lessonDateID == lessonDate).Select(ld => ld.date).FirstOrDefault();
-			result.SubjectName = context.Subject.Where(s => s.subjectID == subjectID).Select(s => s.subjectName).FirstOrDefault();
-			User teacher = new User();
-			var tmpTeacher = context.EIMSUser.Where(usr => usr.Id == teacherID).Single();
-			teacher = tmpTeacher.ToUser();
-			result.TeacherName = teacher.Surname + " " + teacher.Name + " " + teacher.MiddleName;
-			return result;
-		}
+        public Common.LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate)
+        {
+            var result = new Common.LessonPrecenseWithOptions();
+            var tmpList = new List<Common.LessonPresence>();
+            var subjectID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.subjectID).FirstOrDefault();
+            var teacherID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.teacherID).FirstOrDefault();
+            var dbList = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).ToList();
+            foreach (var item in dbList)
+            {
+                Common.LessonPresence lp = new Common.LessonPresence()
+                {
+                    lessonPresenseID = item.lessonPresenceID,
+                    lessonDateID = item.lessonDateID,
+                    studentID = item.studentID,
+                    presence = item.presence,
+                    mark = item.mark,
+                };
+                User student = new User();
+                var tmpStudent = context.EIMSUser.Where(usr => usr.Id == item.studentID).Single();
+                student = tmpStudent.ToUser();
+                lp.StudentName = student.Surname + " " + student.Name + " " + student.MiddleName;
+                tmpList.Add(lp);
+            }
+            result.StudentList = tmpList;
+            result.LessonDate = context.LessonDate.Where(ld => ld.lessonDateID == lessonDate).Select(ld => ld.date).FirstOrDefault();
+            result.SubjectName = context.Subject.Where(s => s.subjectID == subjectID).Select(s => s.subjectName).FirstOrDefault();
+            User teacher = new User();
+            var tmpTeacher = context.EIMSUser.Where(usr => usr.Id == teacherID).Single();
+            teacher = tmpTeacher.ToUser();
+            result.TeacherName = teacher.Surname + " " + teacher.Name + " " + teacher.MiddleName;
+            return result;
+        }
 
         public void Dispose()
         {
@@ -1082,6 +1082,8 @@ namespace EIMS.Repository
                 }
                 else
                 {
+                    if (dbTeacher.Subject.Count == 0)
+                        return true;
                     dbTeacher.Subject.Clear();
                 }
             }

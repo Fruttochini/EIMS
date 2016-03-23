@@ -11,6 +11,7 @@ namespace EIMS.Controllers
     public class TeacherController : Controller
     {
         IRepository context;
+        const int pageSize = 50;
 
         public TeacherController()
         {
@@ -24,7 +25,18 @@ namespace EIMS.Controllers
         // GET: Teacher
         public ActionResult Index()
         {
-            return View();
+            return View(GetItemsPerPage());
+        }
+
+        public ActionResult GetTeacherList(int? id)
+        {
+            int page = id ?? 0;
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_GetTeacherListPartial", GetItemsPerPage(page));
+            }
+            return PartialView(GetItemsPerPage());
+
         }
 
         [Authorize(Roles = "Admin")]
@@ -51,7 +63,7 @@ namespace EIMS.Controllers
                 };
                 all.Add(sub);
             }
-
+            model.Teacher = t;
             model.AllSubjects = all;
             model.SelectedSubjects = repoTeacher.AssignedSubjects;
 
@@ -69,79 +81,38 @@ namespace EIMS.Controllers
             };
             if (context.AssignTeacherSubjects(teacher))
                 return RedirectToAction("Index");
+            List<SubjectInfoViewModel> all = new List<SubjectInfoViewModel>();
+            foreach (var item in context.GetSubjects())
+            {
+                SubjectInfoViewModel sub = new SubjectInfoViewModel()
+                {
+                    ID = item.SubjectID,
+                    Name = item.SubjectName
+                };
+                all.Add(sub);
+            }
+            model.AllSubjects = all;
             return View(model);
         }
 
-        // GET: Teacher/Details/5
-        public ActionResult Details(int id)
+        private object GetItemsPerPage(int page = 0)
         {
-            return View();
-        }
-
-        // GET: Teacher/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Teacher/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            var itemToSkip = page * pageSize;
+            var teachList = new List<UserInfoViewModel>();
+            var dblst = context.GetUsers().Where(u => u.Roles.Contains("Teacher"));
+            foreach (var sub in dblst)
             {
-                // TODO: Add insert logic here
+                UserInfoViewModel tmp = new UserInfoViewModel()
+                {
+                    ID = sub.ID,
+                    Name = sub.Name,
+                    Surname = sub.Surname,
+                    Email = sub.Email
 
-                return RedirectToAction("Index");
+                };
+                teachList.Add(tmp);
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Teacher/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Teacher/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Teacher/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Teacher/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return teachList.OrderBy(f => f.ID).Skip(itemToSkip).Take(pageSize).ToList();
         }
     }
 }
