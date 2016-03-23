@@ -225,6 +225,24 @@ namespace EIMS.Repository
             return dbItem.ToLessonDate();
         }
 
+		public long GetLessonDateByLessonAndDate(long lessonID, DateTime date)
+		{
+			var dbItem = context.LessonDate.Where(d => d.lessonID == lessonID && d.date == date).Select(d=>d.lessonDateID).FirstOrDefault();
+			return dbItem;
+		}
+
+		public Common.Subject GetSubjectByID(int id)
+		{
+			var dbItem = context.Subject.Where(s => s.subjectID == id).Single();
+			return dbItem.ToSubject();
+		}
+
+		public string GetDayOfWeek(byte id)
+		{
+			var day = context.DayOfWeek.Where(d => d.ID == id).Select(d => d.Name).FirstOrDefault();
+			return day;
+		}
+
         public Common.LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate)
         {
             var result = new Common.LessonPrecenseWithOptions();
@@ -1036,8 +1054,31 @@ namespace EIMS.Repository
             return result;
         }
 
-
-        public IEnumerable<Common.Subject> GetSubjectsByGroupID(int id)
+		public IEnumerable<Common.Lesson> GetLessonByTeacherAndDate(long id, DateTime date)
+		{
+			List<Common.Lesson> result = new List<Common.Lesson>();
+			var dblist = context.Lesson.Where(l => l.teacherID == id && l.LessonDate.Where(d=>d.date == date)!= null);
+			foreach (var item in dblist)
+			{
+				var lesn = new Common.Lesson()
+				{
+					DayOfWeek = item.DayOfWeek,
+					GroupID = item.groupID,
+					GroupName = item.UniversityGroup.groupName,
+					LessonID = item.lessonID,
+					RoomID = item.roomID,
+					RoomNo = item.Room.roomNo,
+					SubjectID = item.subjectID,
+					SubjectName = item.Subject.subjectName,
+					TeacherID = item.teacherID,
+					LessonOrder = item.LessonOrder
+				};
+				result.Add(lesn);
+			}
+			return result;
+		}
+		
+		public IEnumerable<Common.Subject> GetSubjectsByGroupID(int id)
         {
             var courseID = context.GroupCourse.Where(gc => gc.groupID == id && gc.endDate > DateTime.Today).Select(gc => gc.courseID).FirstOrDefault();
             List<Common.Subject> result = new List<Common.Subject>();

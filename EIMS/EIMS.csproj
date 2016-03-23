@@ -201,6 +201,7 @@
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
+    <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -215,6 +216,7 @@
     <Compile Include="Models\RoomsViewModels.cs" />
     <Compile Include="Models\SubjectViewModels.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
+    <Compile Include="Models\TeachersViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -261,6 +263,7 @@
     <Content Include="Scripts\RoomInfinityScroll.js" />
     <Content Include="Scripts\ScheduleAddLessonScript.js" />
     <Content Include="Scripts\SubjectInfinityScroll.js" />
+    <Content Include="Scripts\TaskInfinityScrolling.js" />
     <Content Include="Scripts\TeacherScroll.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\CourseFill\Index.cshtml" />
@@ -352,6 +355,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Task\" />
+    <Folder Include="Views\Teachers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

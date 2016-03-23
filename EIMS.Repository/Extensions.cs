@@ -142,5 +142,15 @@ namespace EIMS.Repository
 			};
 			return tmpTask;
 		}
+
+		public static Common.Subject ToSubject(this Datalayer.Subject subject)
+		{
+			var tmpSubject = new Common.Subject()
+			{
+				SubjectID = subject.subjectID,
+				SubjectName = subject.subjectName
+			};
+			return tmpSubject;
+		}
 	}
 }

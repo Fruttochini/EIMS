@@ -26,13 +26,18 @@ namespace EIMS.Common
         IEnumerable<GroupCourse> GetGroupByCourse(int courseID);
         IEnumerable<User> GetStudentByGroup(int groupID);
 		IEnumerable<User> GetUserForGroup(long lessonDateID);
+		IEnumerable<Lesson> GetLessonByTeacherAndDate(long id, DateTime date);
 
 
 
-        bool AddRequirement(Requirement model);
+
+		bool AddRequirement(Requirement model);
+		long GetLessonDateByLessonAndDate(long lessonID, DateTime date);
+		string GetDayOfWeek(byte id);
 
 
-        User GetUserByID(long ID);
+
+		User GetUserByID(long ID);
         FacultyCommon GetFacultyByID(int id);
         Course GetCourseByID(int id);
         CourseFill GetCoursFillByID(int courseFillID);
@@ -43,10 +48,12 @@ namespace EIMS.Common
 		LessonPresence GetLessonPrecenseByID(long id);
 		Task GetTaskByID(long id);
 		LessonDate GetLessonDateByID(long id);
+		Subject GetSubjectByID(int id);
 
 
 
-        void SeedValues();
+
+		void SeedValues();
 
 
         ///Faculty ops
