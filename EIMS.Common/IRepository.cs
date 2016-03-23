@@ -14,17 +14,19 @@ namespace EIMS.Common
         IEnumerable<Room> GetRooms();
         IEnumerable<Course> GetCourses();
         IEnumerable<DayOfWeek> GetDayOfWeek();
-        IEnumerable<Task> GetTaskForGroupByDate(int groupID, DateTime selectDate);
+		IEnumerable<Task> GetTaskForGroupByDate(int groupID, DateTime selectDate);
         IEnumerable<LessonOrder> GetLessonOrder();
         IEnumerable<LessonPresence> GetLessonPresence();
         IEnumerable<FacultyCommon> GetFaculties();
         IEnumerable<UniversityGroup> GetGroups();
-        IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
+		IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
         IEnumerable<CourseFill> GetCourseFillByCourse(int id);
         IEnumerable<CourseFill> GetAllCourseFill();
         IEnumerable<Requirement> GetRequirements();
         IEnumerable<GroupCourse> GetGroupByCourse(int courseID);
         IEnumerable<User> GetStudentByGroup(int groupID);
+		IEnumerable<User> GetUserForGroup(long lessonDateID);
+
 
 
         bool AddRequirement(Requirement model);
@@ -36,11 +38,11 @@ namespace EIMS.Common
         CourseFill GetCoursFillByID(int courseFillID);
         LessonOrder GetLessonOrderByID(int id);
         Room GetRoomByID(int id);
-        LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate);
-        UniversityGroup GetGroupByID(int id);
-        LessonPresence GetLessonPrecenseByID(long id);
-        Task GetTaskByID(long id);
-        LessonDate GetLessonDateByID(long id);
+		LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate);
+		UniversityGroup GetGroupByID(int id);
+		LessonPresence GetLessonPrecenseByID(long id);
+		Task GetTaskByID(long id);
+		LessonDate GetLessonDateByID(long id);
 
 
 
@@ -105,13 +107,14 @@ namespace EIMS.Common
         Teacher GetTeacherByID(long id);
         bool AssignTeacherSubjects(Teacher teacher);
 
-        ///Task ops
-        bool? CreateTask(Task task);
-        bool? UpdateTask(Task task);
-        bool? DeleteTask(long id);
+		///Task ops
+		bool? CreateTask(Task task);
+		bool? UpdateTask(Task task);
+		bool? DeleteTask(long id);
 
-        ///LessonPrecense ops
-        bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense);
-        bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense);
-    }
+		///LessonPrecense ops
+		LessonPrecenseWithOptions GetLessonPrecenseOption(long lessonDateID);
+		bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense);
+		bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense);
+	}
 }
