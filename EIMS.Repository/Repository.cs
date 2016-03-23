@@ -376,6 +376,32 @@ namespace EIMS.Repository
             return false;
         }
 
+		public bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense)
+		{
+			var dbItem = new Datalayer.LessonPresence()
+			{
+				lessonDateID = lessonPrecense.lessonDateID,
+				studentID = lessonPrecense.studentID,
+				presence = lessonPrecense.presence,
+				mark = lessonPrecense.mark
+			};
+			context.LessonPresence.Add(dbItem);
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
+
+		public bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense)
+		{
+			var tmpLessonPrecense = context.LessonPresence.Where(lp => lp.lessonPresenceID == lessonPrecense.lessonPresenseID).Single();
+			tmpLessonPrecense.lessonDateID = lessonPrecense.lessonDateID;
+			tmpLessonPrecense.studentID = lessonPrecense.studentID;
+			tmpLessonPrecense.presence = lessonPrecense.presence;
+			tmpLessonPrecense.mark = lessonPrecense.mark;
+			if (context.SaveChanges() > 0)
+				return true;
+			return false;
+		}
         public IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID)
         {
             var dbLst = context.GroupCourse.Where(gCourse => gCourse.courseID == courseID).ToList();
