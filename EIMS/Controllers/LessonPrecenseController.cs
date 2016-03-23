@@ -11,52 +11,33 @@ namespace EIMS.Controllers
     public class LessonPrecenseController : Controller
     {
 		private IRepository context = new Repository.Repository();
-		const int pageSize = 25;
 
-        public ActionResult Index(long lessonDateID)
-        {
-            return View(GetItemsPerPage(lessonDateID));
-        }
-
-		private object GetItemsPerPage(long lessonDateID, int page = 0)
+		public ActionResult CreateLessonPrecense (long lessonDateID)
 		{
-			var itemToSkip = page * pageSize;
-			var lessonPrecense = new List<LessonPrecenseList>();
-			var lesson = new LessonPrecenseViewModel();
-			var dbList = context.GetLessonPrecenseByLessonDate(lessonDateID);
-			foreach(var item in dbList.StudentList)
+			var lessonPrecens = new LessonPrecenseViewModel();
+			var studentList = new List<LessonPrecenseList>();
+			var option = context.GetLessonPrecenseOption(lessonDateID);
+			var tmpList = context.GetUserForGroup(lessonDateID);
+			foreach(var item in tmpList)
 			{
 				LessonPrecenseList lpl = new LessonPrecenseList()
 				{
-					LessonPrecenseID = item.lessonPresenseID,
-					LessonDateID = item.lessonDateID,
-					StudentID = item.studentID,
-					StudentName = item.StudentName,
-					Precense = item.presence,
-					Mark = item.mark
+					StudentID = item.ID,
+					StudentName = item.Surname + " " + item.Name + " " + item.MiddleName,
+					LessonDateID = lessonDateID,
 				};
-				lessonPrecense.Add(lpl);
+				studentList.Add(lpl);
 			}
-			lesson.RowList = lessonPrecense.OrderBy(lp=>lp.StudentName).Skip(itemToSkip).Take(pageSize).ToList();
-			lesson.LessonDate = dbList.LessonDate;
-			lesson.SubjectName = dbList.SubjectName;
-			lesson.TeacherName = dbList.TeacherName;
-			return lesson;
-		}
-
-		public ActionResult GetLessonPrecense (long lessonDateID, int? id)
-		{
-			int page = id ?? 0;
-			if(Request.IsAjaxRequest())
-			{
-				return PartialView("GetLessonPrecense", GetItemsPerPage(lessonDateID, page));
-			}
-			return PartialView(GetItemsPerPage(lessonDateID));
+			lessonPrecens.RowList = studentList;
+			lessonPrecens.SubjectName = option.SubjectName;
+			lessonPrecens.LessonDate = option.LessonDate;
+			lessonPrecens.TeacherName = option.TeacherName;
+			return View(lessonPrecens);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult GetLessonPrecense (IEnumerable<LessonPrecenseList> models)
+		public ActionResult CreateLessonPrecense (IEnumerable<LessonPrecenseList> models)
 		{
 			if(ModelState.IsValid)
 			{
@@ -76,14 +57,29 @@ namespace EIMS.Controllers
 			return View(models);
 		}
 
-		public ActionResult EditLessonPrecense(long lessonDateID, int? id)
+		public ActionResult EditLessonPrecense(long lessonDateID)
 		{
-			int page = id ?? 0;
-			if (Request.IsAjaxRequest())
+			var lessonPrecense = new LessonPrecenseViewModel();
+			var editList = new List<LessonPrecenseList>();
+			var tmpLessonPrecense = context.GetLessonPrecenseByLessonDate(lessonDateID);
+			foreach(var item in tmpLessonPrecense.StudentList)
 			{
-				return PartialView("EditLessonPrecense", GetItemsPerPage(lessonDateID, page));
+				LessonPrecenseList lpl = new LessonPrecenseList()
+				{
+					LessonPrecenseID = item.lessonPresenseID,
+					LessonDateID = item.lessonDateID,
+					StudentID = item.studentID,
+					StudentName = item.StudentName,
+					Precense = item.presence,
+					Mark = item.mark
+				};
+				editList.Add(lpl);
 			}
-			return PartialView(GetItemsPerPage(lessonDateID));
+			lessonPrecense.RowList = editList;
+			lessonPrecense.LessonDate = tmpLessonPrecense.LessonDate;
+			lessonPrecense.SubjectName = tmpLessonPrecense.SubjectName;
+			lessonPrecense.TeacherName = tmpLessonPrecense.TeacherName;
+			return View(lessonPrecense);
 		}
 
 		[HttpPost]

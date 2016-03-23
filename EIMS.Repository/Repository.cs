@@ -10,255 +10,292 @@ using System.Text;
 namespace EIMS.Repository
 {
 
-    public class Repository : IRepository
-    {
-        private EIMSEntitiesContext context;
+	public class Repository : IRepository
+	{
+		private EIMSEntitiesContext context;
 
-        public Repository()
-        {
-            this.context = new EIMSEntitiesContext();
-        }
+		public Repository()
+		{
+			this.context = new EIMSEntitiesContext();
+		}
 
-        public IEnumerable<Common.Course> GetCourses()
-        {
-            var dbLst = context.Course.ToList();
-            var result = new List<Common.Course>();
-            foreach (var item in dbLst)
-            {
-                var tmpCrs = new Common.Course() { CourseID = item.courseID, CourseName = item.courseName };
-                //var dct = new Dictionary<string, int>();
-                //var tmpLst = item.CourseFill.Select(course => new { course.Subject.subjectName, course.subjectHoursPerWeek });
-                //foreach (var anonim in tmpLst)
-                //{
-                //    dct.Add(anonim.subjectName, anonim.subjectHoursPerWeek);
-                //}
-                //tmpCrs.SubjectByHours = dct;
-                result.Add(tmpCrs);
-            }
-            return result;
-        }
+		public IEnumerable<Common.Course> GetCourses()
+		{
+			var dbLst = context.Course.ToList();
+			var result = new List<Common.Course>();
+			foreach (var item in dbLst)
+			{
+				var tmpCrs = new Common.Course() { CourseID = item.courseID, CourseName = item.courseName };
+				//var dct = new Dictionary<string, int>();
+				//var tmpLst = item.CourseFill.Select(course => new { course.Subject.subjectName, course.subjectHoursPerWeek });
+				//foreach (var anonim in tmpLst)
+				//{
+				//    dct.Add(anonim.subjectName, anonim.subjectHoursPerWeek);
+				//}
+				//tmpCrs.SubjectByHours = dct;
+				result.Add(tmpCrs);
+			}
+			return result;
+		}
 
-        public IEnumerable<Common.CourseFill> GetAllCourseFill()
-        {
-            var dbLst = context.CourseFill.ToList();
-            var result = new List<Common.CourseFill>();
-            foreach (var item in dbLst)
-            {
-                var tmpCourseFill = new Common.CourseFill() { courseFillID = item.courseFillID, courseID = item.courseID, courseName = item.Course.courseName, subjectID = item.subjectID, subjectName = item.Subject.subjectName, SubjectHoursPerWeek = item.subjectHoursPerWeek };
-                result.Add(tmpCourseFill);
-            }
-            return result;
-        }
+		public IEnumerable<Common.CourseFill> GetAllCourseFill()
+		{
+			var dbLst = context.CourseFill.ToList();
+			var result = new List<Common.CourseFill>();
+			foreach (var item in dbLst)
+			{
+				var tmpCourseFill = new Common.CourseFill() { courseFillID = item.courseFillID, courseID = item.courseID, courseName = item.Course.courseName, subjectID = item.subjectID, subjectName = item.Subject.subjectName, SubjectHoursPerWeek = item.subjectHoursPerWeek };
+				result.Add(tmpCourseFill);
+			}
+			return result;
+		}
 
-        public IEnumerable<Common.DayOfWeek> GetDayOfWeek()
-        {
-            var dbLst = context.DayOfWeek.ToList();
-            var result = new List<Common.DayOfWeek>();
-            foreach (var item in dbLst)
-            {
-                var tmpDOW = new Common.DayOfWeek() { DayID = item.ID, DayName = item.Name };
-                var idLst = item.Lesson.Select(less => less.lessonID);
-                tmpDOW.LessonID = idLst;
-                result.Add(tmpDOW);
-            }
-            return result;
-        }
+		public IEnumerable<Common.DayOfWeek> GetDayOfWeek()
+		{
+			var dbLst = context.DayOfWeek.ToList();
+			var result = new List<Common.DayOfWeek>();
+			foreach (var item in dbLst)
+			{
+				var tmpDOW = new Common.DayOfWeek() { DayID = item.ID, DayName = item.Name };
+				var idLst = item.Lesson.Select(less => less.lessonID);
+				tmpDOW.LessonID = idLst;
+				result.Add(tmpDOW);
+			}
+			return result;
+		}
 
-        public IEnumerable<Common.Task> GetTaskForGroupByDate(int groupID, DateTime selectDate)
-        {
-            var dbLst = context.Task.Where(t => t.LessonDate.Lesson.groupID == groupID && t.LessonDate.date == selectDate).ToList();
-            var result = new List<Common.Task>();
-            foreach (var item in dbLst)
-            {
-                var tmpTsk = new Common.Task() { taskID = item.taskID, lessonDateID = item.lessonDateID, homeTask = item.homeTask, expiryDate = item.expiryDate, subjectName = item.LessonDate.Lesson.Subject.subjectName, groupName = item.LessonDate.Lesson.UniversityGroup.groupName };
-                result.Add(tmpTsk);
-            }
-            return result;
-        }
+		public IEnumerable<Common.Task> GetTaskForGroupByDate(int groupID, DateTime selectDate)
+		{
+			var dbLst = context.Task.Where(t => t.LessonDate.Lesson.groupID == groupID && t.LessonDate.date == selectDate).ToList();
+			var result = new List<Common.Task>();
+			foreach (var item in dbLst)
+			{
+				var tmpTsk = new Common.Task() { taskID = item.taskID, lessonDateID = item.lessonDateID, homeTask = item.homeTask, expiryDate = item.expiryDate, subjectName = item.LessonDate.Lesson.Subject.subjectName, groupName = item.LessonDate.Lesson.UniversityGroup.groupName };
+				result.Add(tmpTsk);
+			}
+			return result;
+		}
 
-        public Common.LessonPresence GetLessonPrecenseByID(long id)
-        {
-            var dbItem = context.LessonPresence.Where(lp => lp.lessonPresenceID == id).Single();
-            return dbItem.ToLessonPrecense();
-        }
+		public Common.LessonPresence GetLessonPrecenseByID(long id)
+		{
+			var dbItem = context.LessonPresence.Where(lp => lp.lessonPresenceID == id).Single();
+			return dbItem.ToLessonPrecense();
+		}
 
-        public Common.Task GetTaskByID(long id)
-        {
-            var dbItem = context.Task.Where(t => t.taskID == id).Single();
-            return dbItem.ToTask();
-        }
+		public Common.Task GetTaskByID(long id)
+		{
+			var dbItem = context.Task.Where(t => t.taskID == id).Single();
+			return dbItem.ToTask();
+		}
 
-        public IEnumerable<Common.LessonOrder> GetLessonOrder()
-        {
-            var dbLst = context.LessonOrder.ToList();
-            var result = new List<Common.LessonOrder>();
-            foreach (var item in dbLst)
-            {
-                var tmpLessOrder = new Common.LessonOrder() { lessonOrderID = item.ID, timeStart = item.TimeStart, timeEnd = item.TimeEnd };
-                result.Add(tmpLessOrder);
-            }
-            return result;
-        }
+		public IEnumerable<Common.LessonOrder> GetLessonOrder()
+		{
+			var dbLst = context.LessonOrder.ToList();
+			var result = new List<Common.LessonOrder>();
+			foreach (var item in dbLst)
+			{
+				var tmpLessOrder = new Common.LessonOrder() { lessonOrderID = item.ID, timeStart = item.TimeStart, timeEnd = item.TimeEnd };
+				result.Add(tmpLessOrder);
+			}
+			return result;
+		}
 
-        public IEnumerable<Common.LessonPresence> GetLessonPresence()
-        {
-            var dbLst = context.LessonPresence.ToList();
-            var result = new List<Common.LessonPresence>();
-            foreach (var item in dbLst)
-            {
-                var tmpLessPresence = new Common.LessonPresence() { lessonDateID = item.lessonDateID, studentID = item.studentID, presence = item.presence, mark = item.mark };
-                result.Add(tmpLessPresence);
-            }
-            return result;
-        }
+		public IEnumerable<Common.LessonPresence> GetLessonPresence()
+		{
+			var dbLst = context.LessonPresence.ToList();
+			var result = new List<Common.LessonPresence>();
+			foreach (var item in dbLst)
+			{
+				var tmpLessPresence = new Common.LessonPresence() { lessonDateID = item.lessonDateID, studentID = item.studentID, presence = item.presence, mark = item.mark };
+				result.Add(tmpLessPresence);
+			}
+			return result;
+		}
 
-        public IEnumerable<FacultyCommon> GetFaculties()
-        {
-            var dbLst = context.Faculty.ToList();
-            var result = new List<FacultyCommon>();
-            foreach (var item in dbLst)
-            {
-                var tmpFclt = new FacultyCommon() { FacultyID = item.facultyID, Name = item.Name };
-                var idList = item.UniversityGroup.Select(grp => grp.groupID);
-                tmpFclt.GroupID = idList;
-                result.Add(tmpFclt);
-            }
-            return result;
-        }
+		public IEnumerable<FacultyCommon> GetFaculties()
+		{
+			var dbLst = context.Faculty.ToList();
+			var result = new List<FacultyCommon>();
+			foreach (var item in dbLst)
+			{
+				var tmpFclt = new FacultyCommon() { FacultyID = item.facultyID, Name = item.Name };
+				var idList = item.UniversityGroup.Select(grp => grp.groupID);
+				tmpFclt.GroupID = idList;
+				result.Add(tmpFclt);
+			}
+			return result;
+		}
 
-        public IEnumerable<Common.Room> GetRooms()
-        {
-            var dblst = context.Room.ToList();
-            var result = new List<Common.Room>();
-            foreach (var item in dblst)
-            {
-                var tmpr = new Common.Room()
-                {
-                    ID = item.roomID,
-                    Capacity = item.capacity,
-                    IsAvailable = item.isAvailable,
-                    RoomNo = item.roomNo,
-                    SelectedPossibilities = item.SRRequirement.Select(r => r.ID).ToList()
+		public IEnumerable<Common.Room> GetRooms()
+		{
+			var dblst = context.Room.ToList();
+			var result = new List<Common.Room>();
+			foreach (var item in dblst)
+			{
+				var tmpr = new Common.Room()
+				{
+					ID = item.roomID,
+					Capacity = item.capacity,
+					IsAvailable = item.isAvailable,
+					RoomNo = item.roomNo,
+					SelectedPossibilities = item.SRRequirement.Select(r => r.ID).ToList()
 
-                };
-                result.Add(tmpr);
-            }
+				};
+				result.Add(tmpr);
+			}
 
-            return result;
-        }
-
-
-
-        public IEnumerable<Common.Subject> GetSubjects()
-        {
-            var dbLst = context.Subject.ToList();
-            var result = new List<Common.Subject>();
-            foreach (var item in dbLst)
-            {
-                var tmpSubj = new Common.Subject()
-                {
-                    SubjectID = item.subjectID,
-                    SubjectName = item.subjectName,
-                    Requirements = item.SRRequirement
-                    .Select(req => req.ID)
-                    .ToList()
-
-                };
-                result.Add(tmpSubj);
-            }
-            return result;
-        }
+			return result;
+		}
 
 
-        public IEnumerable<Common.UniversityGroup> GetGroups()
-        {
-            var result = new List<Common.UniversityGroup>();
-            var dbList = context.UniversityGroup.ToList();
-            foreach (var item in dbList)
-            {
-                var tmpGroup = new Common.UniversityGroup()
-                {
-                    GroupID = item.groupID,
-                    CreationDate = item.creationDate,
-                    FacultyID = item.facultyID,
-                    GroupName = item.groupName,
-                    elderID = item.elderID,
-                    SupervisorID = item.supervisorID
-                };
-                result.Add(tmpGroup);
-            }
-            return result;
-        }
 
-        public IEnumerable<Common.Lesson> GetLessons()
-        {
-            var dbLst = context.Lesson.ToList();
-            var result = new List<Common.Lesson>();
-            foreach (var item in dbLst)
-            {
-                var tmpLesson = new Common.Lesson() { LessonID = item.lessonID, SubjectID = item.subjectID, GroupID = item.groupID, TeacherID = item.teacherID, RoomID = item.roomID, LessonOrder = item.LessonOrder, DayOfWeek = item.DayOfWeek, SubjectName = item.Subject.subjectName, GroupName = item.UniversityGroup.groupName, RoomNo = item.Room.roomNo };
-                var user = GetUserByID(tmpLesson.TeacherID);
-                var sb = new StringBuilder();
-                sb.AppendFormat("{0} {1} {2}", user.Surname, user.Name, user.MiddleName);
-                tmpLesson.TeacherFullName = sb.ToString();
-                result.Add(tmpLesson);
-            }
-            return result;
-        }
+		public IEnumerable<Common.Subject> GetSubjects()
+		{
+			var dbLst = context.Subject.ToList();
+			var result = new List<Common.Subject>();
+			foreach (var item in dbLst)
+			{
+				var tmpSubj = new Common.Subject()
+				{
+					SubjectID = item.subjectID,
+					SubjectName = item.subjectName,
+					Requirements = item.SRRequirement
+					.Select(req => req.ID)
+					.ToList()
 
-        public IEnumerable<Common.LessonDate> GetLessonsByDate(DateTime date)
-        {
+				};
+				result.Add(tmpSubj);
+			}
+			return result;
+		}
 
-            var result = new List<Common.LessonDate>();
-            var dbLst = context.LessonDate.Where(lesson => lesson.date == date).Select(lDate => lDate).ToList();
-            foreach (var item in dbLst)
-            {
-                var tmpLessDate = item.ToLessonDate();
-                result.Add(tmpLessDate);
-            }
-            return result;
-        }
 
-        public Common.LessonDate GetLessonDateByID(long id)
-        {
-            var dbItem = context.LessonDate.Where(ld => ld.lessonDateID == id).Single();
-            return dbItem.ToLessonDate();
-        }
+		public IEnumerable<Common.UniversityGroup> GetGroups()
+		{
+			var result = new List<Common.UniversityGroup>();
+			var dbList = context.UniversityGroup.ToList();
+			foreach (var item in dbList)
+			{
+				var tmpGroup = new Common.UniversityGroup()
+				{
+					GroupID = item.groupID,
+					CreationDate = item.creationDate,
+					FacultyID = item.facultyID,
+					GroupName = item.groupName,
+					elderID = item.elderID,
+					SupervisorID = item.supervisorID
+				};
+				result.Add(tmpGroup);
+			}
+			return result;
+		}
 
-        public Common.LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate)
-        {
-            var result = new Common.LessonPrecenseWithOptions();
-            var tmpList = new List<Common.LessonPresence>();
-            var subjectID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.subjectID).FirstOrDefault();
-            var teacherID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.teacherID).FirstOrDefault();
-            var dbList = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).ToList();
-            foreach (var item in dbList)
-            {
-                Common.LessonPresence lp = new Common.LessonPresence()
-                {
-                    lessonPresenseID = item.lessonPresenceID,
-                    lessonDateID = item.lessonDateID,
-                    studentID = item.studentID,
-                    presence = item.presence,
-                    mark = item.mark,
-                };
-                User student = new User();
-                var tmpStudent = context.EIMSUser.Where(usr => usr.Id == item.studentID).Single();
-                student = tmpStudent.ToUser();
-                lp.StudentName = student.Surname + " " + student.Name + " " + student.MiddleName;
-                tmpList.Add(lp);
-            }
-            result.StudentList = tmpList;
-            result.LessonDate = context.LessonDate.Where(ld => ld.lessonDateID == lessonDate).Select(ld => ld.date).FirstOrDefault();
-            result.SubjectName = context.Subject.Where(s => s.subjectID == subjectID).Select(s => s.subjectName).FirstOrDefault();
-            User teacher = new User();
-            var tmpTeacher = context.EIMSUser.Where(usr => usr.Id == teacherID).Single();
-            teacher = tmpTeacher.ToUser();
-            result.TeacherName = teacher.Surname + " " + teacher.Name + " " + teacher.MiddleName;
-            return result;
-        }
+		public IEnumerable<Common.Lesson> GetLessons()
+		{
+			var dbLst = context.Lesson.ToList();
+			var result = new List<Common.Lesson>();
+			foreach (var item in dbLst)
+			{
+				var tmpLesson = new Common.Lesson() { LessonID = item.lessonID, SubjectID = item.subjectID, GroupID = item.groupID, TeacherID = item.teacherID, RoomID = item.roomID, LessonOrder = item.LessonOrder, DayOfWeek = item.DayOfWeek, SubjectName = item.Subject.subjectName, GroupName = item.UniversityGroup.groupName, RoomNo = item.Room.roomNo };
+				var user = GetUserByID(tmpLesson.TeacherID);
+				var sb = new StringBuilder();
+				sb.AppendFormat("{0} {1} {2}", user.Surname, user.Name, user.MiddleName);
+				tmpLesson.TeacherFullName = sb.ToString();
+				result.Add(tmpLesson);
+			}
+			return result;
+		}
 
-        public void Dispose()
+		public IEnumerable<Common.LessonDate> GetLessonsByDate(DateTime date)
+		{
+
+			var result = new List<Common.LessonDate>();
+			var dbLst = context.LessonDate.Where(lesson => lesson.date == date).Select(lDate => lDate).ToList();
+			foreach (var item in dbLst)
+			{
+				var tmpLessDate = item.ToLessonDate();
+				result.Add(tmpLessDate);
+			}
+			return result;
+		}
+
+		public Common.LessonDate GetLessonDateByID(long id)
+		{
+			var dbItem = context.LessonDate.Where(ld => ld.lessonDateID == id).Single();
+			return dbItem.ToLessonDate();
+		}
+
+		public Common.LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate)
+		{
+			var result = new Common.LessonPrecenseWithOptions();
+			var tmpList = new List<Common.LessonPresence>();
+			var subjectID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.subjectID).FirstOrDefault();
+			var teacherID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).Select(lp => lp.LessonDate.Lesson.teacherID).FirstOrDefault();
+			var dbList = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDate).ToList();
+			foreach (var item in dbList)
+			{
+				Common.LessonPresence lp = new Common.LessonPresence()
+				{
+					lessonPresenseID = item.lessonPresenceID,
+					lessonDateID = item.lessonDateID,
+					studentID = item.studentID,
+					presence = item.presence,
+					mark = item.mark,
+				};
+				User student = new User();
+				var tmpStudent = context.EIMSUser.Where(usr => usr.Id == item.studentID).Single();
+				student = tmpStudent.ToUser();
+				lp.StudentName = student.Surname + " " + student.Name + " " + student.MiddleName;
+				tmpList.Add(lp);
+			}
+			result.StudentList = tmpList;
+			result.LessonDate = context.LessonDate.Where(ld => ld.lessonDateID == lessonDate).Select(ld => ld.date).FirstOrDefault();
+			result.SubjectName = context.Subject.Where(s => s.subjectID == subjectID).Select(s => s.subjectName).FirstOrDefault();
+			User teacher = new User();
+			var tmpTeacher = context.EIMSUser.Where(usr => usr.Id == teacherID).Single();
+			teacher = tmpTeacher.ToUser();
+			result.TeacherName = teacher.Surname + " " + teacher.Name + " " + teacher.MiddleName;
+			return result;
+		}
+
+		public LessonPrecenseWithOptions GetLessonPrecenseOption(long lessonDateID)
+		{
+			var result = new LessonPrecenseWithOptions();
+			var subjectID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDateID).Select(lp => lp.LessonDate.Lesson.subjectID).FirstOrDefault();
+			var teacherID = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDateID).Select(lp => lp.LessonDate.Lesson.teacherID).FirstOrDefault();
+			var lessonDate = context.LessonPresence.Where(lp => lp.lessonDateID == lessonDateID).Select(lp => lp.LessonDate.date).FirstOrDefault();
+			result.LessonDate = lessonDate;
+			result.SubjectName  = context.Subject.Where(s => s.subjectID == subjectID).Select(s => s.subjectName).FirstOrDefault();
+			User teacher = new User();
+			var tmpTeacher = context.EIMSUser.Where(usr => usr.Id == teacherID).Single();
+			teacher = tmpTeacher.ToUser();
+			result.TeacherName = teacher.Surname + " " + teacher.Name + " " + teacher.MiddleName;
+			return result;
+		}
+
+		public IEnumerable<User> GetUserForGroup (long lessonDateID)
+		{
+			var result = new List<User>();
+			var groupID = context.LessonDate.Where(u => u.lessonDateID == lessonDateID).Select(u => u.Lesson.groupID).FirstOrDefault();
+			var tmpList = context.EIMSUser.Where(u => u.StudentGroup.Where(g => g.groupID == groupID) != null).ToList();
+			foreach(var item in tmpList)
+			{
+				var tmpUser = context.EIMSUser.Where(u => u.Id == item.Id).Single();
+				var user = tmpUser.ToUser();
+				User usr = new User()
+				{
+					ID = user.ID,
+					Surname = user.Surname,
+					Name = user.Name,
+					MiddleName = user.MiddleName
+				};
+				result.Add(usr);
+			}
+			return result;
+		}
+
+
+		public void Dispose()
         {
             context.Dispose();
         }

@@ -21,7 +21,7 @@
     @Html.Partial("GetCourseFill")
 </div>
 <p>
-    @Html.ActionLink("Back to Details", "DetailCourse", "Course", new { id = Model.SelectCourse.CourseID })
+    @Html.ActionLink("Back to Details", "DetailCourse", "Course", new { id = Model.SelectCourse.CourseID }, null)
 </p>
 @section Scripts {
     @Scripts.Render("~/Scripts/CourseFillInfinityScrolling.js")

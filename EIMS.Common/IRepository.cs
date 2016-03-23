@@ -25,9 +25,11 @@ namespace EIMS.Common
         IEnumerable<Requirement> GetRequirements();
         IEnumerable<GroupCourse> GetGroupByCourse(int courseID);
         IEnumerable<User> GetStudentByGroup(int groupID);
+		IEnumerable<User> GetUserForGroup(long lessonDateID);
 
 
-        bool AddRequirement(Requirement model);
+
+		bool AddRequirement(Requirement model);
 
 
         User GetUserByID(long ID);
@@ -110,6 +112,7 @@ namespace EIMS.Common
 		bool? DeleteTask(long id);
 
 		///LessonPrecense ops
+		LessonPrecenseWithOptions GetLessonPrecenseOption(long lessonDateID);
 		bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense);
 		bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense);
 	}
