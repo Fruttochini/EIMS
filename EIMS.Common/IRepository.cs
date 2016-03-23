@@ -44,7 +44,7 @@ namespace EIMS.Common
 
 
 
-		void SeedValues();
+        void SeedValues();
 
 
         ///Faculty ops
@@ -101,6 +101,8 @@ namespace EIMS.Common
 
         ///Teacher ops
         IEnumerable<User> GetTeacherBySubject(int id);
+        Teacher GetTeacherByID(long id);
+        bool AssignTeacherSubjects(Teacher teacher);
 
 
 		///Task ops

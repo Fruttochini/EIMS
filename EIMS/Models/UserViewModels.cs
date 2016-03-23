@@ -109,4 +109,11 @@ namespace EIMS.Models
         public string FullName { get { return Name + " " + Surname; } }
 
     }
+
+    public class TeacherSubjectAssignViewModel
+    {
+        public GroupUserInfo Teacher { get; set; }
+        public IEnumerable<SubjectInfoViewModel> AllSubjects { get; set; }
+        public IEnumerable<int> SelectedSubjects { get; set; }
+    }
 }
