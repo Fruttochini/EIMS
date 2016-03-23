@@ -11,6 +11,8 @@ namespace EIMS.Models
 		public string StudentName { get; }
 		public string TeacherName { get; set; }
 		public string SubjectName { get; set; }
+		public string Precense { get; }
+		public string Mark { get; }
 
 		public IEnumerable<LessonPrecenseList> RowList { get; set; }
 	}

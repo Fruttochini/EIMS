@@ -347,10 +347,10 @@
     <Content Include="Views\GroupCourse\Index.cshtml" />
     <Content Include="Views\Teacher\_GetTeacherListPartial.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\LessonPrecense\CreateLessonPrecense.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\LessonPrecense\" />
     <Folder Include="Views\Task\" />
   </ItemGroup>
   <ItemGroup>
