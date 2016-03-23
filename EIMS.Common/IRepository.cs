@@ -104,10 +104,13 @@ namespace EIMS.Common
         Teacher GetTeacherByID(long id);
         bool AssignTeacherSubjects(Teacher teacher);
 
-
 		///Task ops
 		bool? CreateTask(Task task);
 		bool? UpdateTask(Task task);
 		bool? DeleteTask(long id);
-    }
+
+		///LessonPrecense ops
+		bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense);
+		bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense);
+	}
 }

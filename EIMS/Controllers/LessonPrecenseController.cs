@@ -54,6 +54,66 @@ namespace EIMS.Controllers
 			return PartialView(GetItemsPerPage(lessonDateID));
 		}
 
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult GetLessonPrecense (IEnumerable<LessonPrecenseList> models)
+		{
+			if(ModelState.IsValid)
+			{
+				foreach(var item in models)
+				{
+					var tmpLessonPrecense = new Common.LessonPresence()
+					{
+						lessonDateID = item.LessonDateID,
+						studentID = item.StudentID,
+						presence = item.Precense,
+						mark = item.Mark
+					};
+					context.CreateLessonPrecense(tmpLessonPrecense);
+				}
+				return RedirectToAction("Lesson", "Lesson");
+			}
+			return View(models);
+		}
 
+		public ActionResult EditLessonPrecense(long lessonDateID, int? id)
+		{
+			int page = id ?? 0;
+			if (Request.IsAjaxRequest())
+			{
+				return PartialView("EditLessonPrecense", GetItemsPerPage(lessonDateID, page));
+			}
+			return PartialView(GetItemsPerPage(lessonDateID));
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult EditLessonPrecense(IEnumerable<LessonPrecenseList> models)
+		{
+			bool IsChange = false;
+			foreach(var item in models)
+			{
+				var lessonPrecense = context.GetLessonPrecenseByID(item.LessonPrecenseID);
+				var tmpLessonPrecense = new Common.LessonPresence();
+				if(!lessonPrecense.presence.Equals(item.Precense))
+				{
+					tmpLessonPrecense.presence = item.Precense;
+					IsChange = true;
+				}
+				if(!lessonPrecense.mark.Equals(item.Mark))
+				{
+					tmpLessonPrecense.mark = item.Mark;
+					IsChange = true;
+				}
+				if(IsChange)
+				{
+					tmpLessonPrecense.lessonPresenseID = item.LessonPrecenseID;
+					tmpLessonPrecense.lessonDateID = item.LessonDateID;
+					tmpLessonPrecense.studentID = item.StudentID;
+					context.UpdateLessonPrecense(tmpLessonPrecense);
+				}
+			}
+			return RedirectToAction("Lesson", "Lesson");
+		}
 	}
 }
