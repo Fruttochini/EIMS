@@ -48,6 +48,51 @@ namespace EIMS.Controllers
             return View(result);
         }
 
+        public JsonResult GetTeachersJSON(int subjectID, int loid, byte dayofweek)
+        {
+            var dblist = context.GetTeacherBySubject(subjectID);
+            var lessonlist = context.GetLessonByDay(dayofweek);
+            lessonlist = lessonlist.Where(l => l.LessonOrder == loid);
+            var exceptTeacherList = lessonlist.Select(l => l.TeacherID);
+            var tidList = dblist.Select(t => t.ID).Except(exceptTeacherList);
+
+
+            List<GroupUserInfo> list = new List<GroupUserInfo>();
+            foreach (var item in tidList)
+            {
+                var teach = context.GetUserByID(item);
+                GroupUserInfo tmp = new GroupUserInfo()
+                {
+                    ID = teach.ID,
+                    Name = teach.Name,
+                    Surname = teach.Surname,
+                    MiddleName = teach.MiddleName
+                };
+                list.Add(tmp);
+            }
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetRoomsJSON(int subjectID, int loid, byte dayofweek, int stCount)
+        {
+            List<Room> result = new List<Room>();
+            var subjReqs = context.GetSubjects().Single(s => s.SubjectID == subjectID).Requirements;
+            var PossibleRooms = context.GetRooms()
+                .Where(r => r.IsAvailable == true)
+                .Where(r => r.Capacity > stCount)
+                .Where(r => r.SelectedPossibilities.Intersect(subjReqs).ToList().Count == r.SelectedPossibilities.ToList().Count)
+                .Select(r => r.ID);
+            var exceptionList = context.GetLessonByDay(dayofweek).Where(l => l.LessonOrder == loid).Select(r => r.RoomID);
+            var resRooms = PossibleRooms.Except(exceptionList);
+            foreach (var item in resRooms)
+            {
+                result.Add(context.GetRoomByID(item));
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Schedule/Details/5
         //public ActionResult Details(int id)
         //{

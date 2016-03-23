@@ -43,7 +43,8 @@ namespace EIMS.Models
         public IEnumerable<SubjectInfoViewModel> Subjects { get; set; }
         public int SelectedSubject { get; set; }
 
-        public TeacherVM TeacherList { get; set; }
+        public IEnumerable<GroupUserInfo> Teachers { get; set; }
+        public long SelectedTeacher { get; set; }
 
         public IEnumerable<RoomInfoViewModel> Rooms { get; set; }
         public int SelectedRoom { get; set; }

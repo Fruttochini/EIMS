@@ -259,6 +259,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\RoomInfinityScroll.js" />
+    <Content Include="Scripts\ScheduleAddLessonScript.js" />
     <Content Include="Scripts\SubjectInfinityScroll.js" />
     <Content Include="Scripts\TeacherScroll.js" />
     <Content Include="Scripts\_references.js" />

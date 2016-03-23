@@ -372,7 +372,9 @@ namespace EIMS.Controllers
             LVM.Group = new GroupInfoViewModel()
             {
                 ID = groupID,
-                Name = group.GroupName
+                Name = group.GroupName,
+                StudentCount = context.GetStudentByGroup(groupID).ToList().Count
+
             };
 
             LVM.LesOrd = new LessonOrderViewModel()

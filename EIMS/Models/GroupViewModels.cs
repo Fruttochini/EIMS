@@ -20,6 +20,8 @@ namespace EIMS.Models
 
         public string Supervisor { get; set; }
         public string Elder { get; set; }
+
+        public int StudentCount { get; set; }
     }
 
     public class CRUGroupViewModel
