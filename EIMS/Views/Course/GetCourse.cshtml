@@ -3,8 +3,8 @@
 @foreach (var item in Model)
 {
     <div class="row" style="font-size:16px">
-            <div class="col-md-2">@Html.DisplayFor(modelItem => item.CourseID)</div>
-            <div class="col-md-4">@Html.DisplayFor(modelItem => item.CourseName)</div>
+            @*<div class="col-md-2">@Html.DisplayFor(modelItem => item.CourseID)</div>*@
+            <div class="col-md-offset-1 col-md-4">@Html.DisplayFor(modelItem => item.CourseName)</div>
             <div class="col-md-4">
                 @Html.ActionLink("Edit", "EditCourse", new { id = item.CourseID }) |
                 @Html.ActionLink("Detail", "DetailCourse", new { id = item.CourseID }) |

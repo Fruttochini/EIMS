@@ -4,9 +4,9 @@
     ViewBag.Title = "ScheduleAddLesson";
 }
 
-<h2>ScheduleAddLesson</h2>
+<h3>Add new lesson for @Model.Group.Name</h3>
 
-<div class="col-md-10">
+<div class="col-md-10" style="font-size:16px">
     @Html.DisplayFor(m=>m.Day.Name)
     @Html.DisplayFor(m=>m.LesOrd.timeStart) - @Html.DisplayFor(m=>m.LesOrd.timeEnd)
     @Html.DisplayFor(m=>m.Group.Name)
@@ -16,7 +16,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>NewLessonViewModel</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model=>model.Day.ID,new { id ="dayid"})

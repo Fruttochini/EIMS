@@ -5,12 +5,12 @@
     ViewBag.CourseID = Model.CourseID;
 }
 
-<h3>Detail Course</h3>
+<h3>Detail of @Model.CourseName</h3>
 <p>
-    @Html.ActionLink("To Course Fill", "Index", "CourseFill", new { courseID = Model.CourseID }, null)
+    @Html.ActionLink("Assign subjects to course", "Index", "CourseFill", new { courseID = Model.CourseID }, null)
 </p>
 <p>
-    @Html.ActionLink("To Group in Course", "Index", "GroupCourse", new { courseID = Model.CourseID }, null)
+    @Html.ActionLink("Assign course to groups", "Index", "GroupCourse", new { courseID = Model.CourseID }, null)
 </p>
 
 <div>

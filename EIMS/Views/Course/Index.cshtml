@@ -3,17 +3,17 @@
     ViewBag.Title = "Courses";
 }
 
-<h2>Courses</h2>
+<h3>Courses</h3>
 
 <p>
     @Html.ActionLink("Create New", "CreateCourse")
 </p>
 <div id="ScrollList">
     <div class="row">
-        <div class="col-md-2">
+        @*<div class="col-md-2">
             <span>@Html.DisplayNameFor(model => model.CourseID)</span>
-        </div>
-        <div class="col-md-4">
+        </div>*@
+        <div class="col-md-offset-1 col-md-4">
             <span>@Html.DisplayNameFor(model => model.CourseName)</span>
         </div>
         <div class="col-md-4"><strong>Options</strong></div>

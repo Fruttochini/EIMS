@@ -1,14 +1,14 @@
 ﻿@model EIMS.Models.UserInfoViewModel
 
 @{
-    ViewBag.Title = "DeleteUser";
+    ViewBag.Title = "Delete User";
 }
 
-<h2>DeleteUser</h2>
+<h3>Delete User: @Model.Name @Model.Surname, @Model.Role</h3>
 
-<h3>Are you sure you want to delete this?</h3>
+<h4>Are you sure you want to delete this?</h4>
 <div>
-    <h4>UserInfoViewModel</h4>
+    @Html.ActionLink("Back to List", "GetAllUsers")
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -48,9 +48,8 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "GetAllUsers")
+        <div class="form-actions no-color col-md-offset-1">
+            <input type="submit" value="Delete" class="btn btn-default" />
         </div>
     }
 </div>

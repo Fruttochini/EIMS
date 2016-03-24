@@ -4,14 +4,14 @@
     ViewBag.Title = "Add Group to Course";
 }
 
-<h2>Add Group to Course</h2>
+<h3>Add Group to Course</h3>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>CourseViewModel</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group hidden">
