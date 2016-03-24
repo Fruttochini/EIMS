@@ -60,7 +60,17 @@ namespace EIMS.Models
 
     }
 
-
-
+    public class StudentScheduleViewModel
+    {
+        public long ID { get; set; }
+        public string FullName { get; set; }
+        public string GroupName { get; set; }
+        public int groupID { get; set; }
+        public IEnumerable<DayVm> Days { get; set; }
+        public IEnumerable<LessonOrderViewModel> Order { get; set; }
+        public IEnumerable<LessonInfoViewModel> LessonList
+        { get; set; }
+        public IEnumerable<LessonInfoViewModel> tmpList { get; set; }
+    }
 
 }

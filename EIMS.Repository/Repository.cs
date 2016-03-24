@@ -1279,6 +1279,41 @@ namespace EIMS.Repository
             }
             return false;
         }
+
+        public Common.UniversityGroup GetGroupByStudent(long id)
+        {
+            var dbgr = context.StudentGroup.Where(st => st.studentID == id).FirstOrDefault();
+            if (dbgr != null)
+            {
+                var gr = dbgr.UniversityGroup;
+                var result = new Common.UniversityGroup()
+                {
+                    GroupID = gr.groupID,
+                    CreationDate = gr.creationDate,
+                    FacultyID = gr.facultyID,
+                    GroupName = gr.groupName,
+                    elderID = gr.elderID,
+                    SupervisorID = gr.supervisorID
+                };
+                return result;
+
+            }
+            return null;
+        }
+
+        public IEnumerable<Common.Task> GetTasksByGroupID(int id)
+        {
+            var tsks = context.Task.Where(t => t.LessonDate.Lesson.groupID == id);
+            List<Common.Task> result = new List<Common.Task>();
+            foreach (var item in tsks)
+            {
+                Common.Task tsk = item.ToTask();
+                tsk.subjectName = item.LessonDate.Lesson.Subject.subjectName;
+                tsk.groupName = item.LessonDate.Lesson.UniversityGroup.groupName;
+                result.Add(tsk);
+            }
+            return result;
+        }
     }
 }
 

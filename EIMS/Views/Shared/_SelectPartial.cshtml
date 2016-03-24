@@ -49,6 +49,12 @@ else if (User.IsInRole("Student"))
 {
     <aside class="col-md-2">
         <div class="navbar navbar-pills nav-stacked navbar-left">
+            <br /><br /><br />
+            <ul class="nav navbar-left" style="font-size:24px">
+                <li>@Html.ActionLink("Personal Schedule", "PersonalSchedule", "Students")</li>
+                <li>@Html.ActionLink("Tasks", "GetTasks", "Students")</li>
+
+            </ul>
         </div>
     </aside>
 }

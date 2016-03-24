@@ -73,84 +73,84 @@ namespace EIMS.Repository
             return tmpDate;
         }
 
-		public static FacultyCommon ToFaculty(this Datalayer.Faculty fclt)
-		{
-			var tmpFaculty = new FacultyCommon()
-			{
-				FacultyID = fclt.facultyID,
-				Name = fclt.Name
-			};
-			return tmpFaculty;
-		}
+        public static FacultyCommon ToFaculty(this Datalayer.Faculty fclt)
+        {
+            var tmpFaculty = new FacultyCommon()
+            {
+                FacultyID = fclt.facultyID,
+                Name = fclt.Name
+            };
+            return tmpFaculty;
+        }
 
-		public static Common.CourseFill ToCourseFill(this Datalayer.CourseFill cFill)
-		{
-			var tmpCourseFill = new Common.CourseFill()
-			{
-				courseID = cFill.courseID,
-				subjectID = cFill.subjectID,
-				SubjectHoursPerWeek = cFill.subjectHoursPerWeek
-			};
-			return tmpCourseFill;
-		}
+        public static Common.CourseFill ToCourseFill(this Datalayer.CourseFill cFill)
+        {
+            var tmpCourseFill = new Common.CourseFill()
+            {
+                courseID = cFill.courseID,
+                subjectID = cFill.subjectID,
+                SubjectHoursPerWeek = cFill.subjectHoursPerWeek
+            };
+            return tmpCourseFill;
+        }
 
-		public static Common.GroupCourse ToGroupCourse(this Datalayer.GroupCourse gCourse)
-		{
-			var tmpGroupCourse = new Common.GroupCourse()
-			{
-				GroupCourseID = gCourse.groupCourseID,
-				CourseID = gCourse.courseID,
-				GroupID = gCourse.groupID,
-				StartDate = gCourse.startDate,
-				EndDate = gCourse.endDate
-			};
-			return tmpGroupCourse;
-		}
+        public static Common.GroupCourse ToGroupCourse(this Datalayer.GroupCourse gCourse)
+        {
+            var tmpGroupCourse = new Common.GroupCourse()
+            {
+                GroupCourseID = gCourse.groupCourseID,
+                CourseID = gCourse.courseID,
+                GroupID = gCourse.groupID,
+                StartDate = gCourse.startDate,
+                EndDate = gCourse.endDate
+            };
+            return tmpGroupCourse;
+        }
 
-		public static Common.LessonOrder ToLessonOrder(this Datalayer.LessonOrder lOrder)
-		{
-			var tmpLessonOrder = new Common.LessonOrder()
-			{
-				lessonOrderID = lOrder.ID,
-				timeStart = lOrder.TimeStart,
-				timeEnd = lOrder.TimeEnd
-			};
-			return tmpLessonOrder;
-		}
+        public static Common.LessonOrder ToLessonOrder(this Datalayer.LessonOrder lOrder)
+        {
+            var tmpLessonOrder = new Common.LessonOrder()
+            {
+                lessonOrderID = lOrder.ID,
+                timeStart = lOrder.TimeStart,
+                timeEnd = lOrder.TimeEnd
+            };
+            return tmpLessonOrder;
+        }
 
-		public static Common.LessonPresence ToLessonPrecense(this Datalayer.LessonPresence lPrecense)
-		{
-			var tmpLessonPrecense = new Common.LessonPresence()
-			{
-				lessonPresenseID = lPrecense.lessonPresenceID,
-				lessonDateID = lPrecense.lessonDateID,
-				studentID = lPrecense.studentID,
-				presence = lPrecense.presence,
-				mark = lPrecense.mark
-			};
-			return tmpLessonPrecense;
-		}
+        public static Common.LessonPresence ToLessonPrecense(this Datalayer.LessonPresence lPrecense)
+        {
+            var tmpLessonPrecense = new Common.LessonPresence()
+            {
+                lessonPresenseID = lPrecense.lessonPresenceID,
+                lessonDateID = lPrecense.lessonDateID,
+                studentID = lPrecense.studentID,
+                presence = lPrecense.presence,
+                mark = lPrecense.mark
+            };
+            return tmpLessonPrecense;
+        }
 
-		public static Common.Task ToTask(this Datalayer.Task task)
-		{
-			var tmpTask = new Common.Task()
-			{
-				taskID = task.taskID,
-				lessonDateID = task.lessonDateID,
-				homeTask = task.homeTask,
-				expiryDate = task.expiryDate
-			};
-			return tmpTask;
-		}
+        public static Common.Task ToTask(this Datalayer.Task task)
+        {
+            var tmpTask = new Common.Task()
+            {
+                taskID = task.taskID,
+                lessonDateID = task.lessonDateID,
+                homeTask = task.homeTask,
+                expiryDate = task.expiryDate
+            };
+            return tmpTask;
+        }
 
-		public static Common.Subject ToSubject(this Datalayer.Subject subject)
-		{
-			var tmpSubject = new Common.Subject()
-			{
-				SubjectID = subject.subjectID,
-				SubjectName = subject.subjectName
-			};
-			return tmpSubject;
-		}
-	}
+        public static Common.Subject ToSubject(this Datalayer.Subject subject)
+        {
+            var tmpSubject = new Common.Subject()
+            {
+                SubjectID = subject.subjectID,
+                SubjectName = subject.subjectName
+            };
+            return tmpSubject;
+        }
+    }
 }

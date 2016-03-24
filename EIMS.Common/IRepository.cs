@@ -87,6 +87,7 @@ namespace EIMS.Common
         bool? DeleteRoom(int id);
 
         ///Groups ops
+        Common.UniversityGroup GetGroupByStudent(long id);
         bool? AddGroup(UniversityGroup group);
         bool? EditGroup(UniversityGroup group);
         bool? DeleteGroup(int id);
@@ -102,6 +103,7 @@ namespace EIMS.Common
         IEnumerable<User> GetStudentsWOGroups();
         bool AssignStudent(int groupID, long studentID);
         bool DeassignStudent(int groupID, long studentID);
+
 
         ///Lesson - Schedule ops
         IEnumerable<Lesson> GetLessonsByGroup(int id);
@@ -120,6 +122,7 @@ namespace EIMS.Common
         bool? UpdateTask(Task task);
         bool? DeleteTask(long id);
         Common.Task GetTaskByLessonDateID(long id);
+        IEnumerable<Common.Task> GetTasksByGroupID(int id);
 
         ///LessonPrecense ops
         LessonPrecenseWithOptions GetLessonPrecenseOption(long lessonDateID);

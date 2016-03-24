@@ -1,0 +1,32 @@
+﻿@model EIMS.Models.TaskViewModel
+
+@{
+    ViewBag.Title = "Tasks";
+}
+
+<h3>Tasks</h3>
+<div class="row">
+    <div class="col-md-1">
+        <strong>Subject</strong>
+    </div>
+    <div class="col-md-7">
+        <strong>Task</strong>
+    </div>
+    <div class="col-md-2">
+        <strong>Expires on</strong>
+    </div>
+</div>
+@foreach (var item in Model.taskList)
+{
+    <div class="row">
+        <div class="col-md-1">
+            @item.SubjectName
+        </div>
+        <div class="col-md-7">
+            @item.homeTask
+        </div>
+        <div class="col-md-2">
+            @item.expireDate.ToShortDateString()
+        </div>
+    </div>
+}
