@@ -65,7 +65,7 @@ namespace EIMS.Controllers
                 Date = DateTime.Today,
                 GroupID = group.GroupID,
                 GroupName = group.GroupName,
-                LessonOrder = lo.timeStart.Hours.ToString() + ":" + lo.timeStart.Minutes.ToString() + " - " + lo.timeEnd.Hours.ToString() + ":" + lo.timeEnd.Minutes.ToString(),
+                LessonOrder = lo.timeStart.ToString() + " - " + lo.timeEnd.ToString(),
                 StudentsPressense = stPresList,
                 SubjectName = subject.SubjectName,
                 lessonDateID = lessonDateID

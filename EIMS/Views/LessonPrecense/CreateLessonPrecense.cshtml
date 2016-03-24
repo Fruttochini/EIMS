@@ -5,7 +5,7 @@
     ViewBag.Title = "Check Students";
 }
 
-<h3>@Model.Date - @Model.LessonOrder </h3>
+<h3>@Model.Date.ToShortDateString() - @Model.LessonOrder</h3>
 <h3>@Model.GroupName - @Model.SubjectName</h3>
 @Html.HiddenFor(m => m.lessonDateID,new { id = "lessondateid" })
 <div class="row">
