@@ -97,6 +97,13 @@ namespace EIMS.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(int groupID)
+        {
+            context.DeleteGroup(groupID);
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Edit(int id)
         {
             var group = context.GetGroupByID(id);
@@ -111,29 +118,13 @@ namespace EIMS.Controllers
             if (group.SupervisorID != null)
             {
                 model.Supervisor = (long)group.SupervisorID;
-                //var dbsupervisor = context.GetUserByID((long)group.SupervisorID);
-                //var supervisor = new GroupUserInfo()
-                //{
-                //    ID = (long)group.SupervisorID,
-                //    Name = dbsupervisor.Name,
-                //    Surname = dbsupervisor.Surname,
-                //    MiddleName = dbsupervisor.MiddleName
-                //};
-                //model.Supervisor = supervisor.ID;
+
             }
 
             if (group.elderID != null)
             {
                 model.Elder = (long)group.elderID;
-                //var dbelder = context.GetUserByID((long)group.elderID);
-                //var elder = new GroupUserInfo()
-                //{
-                //    ID = (long)group.elderID,
-                //    Name = dbelder.Name,
-                //    Surname = dbelder.Surname,
-                //    MiddleName = dbelder.MiddleName
-                //};
-                //model.Elder = elder.ID;
+
             }
 
             var dbTech = context.GetUsers().Where(u => u.Roles.Contains("Teacher"));
@@ -468,6 +459,14 @@ namespace EIMS.Controllers
 
             return View(model);
 
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteLesson(long lid, int groupID)
+        {
+            Lesson les = new Lesson() { LessonID = lid };
+            context.DeleteLesson(les);
+            return RedirectToAction("Schedule", "Groups", new { ID = groupID });
         }
 
         private object GetItemsPerPage(int page = 0)

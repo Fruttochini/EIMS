@@ -39,7 +39,7 @@
                             var l = Model.tmpList.Where(u => u.DayID == les.ID).FirstOrDefault();
                             if (l!= null)
                             {
-                                <td>@l.Subject - @l.RoomNo - @l.Teacher  @Html.ActionLink("X","DeleteLesson", new { LessonID = l.LessonID })</td>
+                                <td>@l.Subject - @l.RoomNo - @l.Teacher  @Html.ActionLink("X","DeleteLesson", new { lid = l.LessonID, groupID = Model.GroupID })</td>
                             }
                             else
                             {

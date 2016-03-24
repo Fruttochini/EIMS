@@ -65,6 +65,7 @@ namespace EIMS.Models
             get; set;
         }
 
+        [Display(Name = "Role")]
         public string RoleToAssign { get; set; }
 
 

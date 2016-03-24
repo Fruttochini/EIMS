@@ -11,7 +11,7 @@ namespace EIMS.Models
         public int ID { get; set; }
 
         [Required]
-        [Display(Name = "Group name")]
+        [Display(Name = "Group")]
         public string Name { get; set; }
 
         public string Faculty { get; set; }

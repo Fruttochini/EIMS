@@ -1,9 +1,17 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@{
     ViewBag.Title = "EIMS Home Page";
 }
 
 <div class="jumbotron">
     <h2>EIMS - <b>E</b>ducational <b>I</b>nstitution <b>M</b>anagement <b>S</b>ystem</h2>
-    <p>Welcome to EIMS!</p>
-    
+    <p>Welcome to EIMS!</p> 
 </div>
+<div class="row">
+    <div class="col-md-10">
+        @if (!User.Identity.IsAuthenticated) {
+            @:Please @Html.ActionLink("log in", "Login", "Account") to use the system.
+                }
+    </div>
+</div>
+

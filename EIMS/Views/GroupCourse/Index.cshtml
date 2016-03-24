@@ -3,7 +3,7 @@
     ViewBag.Title = "Group in Course";
 }
 
-<h2>@Html.LabelFor(model => model.SelectCourse.CourseName)</h2>
+<h3>@Model.SelectCourse.CourseName groups</h3>
 
 <p>
     @Html.ActionLink("Create New", "CreateGroupCourse", new { id = Model.SelectCourse.CourseID })
@@ -11,13 +11,13 @@
 <div id="ScrollList">
     <div class="row">
         <div class="col-md-2">
-            <span>@Html.DisplayNameFor(model => model.GroupName)</span>
+            <strong> @Html.DisplayNameFor(model => model.GroupName)</strong>
         </div>
         <div class="col-md-2">
-            <span>@Html.DisplayNameFor(model => model.StartDate)</span>
+            <strong>  @Html.DisplayNameFor(model => model.StartDate)</strong>
         </div>
         <div class="col-md-2">
-            <span>@Html.DisplayNameFor(model => model.EndDate)</span>
+            <strong> @Html.DisplayNameFor(model => model.EndDate)</strong>
         </div>
         <div class="col-md-4"><strong>Options</strong></div>
     </div>

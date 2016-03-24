@@ -21,32 +21,36 @@ namespace EIMS.Controllers
         {
             context = repo;
         }
-        // GET: Schedule
-        public ActionResult GetTeachers(int subjectID, int loid, byte dayofWeek)
-        {
-            var dblist = context.GetTeacherBySubject(subjectID);
-            var lessonlist = context.GetLessonByDay(dayofWeek);
-            lessonlist = lessonlist.Where(l => l.LessonOrder == loid);
-            var exceptTeacherList = lessonlist.Select(l => l.TeacherID);
-            var tidList = dblist.Select(t => t.ID).Except(exceptTeacherList);
 
-            TeacherVM result = new TeacherVM();
-            List<GroupUserInfo> list = new List<GroupUserInfo>();
-            foreach (var item in tidList)
-            {
-                var teach = context.GetUserByID(item);
-                GroupUserInfo tmp = new GroupUserInfo()
-                {
-                    ID = teach.ID,
-                    Name = teach.Name,
-                    Surname = teach.Surname,
-                    MiddleName = teach.MiddleName
-                };
-                list.Add(tmp);
-            }
-            result.Teachers = list;
-            return View(result);
-        }
+
+        // GET: Schedule
+        //public ActionResult GetTeachers(int subjectID, int loid, byte dayofWeek)
+        //{
+        //    var dblist = context.GetTeacherBySubject(subjectID);
+        //    var lessonlist = context.GetLessonByDay(dayofWeek);
+        //    lessonlist = lessonlist.Where(l => l.LessonOrder == loid);
+        //    var exceptTeacherList = lessonlist.Select(l => l.TeacherID);
+        //    var tidList = dblist.Select(t => t.ID).Except(exceptTeacherList);
+
+        //    TeacherVM result = new TeacherVM();
+        //    List<GroupUserInfo> list = new List<GroupUserInfo>();
+        //    foreach (var item in tidList)
+        //    {
+        //        var teach = context.GetUserByID(item);
+        //        GroupUserInfo tmp = new GroupUserInfo()
+        //        {
+        //            ID = teach.ID,
+        //            Name = teach.Name,
+        //            Surname = teach.Surname,
+        //            MiddleName = teach.MiddleName
+        //        };
+        //        list.Add(tmp);
+        //    }
+        //    result.Teachers = list;
+        //    return View(result);
+        //}
+
+
 
         public JsonResult GetTeachersJSON(int subjectID, int loid, byte dayofweek)
         {

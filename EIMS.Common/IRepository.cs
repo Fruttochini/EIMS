@@ -14,46 +14,46 @@ namespace EIMS.Common
         IEnumerable<Room> GetRooms();
         IEnumerable<Course> GetCourses();
         IEnumerable<DayOfWeek> GetDayOfWeek();
-		IEnumerable<Task> GetTaskForGroupByDate(int groupID, DateTime selectDate);
+        IEnumerable<Task> GetTaskForGroupByDate(int groupID, DateTime selectDate);
         IEnumerable<LessonOrder> GetLessonOrder();
         IEnumerable<LessonPresence> GetLessonPresence();
         IEnumerable<FacultyCommon> GetFaculties();
         IEnumerable<UniversityGroup> GetGroups();
-		IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
+        IEnumerable<LessonDate> GetLessonsByDate(DateTime date);
         IEnumerable<CourseFill> GetCourseFillByCourse(int id);
         IEnumerable<CourseFill> GetAllCourseFill();
         IEnumerable<Requirement> GetRequirements();
         IEnumerable<GroupCourse> GetGroupByCourse(int courseID);
         IEnumerable<User> GetStudentByGroup(int groupID);
-		IEnumerable<User> GetUserForGroup(long lessonDateID);
-		IEnumerable<Lesson> GetLessonByTeacherAndDate(long id, DateTime date);
+        IEnumerable<User> GetUserForGroup(long lessonDateID);
+        IEnumerable<Lesson> GetLessonByTeacherAndDate(long id, DateTime date);
 
 
 
 
-		bool AddRequirement(Requirement model);
-		long GetLessonDateByLessonAndDate(long lessonID, DateTime date);
-		string GetDayOfWeek(byte id);
+        bool AddRequirement(Requirement model);
+        long GetLessonDateByLessonAndDate(long lessonID, DateTime date);
+        string GetDayOfWeek(byte id);
 
 
 
-		User GetUserByID(long ID);
+        User GetUserByID(long ID);
         FacultyCommon GetFacultyByID(int id);
         Course GetCourseByID(int id);
         CourseFill GetCoursFillByID(int courseFillID);
         LessonOrder GetLessonOrderByID(int id);
         Room GetRoomByID(int id);
-		LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate);
-		UniversityGroup GetGroupByID(int id);
-		LessonPresence GetLessonPrecenseByID(long id);
-		Task GetTaskByID(long id);
-		LessonDate GetLessonDateByID(long id);
-		Subject GetSubjectByID(int id);
+        LessonPrecenseWithOptions GetLessonPrecenseByLessonDate(long lessonDate);
+        UniversityGroup GetGroupByID(int id);
+        LessonPresence GetLessonPrecenseByID(long id);
+        Task GetTaskByID(long id);
+        LessonDate GetLessonDateByID(long id);
+        Subject GetSubjectByID(int id);
 
 
 
 
-		void SeedValues();
+        void SeedValues();
 
 
         ///Faculty ops
@@ -108,20 +108,21 @@ namespace EIMS.Common
         IEnumerable<Lesson> GetLessonByTeacher(long id);
         IEnumerable<Lesson> GetLessonByDay(byte dayid);
         bool CreateLesson(Lesson lesson);
+        bool DeleteLesson(Lesson lesson);
 
         ///Teacher ops
         IEnumerable<User> GetTeacherBySubject(int id);
         Teacher GetTeacherByID(long id);
         bool AssignTeacherSubjects(Teacher teacher);
 
-		///Task ops
-		bool? CreateTask(Task task);
-		bool? UpdateTask(Task task);
-		bool? DeleteTask(long id);
+        ///Task ops
+        bool? CreateTask(Task task);
+        bool? UpdateTask(Task task);
+        bool? DeleteTask(long id);
 
-		///LessonPrecense ops
-		LessonPrecenseWithOptions GetLessonPrecenseOption(long lessonDateID);
-		bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense);
-		bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense);
-	}
+        ///LessonPrecense ops
+        LessonPrecenseWithOptions GetLessonPrecenseOption(long lessonDateID);
+        bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense);
+        bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense);
+    }
 }
