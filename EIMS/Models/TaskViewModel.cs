@@ -25,7 +25,6 @@ namespace EIMS.Models
 		public string homeTask { get; set; }
 		public DateTime expireDate { get; set; }
 
-		public long SelectLessonPrecense { get; set; }
 		public int SelectGroup { get; set; }
 		public DateTime SelectDate { get; set; }
 	}

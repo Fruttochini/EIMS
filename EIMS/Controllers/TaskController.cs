@@ -59,14 +59,12 @@ namespace EIMS.Controllers
 			return PartialView(GetItemPerPage(groupID, selectDate));
 		}
 
-		public ActionResult CreateTask(long lessonPrecenseID)
+		public ActionResult CreateTask(long lessonDateID)
 		{
-			var tmp = context.GetLessonPrecenseByID(lessonPrecenseID);
 			CreateEditTaskViewModel model = new CreateEditTaskViewModel()
 			{
-				lessonDateID = tmp.lessonDateID, 
+				lessonDateID = lessonDateID, 
 			};
-			model.SelectLessonPrecense = tmp.lessonPresenseID;
 			return View(model);
 		}
 
@@ -84,7 +82,7 @@ namespace EIMS.Controllers
 				};
 				if(context.CreateTask(tmpTask) == true)
 				{
-					return RedirectToAction("LessonPrecense","LessonPrecense", new { lessonPrecenseID = model.SelectLessonPrecense });
+					return RedirectToAction("LessonPrecense","LessonPrecense", new { lessonDateID = model.lessonDateID });
 				}
 				else
 				{
