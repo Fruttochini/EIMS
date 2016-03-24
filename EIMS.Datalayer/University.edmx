@@ -112,7 +112,7 @@
             <PropertyRef Name="roomID" />
           </Key>
           <Property Name="roomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="roomNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="roomNo" Type="nvarchar(max)" Nullable="false" />
           <Property Name="capacity" Type="smallint" Nullable="false" />
           <Property Name="isAvailable" Type="bit" Nullable="false" />
         </EntityType>
@@ -139,7 +139,6 @@
           <Property Name="groupID" Type="int" Nullable="false" />
           <Property Name="studentID" Type="bigint" Nullable="false" />
           <Property Name="enrollmentDate" Type="datetime" Nullable="false" />
-          <Property Name="graduationDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Subject">
           <Key>
@@ -505,6 +504,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TeacherSubject_EIMSUser1">
+          <End Role="EIMSUser" Type="Self.EIMSUser" Multiplicity="1" />
+          <End Role="TeacherSubject" Type="Self.TeacherSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EIMSUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeacherSubject">
+              <PropertyRef Name="teacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TeacherSubject_Subject">
           <End Role="Subject" Type="Self.Subject" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -708,6 +719,10 @@
             <End Role="Task" EntitySet="Task" />
           </AssociationSet>
           <AssociationSet Name="FK_TeacherSubject_EIMSUser" Association="Self.FK_TeacherSubject_EIMSUser">
+            <End Role="EIMSUser" EntitySet="EIMSUser" />
+            <End Role="TeacherSubject" EntitySet="TeacherSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherSubject_EIMSUser1" Association="Self.FK_TeacherSubject_EIMSUser1">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
             <End Role="TeacherSubject" EntitySet="TeacherSubject" />
           </AssociationSet>
@@ -940,7 +955,6 @@
           <EntitySet Name="Role" EntityType="EIMS.Datalayer.Role" />
           <EntitySet Name="Room" EntityType="EIMS.Datalayer.Room" />
           <EntitySet Name="SRRequirement" EntityType="EIMS.Datalayer.SRRequirement" />
-          <EntitySet Name="StudentGroup" EntityType="EIMS.Datalayer.StudentGroup" />
           <EntitySet Name="Subject" EntityType="EIMS.Datalayer.Subject" />
           <EntitySet Name="Task" EntityType="EIMS.Datalayer.Task" />
           <EntitySet Name="UniversityGroup" EntityType="EIMS.Datalayer.UniversityGroup" />
@@ -969,10 +983,6 @@
           <AssociationSet Name="FK_LessonPresence_EIMSUser" Association="EIMS.Datalayer.FK_LessonPresence_EIMSUser">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
             <End Role="LessonPresence" EntitySet="LessonPresence" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentGroup_EIMSUser" Association="EIMS.Datalayer.FK_StudentGroup_EIMSUser">
-            <End Role="EIMSUser" EntitySet="EIMSUser" />
-            <End Role="StudentGroup" EntitySet="StudentGroup" />
           </AssociationSet>
           <AssociationSet Name="FK_UniversityGroup_EIMSUser" Association="EIMS.Datalayer.FK_UniversityGroup_EIMSUser">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
@@ -1026,10 +1036,6 @@
             <End Role="LessonDate" EntitySet="LessonDate" />
             <End Role="Task" EntitySet="Task" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentGroup_Group" Association="EIMS.Datalayer.FK_StudentGroup_Group">
-            <End Role="UniversityGroup" EntitySet="UniversityGroup" />
-            <End Role="StudentGroup" EntitySet="StudentGroup" />
-          </AssociationSet>
           <AssociationSet Name="RoomPossibility" Association="EIMS.Datalayer.RoomPossibility">
             <End Role="Room" EntitySet="Room" />
             <End Role="SRRequirement" EntitySet="SRRequirement" />
@@ -1045,6 +1051,15 @@
           <AssociationSet Name="UserRole" Association="EIMS.Datalayer.UserRole">
             <End Role="EIMSUser" EntitySet="EIMSUser" />
             <End Role="Role" EntitySet="Role" />
+          </AssociationSet>
+          <EntitySet Name="StudentGroup" EntityType="EIMS.Datalayer.StudentGroup" />
+          <AssociationSet Name="FK_StudentGroup_EIMSUser" Association="EIMS.Datalayer.FK_StudentGroup_EIMSUser">
+            <End Role="EIMSUser" EntitySet="EIMSUser" />
+            <End Role="StudentGroup" EntitySet="StudentGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGroup_Group" Association="EIMS.Datalayer.FK_StudentGroup_Group">
+            <End Role="UniversityGroup" EntitySet="UniversityGroup" />
+            <End Role="StudentGroup" EntitySet="StudentGroup" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Course">
@@ -1093,13 +1108,13 @@
           <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Lesson" Relationship="EIMS.Datalayer.FK_Lesson_EIMSUser" FromRole="EIMSUser" ToRole="Lesson" />
           <NavigationProperty Name="LessonPresence" Relationship="EIMS.Datalayer.FK_LessonPresence_EIMSUser" FromRole="EIMSUser" ToRole="LessonPresence" />
-          <NavigationProperty Name="StudentGroup" Relationship="EIMS.Datalayer.FK_StudentGroup_EIMSUser" FromRole="EIMSUser" ToRole="StudentGroup" />
           <NavigationProperty Name="UniversityGroup" Relationship="EIMS.Datalayer.FK_UniversityGroup_EIMSUser" FromRole="EIMSUser" ToRole="UniversityGroup" />
           <NavigationProperty Name="UniversityGroup1" Relationship="EIMS.Datalayer.FK_UniversityGroup_EIMSUser1" FromRole="EIMSUser" ToRole="UniversityGroup" />
           <NavigationProperty Name="UserClaim" Relationship="EIMS.Datalayer.FK_UserClaim_EIMSUser" FromRole="EIMSUser" ToRole="UserClaim" />
           <NavigationProperty Name="UserLogin" Relationship="EIMS.Datalayer.FK_UserLogin_EIMSUser" FromRole="EIMSUser" ToRole="UserLogin" />
           <NavigationProperty Name="Subject" Relationship="EIMS.Datalayer.TeacherSubject" FromRole="EIMSUser" ToRole="Subject" />
           <NavigationProperty Name="Role" Relationship="EIMS.Datalayer.UserRole" FromRole="EIMSUser" ToRole="Role" />
+          <NavigationProperty Name="StudentGroup" Relationship="EIMS.Datalayer.FK_StudentGroup_EIMSUser" FromRole="EIMSUser" ToRole="StudentGroup" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -1185,7 +1200,7 @@
             <PropertyRef Name="roomID" />
           </Key>
           <Property Name="roomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="roomNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="roomNo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="capacity" Type="Int16" Nullable="false" />
           <Property Name="isAvailable" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Lesson" Relationship="EIMS.Datalayer.FK_Lesson_Room" FromRole="Room" ToRole="Lesson" />
@@ -1199,18 +1214,6 @@
           <Property Name="Requirement" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Room" Relationship="EIMS.Datalayer.RoomPossibility" FromRole="SRRequirement" ToRole="Room" />
           <NavigationProperty Name="Subject" Relationship="EIMS.Datalayer.SubjectRequirements" FromRole="SRRequirement" ToRole="Subject" />
-        </EntityType>
-        <EntityType Name="StudentGroup">
-          <Key>
-            <PropertyRef Name="studentGroupID" />
-          </Key>
-          <Property Name="studentGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="groupID" Type="Int32" Nullable="false" />
-          <Property Name="studentID" Type="Int64" Nullable="false" />
-          <Property Name="enrollmentDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="graduationDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EIMSUser" Relationship="EIMS.Datalayer.FK_StudentGroup_EIMSUser" FromRole="StudentGroup" ToRole="EIMSUser" />
-          <NavigationProperty Name="UniversityGroup" Relationship="EIMS.Datalayer.FK_StudentGroup_Group" FromRole="StudentGroup" ToRole="UniversityGroup" />
         </EntityType>
         <EntityType Name="Subject">
           <Key>
@@ -1345,18 +1348,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="LessonPresence">
-              <PropertyRef Name="studentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentGroup_EIMSUser">
-          <End Type="EIMS.Datalayer.EIMSUser" Role="EIMSUser" Multiplicity="1" />
-          <End Type="EIMS.Datalayer.StudentGroup" Role="StudentGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EIMSUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentGroup">
               <PropertyRef Name="studentID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1535,20 +1526,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentGroup_Group">
-          <End Type="EIMS.Datalayer.UniversityGroup" Role="UniversityGroup" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="EIMS.Datalayer.StudentGroup" Role="StudentGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UniversityGroup">
-              <PropertyRef Name="groupID" />
-            </Principal>
-            <Dependent Role="StudentGroup">
-              <PropertyRef Name="groupID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="RoomPossibility">
           <End Type="EIMS.Datalayer.Room" Role="Room" Multiplicity="*" />
           <End Type="EIMS.Datalayer.SRRequirement" Role="SRRequirement" Multiplicity="*" />
@@ -1564,6 +1541,43 @@
         <Association Name="UserRole">
           <End Type="EIMS.Datalayer.EIMSUser" Role="EIMSUser" Multiplicity="*" />
           <End Type="EIMS.Datalayer.Role" Role="Role" Multiplicity="*" />
+        </Association>
+        <EntityType Name="StudentGroup">
+          <Key>
+            <PropertyRef Name="studentGroupID" />
+          </Key>
+          <Property Name="studentGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="groupID" Type="Int32" Nullable="false" />
+          <Property Name="studentID" Type="Int64" Nullable="false" />
+          <Property Name="enrollmentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="EIMSUser" Relationship="EIMS.Datalayer.FK_StudentGroup_EIMSUser" FromRole="StudentGroup" ToRole="EIMSUser" />
+          <NavigationProperty Name="UniversityGroup" Relationship="EIMS.Datalayer.FK_StudentGroup_Group" FromRole="StudentGroup" ToRole="UniversityGroup" />
+        </EntityType>
+        <Association Name="FK_StudentGroup_EIMSUser">
+          <End Type="EIMS.Datalayer.EIMSUser" Role="EIMSUser" Multiplicity="1" />
+          <End Type="EIMS.Datalayer.StudentGroup" Role="StudentGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EIMSUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentGroup">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGroup_Group">
+          <End Type="EIMS.Datalayer.UniversityGroup" Role="UniversityGroup" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EIMS.Datalayer.StudentGroup" Role="StudentGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UniversityGroup">
+              <PropertyRef Name="groupID" />
+            </Principal>
+            <Dependent Role="StudentGroup">
+              <PropertyRef Name="groupID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1702,17 +1716,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StudentGroup">
-            <EntityTypeMapping TypeName="EIMS.Datalayer.StudentGroup">
-              <MappingFragment StoreEntitySet="StudentGroup">
-                <ScalarProperty Name="graduationDate" ColumnName="graduationDate" />
-                <ScalarProperty Name="enrollmentDate" ColumnName="enrollmentDate" />
-                <ScalarProperty Name="studentID" ColumnName="studentID" />
-                <ScalarProperty Name="groupID" ColumnName="groupID" />
-                <ScalarProperty Name="studentGroupID" ColumnName="studentGroupID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Subject">
             <EntityTypeMapping TypeName="EIMS.Datalayer.Subject">
               <MappingFragment StoreEntitySet="Subject">
@@ -1794,6 +1797,16 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="StudentGroup">
+            <EntityTypeMapping TypeName="EIMS.Datalayer.StudentGroup">
+              <MappingFragment StoreEntitySet="StudentGroup">
+                <ScalarProperty Name="enrollmentDate" ColumnName="enrollmentDate" />
+                <ScalarProperty Name="studentID" ColumnName="studentID" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="studentGroupID" ColumnName="studentGroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

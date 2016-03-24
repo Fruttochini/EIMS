@@ -1,4 +1,10 @@
-﻿function OnSubjectChange(subject) {
+﻿$(document).ready(function () {
+
+    var subj = $("#SelectedSubject").val();
+    OnSubjectChange(subj);
+});
+
+function OnSubjectChange(subject) {
     var dayid = $("#dayid").val();
     var loid = $("#lesOrid").val();
     var stdcount = $("#stdCount").val();
@@ -28,8 +34,6 @@
             })
         }
     });
-        
-        
-
-
+ 
 }
+

@@ -25,6 +25,11 @@ namespace EIMS.Models
         public string Subject { get; set; }
         public string Teacher { get; set; }
         public string RoomNo { get; set; }
+        //Added for Personal teacher schedule
+        public int GroupID { get; set; }
+        public string GroupName { get; set; }
+        public long LessonDateID { get; set; }
+        public int SubjectID { get; set; }
 
     }
 

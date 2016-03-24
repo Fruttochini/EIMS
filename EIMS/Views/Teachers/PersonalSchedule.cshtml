@@ -1,0 +1,64 @@
+﻿
+@model EIMS.Models.TeacherScheduleViewModel
+@{
+    ViewBag.Title = "PersonalSchedule";
+}
+<h3>Personal Schedule</h3>
+
+<div>
+
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td></td>
+                @foreach (var item in Model.Days)
+                {
+                    <td><strong>@item.Name</strong></td>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Order)
+            {
+                <tr>
+                    <td>@item.timeStart - @item.timeEnd</td>
+                    @{
+                        Model.tmpList = Model.LessonList.Where(les => les.OrderID == item.lessonOrderID).OrderBy(l => l.DayID);
+                    }
+                    @{
+                        var arr = Model.tmpList.ToArray();
+                        for (int i = 0; i < Model.Days.ToArray().Length; i++)
+                        {
+
+                        }
+                        foreach (var les in Model.Days)
+                        {
+                            var l = Model.tmpList.Where(u => u.DayID == les.ID).FirstOrDefault();
+                            if (l != null)
+                            {
+                                if (l.LessonDateID != 0)
+                                {
+                                    <td>@Html.ActionLink(@l.Subject + " - " + @l.RoomNo + " - " + @l.GroupName, "CreateLessonPrecense", "LessonPrecense",new { lessonDateID = l.LessonDateID, groupID = l.GroupID, subjectID = l.SubjectID, loid=l.OrderID },null)</td>
+                                }
+                                else {
+                                    <td> @l.Subject  - @l.RoomNo  - @l.GroupName </td>
+                                    }
+                                
+                            }
+                            else
+                            {
+                                <td> </td>
+                            }
+                        }
+
+                    }
+
+
+                </tr>
+                        }
+        </tbody>
+    </table>
+
+</div>

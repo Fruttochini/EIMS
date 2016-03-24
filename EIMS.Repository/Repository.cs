@@ -82,6 +82,14 @@ namespace EIMS.Repository
             return dbItem.ToLessonPrecense();
         }
 
+        public Common.LessonPresence GetLessonPressenseByLDIDandSID(long ldid, long sid)
+        {
+            var dbItem = context.LessonPresence.Where(lp => lp.lessonDateID == ldid && lp.studentID == sid).FirstOrDefault();
+            if (dbItem != null)
+                return dbItem.ToLessonPrecense();
+            return null;
+        }
+
         public Common.Task GetTaskByID(long id)
         {
             var dbItem = context.Task.Where(t => t.taskID == id).Single();
@@ -448,13 +456,14 @@ namespace EIMS.Repository
 
         public bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense)
         {
-            var tmpLessonPrecense = context.LessonPresence.Where(lp => lp.lessonPresenceID == lessonPrecense.lessonPresenseID).Single();
-            tmpLessonPrecense.lessonDateID = lessonPrecense.lessonDateID;
-            tmpLessonPrecense.studentID = lessonPrecense.studentID;
-            tmpLessonPrecense.presence = lessonPrecense.presence;
-            tmpLessonPrecense.mark = lessonPrecense.mark;
-            if (context.SaveChanges() > 0)
-                return true;
+            var tmpLessonPrecense = context.LessonPresence.Where(lp => lp.lessonDateID == lessonPrecense.lessonDateID && lp.studentID == lessonPrecense.studentID).FirstOrDefault();
+            if (tmpLessonPrecense != null)
+            {
+                tmpLessonPrecense.presence = lessonPrecense.presence;
+                tmpLessonPrecense.mark = lessonPrecense.mark;
+                if (context.SaveChanges() > 0)
+                    return true;
+            }
             return false;
         }
         public IEnumerable<Common.GroupCourse> GetGroupByCourse(int courseID)
@@ -990,7 +999,7 @@ namespace EIMS.Repository
             {
                 groupID = groupID,
                 studentID = studentID,
-                enrollmentDate = DateTime.Today.Date,
+                enrollmentDate = DateTime.Today.Date
             };
             context.StudentGroup.Add(assignment);
             if (context.SaveChanges() > 0)

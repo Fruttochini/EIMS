@@ -1,39 +1,45 @@
-﻿@model EIMS.Models.LessonPrecenseViewModel
+﻿@model EIMS.Models.GroupLessonPressenceViewModel
+ 
 
 @{
-    ViewBag.Title = "Create Lesson Precense";
+    ViewBag.Title = "Check Students";
 }
 
-@using (Html.BeginForm())
+<h3>@Model.Date - @Model.LessonOrder </h3>
+<h3>@Model.GroupName - @Model.SubjectName</h3>
+@Html.HiddenFor(m => m.lessonDateID,new { id = "lessondateid" })
+<div class="row">
+    <div class="col-md-3">
+        <strong>@Html.DisplayNameFor(m => m.StudentsPressense.Single().StudentName)</strong>
+    </div>
+    <div class="col-md-1">
+        <strong>@Html.DisplayNameFor(m => m.StudentsPressense.Single().Precense)</strong>
+    </div>
+    <div class="col-md-1">
+        <strong>@Html.DisplayNameFor(m => m.StudentsPressense.Single().Mark)</strong>
+    </div>
+</div>
+@foreach (var item in Model.StudentsPressense)
 {
-    <div>
-        <p>@Html.DisplayFor(model => model.SubjectName) &nbsp;<span>@Html.DisplayFor(model => model.LessonDate)</span></p>
-        <p>@Html.DisplayFor(model => model.TeacherName)</p>
-        <div class="row">
-            <div class="col-md-4">@Html.DisplayNameFor(model => model.StudentName)</div>
-            <div class="col-md-2">@Html.DisplayNameFor(model => model.Precense)</div>
-            <div class="col-md-2">@Html.DisplayNameFor(model => model.Mark)</div>
+    <div class="row">
+        <div class="col-md-3">
+            @item.StudentName
         </div>
-        @foreach (var item in Model.RowList)
-        {
-            <div class="row">
-                <div class="hidden">@Html.DisplayFor(modelItem => item.LessonDateID)</div>
-                <div class="col-md-4">@Html.DisplayFor(modelItem => item.StudentName)</div>
-                <div class="col-md-2">
-                    @Html.EditorFor(modelItem => item.Precense, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(modelItem => item.Precense, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.EditorFor(modelItem => item.Mark, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(modelItem => item.Mark, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        }
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        <div class="col-md-1">
+            @Html.CheckBox("StudPres"+@item.StudentID,@item.Precense,new { id = item.StudentID, onchange= "SetPressenseOnCheckbox(this)" })
+        </div>
+
+    <div class="col-md-1">
+            @Html.TextBox("StudMark"+@item.StudentID,@item.Mark,new { id ="m"+ item.StudentID, onchange="SetPressense(this.id)"})
+            
         </div>
     </div>
+
 }
 
+@Html.ActionLink("Back to Schedule", "PersonalSchedule", "Teachers");
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/CheckStudentsScript.js")
+}

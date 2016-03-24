@@ -274,7 +274,7 @@ namespace EIMS.Controllers
             }
 
             claim = ClaimList.Where(cl => cl.ClaimType == "MiddleName").Single();
-            if (!claim.ClaimValue.Equals(model.MiddleName))
+            if (claim != null & !claim.ClaimValue.Equals(model.MiddleName))
             {
                 await UserManager.RemoveClaimAsync(user.Id, new Claim(claim.ClaimType, claim.ClaimValue));
                 await UserManager.AddClaimAsync(user.Id, new Claim("MiddleName", model.MiddleName));

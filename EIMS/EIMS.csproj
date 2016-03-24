@@ -240,6 +240,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\CheckStudentsScript.js" />
     <Content Include="Scripts\CourseFillInfinityScrolling.js" />
     <Content Include="Scripts\CourseInfinityScrolling.js" />
     <Content Include="Scripts\DatePickerForAspNet.js" />
@@ -352,11 +353,11 @@
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\LessonPrecense\CreateLessonPrecense.cshtml" />
     <Content Include="Views\Admin\DeleteUser.cshtml" />
+    <Content Include="Views\Teachers\PersonalSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Task\" />
-    <Folder Include="Views\Teachers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

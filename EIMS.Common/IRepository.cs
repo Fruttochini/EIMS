@@ -122,6 +122,7 @@ namespace EIMS.Common
 
         ///LessonPrecense ops
         LessonPrecenseWithOptions GetLessonPrecenseOption(long lessonDateID);
+        LessonPresence GetLessonPressenseByLDIDandSID(long ldid, long sid);
         bool? CreateLessonPrecense(Common.LessonPresence lessonPrecense);
         bool? UpdateLessonPrecense(Common.LessonPresence lessonPrecense);
     }
