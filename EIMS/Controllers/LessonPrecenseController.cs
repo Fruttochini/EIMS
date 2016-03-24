@@ -60,6 +60,7 @@ namespace EIMS.Controllers
                     stPresList.Add(slpvm);
                 }
             }
+
             var result = new GroupLessonPressenceViewModel()
             {
                 Date = DateTime.Today,
@@ -68,9 +69,22 @@ namespace EIMS.Controllers
                 LessonOrder = lo.timeStart.ToString() + " - " + lo.timeEnd.ToString(),
                 StudentsPressense = stPresList,
                 SubjectName = subject.SubjectName,
-                lessonDateID = lessonDateID
+                lessonDateID = lessonDateID,
+                subjectID = subjectID,
+                loid = loid
+
 
             };
+            var task = context.GetTaskByLessonDateID(lessonDateID);
+            if (task != null)
+            {
+                CreateEditTaskViewModel tm = new CreateEditTaskViewModel()
+                {
+                    expireDate = task.expiryDate,
+                    homeTask = task.homeTask
+                };
+                result.Task = tm;
+            }
             return View(result);
         }
 

@@ -119,6 +119,7 @@ namespace EIMS.Common
         bool? CreateTask(Task task);
         bool? UpdateTask(Task task);
         bool? DeleteTask(long id);
+        Common.Task GetTaskByLessonDateID(long id);
 
         ///LessonPrecense ops
         LessonPrecenseWithOptions GetLessonPrecenseOption(long lessonDateID);

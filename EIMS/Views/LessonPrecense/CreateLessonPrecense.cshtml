@@ -36,7 +36,23 @@
     </div>
 
 }
-
+@if (Model.Task == null)
+{
+<div class="row">
+    <div class="col-md-10">
+        @Html.ActionLink("Create Task", "CreateTask", "Task", new { lessonDateID = Model.lessonDateID, groupID = Model.GroupID,  subjectID = Model.subjectID, loid = Model.loid }, null)
+    </div>
+</div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-10">
+            Task: @Model.Task.homeTask <br />
+            Expires on: @Model.Task.expireDate.ToShortDateString()
+        </div></div>
+}
+<br />
 @Html.ActionLink("Back to Schedule", "PersonalSchedule", "Teachers");
 
 @section Scripts {

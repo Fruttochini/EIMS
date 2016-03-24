@@ -92,8 +92,18 @@ namespace EIMS.Repository
 
         public Common.Task GetTaskByID(long id)
         {
-            var dbItem = context.Task.Where(t => t.taskID == id).Single();
-            return dbItem.ToTask();
+            var dbItem = context.Task.Where(t => t.taskID == id).FirstOrDefault();
+            if (dbItem != null)
+                return dbItem.ToTask();
+            return null;
+        }
+
+        public Common.Task GetTaskByLessonDateID(long id)
+        {
+            var dbItem = context.Task.Where(t => t.lessonDateID == id).FirstOrDefault();
+            if (dbItem != null)
+                return dbItem.ToTask();
+            return null;
         }
 
         public IEnumerable<Common.LessonOrder> GetLessonOrder()

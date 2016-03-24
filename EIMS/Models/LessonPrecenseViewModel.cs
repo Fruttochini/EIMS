@@ -53,12 +53,15 @@ namespace EIMS.Models
     {
         public DateTime Date { get; set; }
         public string SubjectName { get; set; }
+        public int subjectID { get; set; }
         public string LessonOrder { get; set; }
+        public int loid { get; set; }
         public int GroupID { get; set; }
         public string GroupName { get; set; }
         public IEnumerable<StudentLessonPressenceViewModel> StudentsPressense { get; set; }
 
         public long lessonDateID { get; set; }
+        public CreateEditTaskViewModel Task { get; set; }
     }
 
 

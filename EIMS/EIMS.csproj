@@ -354,10 +354,10 @@
     <Content Include="Views\LessonPrecense\CreateLessonPrecense.cshtml" />
     <Content Include="Views\Admin\DeleteUser.cshtml" />
     <Content Include="Views\Teachers\PersonalSchedule.cshtml" />
+    <Content Include="Views\Task\CreateTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Task\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
