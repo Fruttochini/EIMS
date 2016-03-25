@@ -70,6 +70,13 @@ namespace EIMS.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            if (UserManager.Users.Count() == 0)
+            {
+                var usr = new EIMSUser() { UserName = "admin", Email = "admin@eims.com", PhoneNumber = "777" };
+                UserManager.Create(usr, "admin");
+                UserManager.AddToRole(usr.Id, "Admin");
+            }
+
             return View();
         }
 
@@ -88,7 +95,7 @@ namespace EIMS.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
-            
+
             switch (result)
             {
                 case SignInStatus.Success:
