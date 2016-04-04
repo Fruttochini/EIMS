@@ -1,5 +1,6 @@
 # EIMS
-EIMS - Educational Institution Management System
+EIMS - Educational Institution Management System.
+
 ASP.NET MVC final project for IT STEP academy, Kiev, Ukraine.
 
 Requirements: .NET Framework 4.5.2, MS SQL Server 2012 (Express edition), Google Chrome (was tested on this browser)
