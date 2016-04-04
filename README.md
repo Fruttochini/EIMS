@@ -13,9 +13,11 @@ Admin:
  - Rooms: create/edit/delete, assign specific possibilities (corresponds to subject requirements);
  - Courses: create/edit/delete, include subjects and subject hours per week to corresponding course;
  - Teachers: assign subjects;
+
 Teacher:
  - Has personal schedule according to groups schedule;
  - Can input student pressence, marks and home tasks;
+
 Student:
  - Has personal (group) schedule;
  - Can read home task list;
